@@ -1,6 +1,6 @@
 import Header from "@/componants/layout/header";
 import BestDeals from "@/componants/route/bestDeals/bestDeal";
-import Category from "@/componants/route/category/Category";
+import Category from "@/componants/route/category/category";
 import SsrBestDeals from "@/componants/route/bestDeals/ssrBestDeal";
 import { Suspense } from "react";
 import BestElectronics from "@/componants/route/bestElectronic/bestElectronic";

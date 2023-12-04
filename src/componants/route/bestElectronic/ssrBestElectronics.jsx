@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 
 import { getbestElectronic } from "@/allActions/product/product";
-import ProductImageCard from "../productCard/ProductImageCard";
+import ProductImageCard from "../productCard/productImageCard";
 import ProductImageCardMin from "../productCard/productImageCardMin";
 
 async function SsrBestElectronic() {

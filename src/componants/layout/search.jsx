@@ -1,6 +1,6 @@
 "use client";
 import React, { Suspense, useEffect, useState } from "react";
-import Navbar from "./Navbar";
+import Navbar from "./navbar";
 import Link from "next/link";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { IoIosArrowForward } from "react-icons/io";
