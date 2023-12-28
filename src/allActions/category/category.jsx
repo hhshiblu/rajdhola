@@ -26,9 +26,9 @@ export const getCategory = async () => {
   try {
     const categories = await prisma.categories.findMany({});
 
-    // const categoryList = createCategories(categories);
+    const categoryList = createCategories(categories);
 
-    return categories;
+    return categoryList;
   } catch (error) {
     return error.message;
   }

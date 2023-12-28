@@ -7,18 +7,18 @@ import SuggestProduct from "@/componants/route/suggestProduct/suggestProduct";
 
 import { Suspense } from "react";
 import prisma from "../../../../../prisma/prisma";
-export async function generateMetadata({ params }) {
-  const product = await prisma.products.findUnique({
-    where: {
-      id: params.id,
-    },
-  });
+// export async function generateMetadata({ params }) {
+//   const product = await prisma.products.findUnique({
+//     where: {
+//       id: params.id,
+//     },
+//   });
 
-  return {
-    title: product.name,
-    description: product.description,
-  };
-}
+//   return {
+//     title: product.name,
+//     description: product.description,
+//   };
+// }
 function Page({ params }) {
   return (
     <div>

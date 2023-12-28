@@ -9,6 +9,7 @@ import ToyProducts from "@/componants/route/ToysProducts/toyProducts";
 import SsrToysProducts from "@/componants/route/ToysProducts/ssrToyProduct";
 import FeaturedProduct from "@/componants/route/featuredProduct/featuredProduct";
 
+export const dynamic = "force-dynamic";
 export default function Home() {
   return (
     <main>

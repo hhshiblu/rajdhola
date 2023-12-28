@@ -3,15 +3,7 @@ import Search from "../layout/search";
 import Cate from "../cate";
 
 function Test() {
-  return (
-    <div>
-      <Search>
-        <Suspense fallback={true}>
-          <Cate />
-        </Suspense>
-      </Search>
-    </div>
-  );
+  return <div></div>;
 }
 
 export default Test;

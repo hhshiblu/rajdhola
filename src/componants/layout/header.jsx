@@ -1,11 +1,20 @@
 import "./header.css";
 
 import Test from "../route/test";
+import Search from "./search";
+import { Suspense } from "react";
+import Cate from "../cate";
+import AnimateCategory from "./Category/animateCategory";
+import { getCategory } from "@/allActions/category/category";
 
-function Header() {
+export const dynamic = "force-dynamic";
+async function Header() {
+  const categories = await getCategory();
   return (
     <div>
-      <Test />
+      <Search>
+        <AnimateCategory categories={categories} />
+      </Search>
     </div>
   );
 }

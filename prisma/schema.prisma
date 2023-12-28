@@ -376,8 +376,6 @@ model carts {
 
 model categories {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  /// Multiple data types found: Int: 93.8%, BigInt: 6.3% out of 16 sampled entries
-  v         Json      @map("__v")
   avatar    String?
   createdAt DateTime? @db.Date
   name      String
