@@ -1,6 +1,5 @@
 import "./header.css";
 
-import Test from "../route/test";
 import Search from "./search";
 import { Suspense } from "react";
 import Cate from "../cate";
