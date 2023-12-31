@@ -456,19 +456,19 @@ model orders {
 model products {
   id            String            @id @default(auto()) @map("_id") @db.ObjectId
   /// Multiple data types found: Int: 69.2%, BigInt: 30.8% out of 13 sampled entries
-  v             Int               @map("__v")
+  v             Int?              @map("__v")
   category      String
   color         String[]
   createdAt     DateTime          @db.Date
   description   String
   /// Multiple data types found: Int: 69.2%, BigInt: 30.8% out of 13 sampled entries
   discountPrice Int
-  images        String[]
+  images        Json[]
   name          String
   /// Multiple data types found: Int: 69.2%, BigInt: 30.8% out of 13 sampled entries
   originalPrice Int
   /// Multiple data types found: Float: 50%, Int: 50% out of 2 sampled entries
-  ratings       Json?
+  ratings       Int?
   reviews       ProductsReviews[]
   seller        ProductsSeller?
   sellerId      String
