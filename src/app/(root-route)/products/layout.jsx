@@ -5,7 +5,7 @@ import React from "react";
 async function layout() {
   
   return <div className="flex">
-    <div className="w-3/12">
+    <div className="w-6/12">
       <FilterComponet/>
     </div>
 
