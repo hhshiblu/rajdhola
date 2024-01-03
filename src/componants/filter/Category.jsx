@@ -51,7 +51,7 @@ export default function Category() {
                     <li
                       id="checkbox"
                       key={subcategory.id}
-                      className="py-3 px-4 cursor-pointer text-sm hover:bg-slate-200 rounded-sm flex items-center justify-between"
+                      className="py-3 pl-6 pr-4 cursor-pointer text-sm hover:bg-slate-200 rounded-sm flex items-center justify-between"
                     >
                       <span>{subcategory.name}</span>
                       <Checkbox />

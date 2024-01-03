@@ -26,7 +26,7 @@ function ProductCard({ data, i }) {
       <div className="w-full h-auto mb- p-3 relative rounded-md  cursor-pointer ">
         <Link href={`/product/${data.id}`}>
           <Image
-            src={``}
+            src="https://picsum.photos/seed/picsum/200/300"
             width={100}
             height={100}
             alt={data?.name}
