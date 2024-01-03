@@ -1,0 +1,389 @@
+[
+  {
+    "reviews": [],
+    "seller": null,
+    "id": "1",
+    "v": null,
+    "category": "Electronics",
+    "color": ["Black", "Silver"],
+    "createdAt": "2023-12-30T03:39:33.010Z",
+    "description": "High-Resolution Camera",
+    "discountPrice": 899,
+    "images": [
+      {
+        "public_id": "camera-image1",
+        "secure_url": "https://example.com/camera1.jpg"
+      }
+    ],
+    "name": "Professional DSLR Camera",
+    "originalPrice": 999,
+    "ratings": 4.8,
+    "sellerId": "seller1",
+    "size": ["Standard"],
+    "sold_out": 0,
+    "stock": 30,
+    "subCategory": "Cameras",
+    "tags": "camera, photography"
+  },
+  {
+    "reviews": [],
+    "seller": null,
+    "id": "2",
+    "v": null,
+    "category": "Clothing",
+    "color": ["Blue", "White", "Red"],
+    "createdAt": "2023-12-30T03:42:45.010Z",
+    "description": "Casual T-Shirt",
+    "discountPrice": 19.99,
+    "images": [
+      {
+        "public_id": "tshirt-image1",
+        "secure_url": "https://example.com/tshirt1.jpg"
+      }
+    ],
+    "name": "Comfort Fit T-Shirt",
+    "originalPrice": 24.99,
+    "ratings": 4.5,
+    "sellerId": "seller2",
+    "size": ["S", "M", "L", "XL"],
+    "sold_out": 0,
+    "stock": 100,
+    "subCategory": "T-Shirts",
+    "tags": "clothing, tshirt"
+  },
+  {
+    "reviews": [],
+    "seller": null,
+    "id": "3",
+    "v": null,
+    "category": "Home & Kitchen",
+    "color": ["Green", "Brown"],
+    "createdAt": "2023-12-30T04:12:15.010Z",
+    "description": "Stainless Steel Cookware Set",
+    "discountPrice": 129.99,
+    "images": [
+      {
+        "public_id": "cookware-image1",
+        "secure_url": "https://example.com/cookware1.jpg"
+      }
+    ],
+    "name": "Premium Cookware Set",
+    "originalPrice": 149.99,
+    "ratings": 4.3,
+    "sellerId": "seller3",
+    "size": ["Set of 10"],
+    "sold_out": 0,
+    "stock": 50,
+    "subCategory": "Cookware",
+    "tags": "kitchen, cookware"
+  },
+  {
+    "reviews": [],
+    "seller": null,
+    "id": "4",
+    "v": null,
+    "category": "Sports & Outdoors",
+    "color": ["Black", "Blue"],
+    "createdAt": "2023-12-30T04:38:22.010Z",
+    "description": "Fitness Tracker",
+    "discountPrice": 49.99,
+    "images": [
+      {
+        "public_id": "fitness-image1",
+        "secure_url": "https://example.com/fitness1.jpg"
+      }
+    ],
+    "name": "Smart Fitness Tracker",
+    "originalPrice": 59.99,
+    "ratings": 4.7,
+    "sellerId": "seller4",
+    "size": ["One Size"],
+    "sold_out": 0,
+    "stock": 75,
+    "subCategory": "Fitness",
+    "tags": "fitness, tracker"
+  },
+  {
+    "reviews": [],
+    "seller": null,
+    "id": "5",
+    "v": null,
+    "category": "Beauty",
+    "color": ["Pink", "Gold"],
+    "createdAt": "2023-12-30T05:05:31.010Z",
+    "description": "Professional Hair Dryer",
+    "discountPrice": 79.99,
+    "images": [
+      {
+        "public_id": "hairdryer-image1",
+        "secure_url": "https://example.com/hairdryer1.jpg"
+      }
+    ],
+    "name": "Ionic Hair Dryer",
+    "originalPrice": 89.99,
+    "ratings": 4.6,
+    "sellerId": "seller5",
+    "size": ["Standard"],
+    "sold_out": 0,
+    "stock": 40,
+    "subCategory": "Hair Care",
+    "tags": "beauty, hairdryer"
+  },
+  {
+    "reviews": [],
+    "seller": null,
+    "id": "6",
+    "v": null,
+    "category": "Electronics",
+    "color": ["Silver", "Space Gray"],
+    "createdAt": "2023-12-30T05:32:44.010Z",
+    "description": "Wireless Earbuds",
+    "discountPrice": 69.99,
+    "images": [
+      {
+        "public_id": "earbuds-image1",
+        "secure_url": "https://example.com/earbuds1.jpg"
+      }
+    ],
+    "name": "Bluetooth Wireless Earbuds",
+    "originalPrice": 79.99,
+    "ratings": 4.4,
+    "sellerId": "seller6",
+    "size": ["One Size"],
+    "sold_out": 0,
+    "stock": 60,
+    "subCategory": "Audio",
+    "tags": "electronics, earbuds"
+  },
+  {
+    "reviews": [],
+    "seller": null,
+    "id": "7",
+    "v": null,
+    "category": "Clothing",
+    "color": ["Black", "Gray"],
+    "createdAt": "2023-12-30T06:00:59.010Z",
+    "description": "Winter Jacket",
+    "discountPrice": 129.99,
+    "images": [
+      {
+        "public_id": "jacket-image1",
+        "secure_url": "https://example.com/jacket1.jpg"
+      }
+    ],
+    "name": "Waterproof Winter Jacket",
+    "originalPrice": 149.99,
+    "ratings": 4.5,
+    "sellerId": "seller7",
+    "size": ["S", "M", "L", "XL"],
+    "sold_out": 0,
+    "stock": 45,
+    "subCategory": "Jackets",
+    "tags": "clothing, winter"
+  },
+  {
+    "reviews": [],
+    "seller": null,
+    "id": "8",
+    "v": null,
+    "category": "Home & Kitchen",
+    "color": ["White", "Brown"],
+    "createdAt": "2023-12-30T06:28:13.010Z",
+    "description": "Smart Coffee Maker",
+    "discountPrice": 89.99,
+    "images": [
+      {
+        "public_id": "coffeemaker-image1",
+        "secure_url": "https://example.com/coffeemaker1.jpg"
+      }
+    ],
+    "name": "WiFi-Enabled Coffee Maker",
+    "originalPrice": 99.99,
+    "ratings": 4.7,
+    "sellerId": "seller8",
+    "size": ["Standard"],
+    "sold_out": 0,
+    "stock": 35,
+    "subCategory": "Appliances",
+    "tags": "kitchen, coffee"
+  },
+  {
+    "reviews": [],
+    "seller": null,
+    "id": "9",
+    "v": null,
+    "category": "Sports & Outdoors",
+    "color": ["Red", "Black"],
+    "createdAt": "2023-12-30T06:55:26.010Z",
+    "description": "Outdoor Camping Tent",
+    "discountPrice": 129.99,
+    "images": [
+      {
+        "public_id": "tent-image1",
+        "secure_url": "https://example.com/tent1.jpg"
+      }
+    ],
+    "name": "Durable Camping Tent",
+    "originalPrice": 149.99,
+    "ratings": 4.6,
+    "sellerId": "seller9",
+    "size": ["4-Person"],
+    "sold_out": 0,
+    "stock": 25,
+    "subCategory": "Camping",
+    "tags": "outdoors, camping"
+  },
+  {
+    "reviews": [],
+    "seller": null,
+    "id": "10",
+    "v": null,
+    "category": "Beauty",
+    "color": ["Rose Gold", "Silver"],
+    "createdAt": "2023-12-30T07:22:40.010Z",
+    "description": "Makeup Brush Set",
+    "discountPrice": 24.99,
+    "images": [
+      {
+        "public_id": "makeup-image1",
+        "secure_url": "https://example.com/makeup1.jpg"
+      }
+    ],
+    "name": "Professional Makeup Brushes",
+    "originalPrice": 29.99,
+    "ratings": 4.3,
+    "sellerId": "seller10",
+    "size": ["Set of 10"],
+    "sold_out": 0,
+    "stock": 55,
+    "subCategory": "Makeup",
+    "tags": "beauty, makeup"
+  },
+  {
+    "reviews": [],
+    "seller": null,
+    "id": "11",
+    "v": null,
+    "category": "Electronics",
+    "color": ["Space Gray", "Gold"],
+    "createdAt": "2023-12-30T07:49:53.010Z",
+    "description": "Smart LED TV",
+    "discountPrice": 499.99,
+    "images": [
+      { "public_id": "tv-image1", "secure_url": "https://example.com/tv1.jpg" }
+    ],
+    "name": "55-Inch 4K Smart TV",
+    "originalPrice": 599.99,
+    "ratings": 4.8,
+    "sellerId": "seller11",
+    "size": ["55 Inches"],
+    "sold_out": 0,
+    "stock": 20,
+    "subCategory": "Televisions",
+    "tags": "electronics, tv"
+  },
+  {
+    "reviews": [],
+    "seller": null,
+    "id": "12",
+    "v": null,
+    "category": "Clothing",
+    "color": ["Green", "Yellow"],
+    "createdAt": "2023-12-30T08:17:06.010Z",
+    "description": "Denim Jeans",
+    "discountPrice": 34.99,
+    "images": [
+      {
+        "public_id": "jeans-image1",
+        "secure_url": "https://example.com/jeans1.jpg"
+      }
+    ],
+    "name": "Slim Fit Denim Jeans",
+    "originalPrice": 44.99,
+    "ratings": 4.4,
+    "sellerId": "seller12",
+    "size": ["28", "30", "32", "34"],
+    "sold_out": 0,
+    "stock": 65,
+    "subCategory": "Jeans",
+    "tags": "clothing, denim"
+  },
+  {
+    "reviews": [],
+    "seller": null,
+    "id": "13",
+    "v": null,
+    "category": "Home & Kitchen",
+    "color": ["White", "Blue"],
+    "createdAt": "2023-12-30T08:44:19.010Z",
+    "description": "Robot Vacuum Cleaner",
+    "discountPrice": 179.99,
+    "images": [
+      {
+        "public_id": "vacuum-image1",
+        "secure_url": "https://example.com/vacuum1.jpg"
+      }
+    ],
+    "name": "Smart Robot Vacuum",
+    "originalPrice": 199.99,
+    "ratings": 4.7,
+    "sellerId": "seller13",
+    "size": ["Standard"],
+    "sold_out": 0,
+    "stock": 30,
+    "subCategory": "Appliances",
+    "tags": "home, vacuum"
+  },
+  {
+    "reviews": [],
+    "seller": null,
+    "id": "14",
+    "v": null,
+    "category": "Sports & Outdoors",
+    "color": ["Black", "Orange"],
+    "createdAt": "2023-12-30T09:11:32.010Z",
+    "description": "Outdoor Backpack",
+    "discountPrice": 44.99,
+    "images": [
+      {
+        "public_id": "backpack-image1",
+        "secure_url": "https://example.com/backpack1.jpg"
+      }
+    ],
+    "name": "Water-Resistant Hiking Backpack",
+    "originalPrice": 54.99,
+    "ratings": 4.5,
+    "sellerId": "seller14",
+    "size": ["25 Liters"],
+    "sold_out": 0,
+    "stock": 40,
+    "subCategory": "Backpacks",
+    "tags": "outdoors, backpack"
+  },
+  {
+    "reviews": [],
+    "seller": null,
+    "id": "15",
+    "v": null,
+    "category": "Beauty",
+    "color": ["Purple", "Gold"],
+    "createdAt": "2023-12-30T09:38:45.010Z",
+    "description": "Eyeshadow Palette",
+    "discountPrice": 16.99,
+    "images": [
+      {
+        "public_id": "eyeshadow-image1",
+        "secure_url": "https://example.com/eyeshadow1.jpg"
+      }
+    ],
+    "name": "Vibrant Eyeshadow Palette",
+    "originalPrice": 19.99,
+    "ratings": 4.2,
+    "sellerId": "seller15",
+    "size": ["Set of 12"],
+    "sold_out": 0,
+    "stock": 50,
+    "subCategory": "Makeup",
+    "tags": "beauty, eyeshadow"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "id": "1",
+    "name": "Clothing & Accessories",
+    "children": [
+      { "id": "11", "name": "Jeans" },
+      { "id": "12", "name": "Shirts" }
+    ]
+  },
+  {
+    "id": "2",
+    "name": "Electronics",
+    "children": [
+      { "id": "21", "name": "Phones" },
+      { "id": "22", "name": "Computers" }
+    ]
+  },
+  {
+    "id": "3",
+    "name": "Home & Kitchen",
+    "children": [{ "id": "31", "name": "Appliances" }]
+  },
+  {
+    "id": "4",
+    "name": "Sports & Outdoors",
+    "children": [{ "id": "41", "name": "Backpacks" }]
+  },
+  {
+    "id": "5",
+    "name": "Beauty",
+    "children": [{ "id": "51", "name": "Makeup" }]
+  },
+  {
+    "id":6,
+    "name":"Games"
+  }
+]

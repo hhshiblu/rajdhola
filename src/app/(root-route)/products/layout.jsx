@@ -1,9 +1,18 @@
 import { getCategory } from "@/allActions/category/category";
+import FilterComponet from "@/componants/filter/FilterComponent";
 import React from "react";
 
 async function layout() {
-  const categories = await getCategory();
-  return <div></div>;
+  
+  return <div className="flex">
+    <div className="w-3/12">
+      <FilterComponet/>
+    </div>
+
+    <div>
+      ProductList
+    </div>
+  </div>;
 }
 
 export default layout;
