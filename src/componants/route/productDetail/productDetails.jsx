@@ -5,7 +5,7 @@ import {
   AiOutlineHeart,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
-
+import { useSelector, useDispatch } from "react-redux";
 import { HiOutlineMinus, HiPlus } from "react-icons/hi";
 import { IoLocation } from "react-icons/io5";
 import { GrServices } from "react-icons/gr";
@@ -15,8 +15,12 @@ import { GrServices } from "react-icons/gr";
 import Image from "next/image";
 
 import Link from "next/link";
+import { addTocart } from "@/redux/action/cart";
+import { toast } from "sonner";
 
 const ProductDetails = ({ data }) => {
+  const dispatch = useDispatch();
+  const { cart } = useSelector((state) => state.cart);
   const [selectedColor, setSelectedColor] = useState({
     color: "",
     index: -1,
@@ -30,6 +34,53 @@ const ProductDetails = ({ data }) => {
   const [click, setClick] = useState(false);
   const [select, setSelect] = useState(0);
 
+  const addToCartHandler = () => {
+    if (cart === null) {
+      const cartData = {
+        productId: data?.id,
+        quantity: count, // Assuming count is the quantity
+        color: selectedColor.color,
+        size: selectedSize.size,
+      };
+      dispatch(addTocart(cartData));
+    } else {
+      const isItemExists = cart.find((item) => item.productId === data.id);
+
+      if (isItemExists) {
+        toast.error("Item already in cart!", {
+          duration: 3000,
+          cancel: {
+            label: "cancel",
+          },
+        });
+      } else {
+        if (data.stock <= 1) {
+          toast.error("Product stock limited!", {
+            duration: 3000,
+            cancel: {
+              label: "cancel",
+            },
+          });
+        } else {
+          const cartData = {
+            productId: data?.id,
+            quantity: count,
+            color: selectedColor.color,
+            size: selectedSize.size,
+          };
+
+          dispatch(addTocart(cartData));
+
+          toast.success("Item added to cart successfully!", {
+            duration: 3000,
+            cancel: {
+              label: "cancel",
+            },
+          });
+        }
+      }
+    }
+  };
   const incrementCount = () => {};
 
   const decrementCount = () => {};
@@ -44,7 +95,7 @@ const ProductDetails = ({ data }) => {
               <div className="block w-full md:flex gap-5 ">
                 {/* ---------------------------------------image part------------------- */}
 
-                <div className=" w-full sm:w-[90%] md:w-[40%] lg:w-[26%] h-[55vh]">
+                <div className=" w-full sm:w-[90%] md:w-[40%] lg:w-[26%] h-[44vh] md:h-[55]">
                   <div className="h-[80%]  m-auto">
                     {data && data.images && data.images[select] && (
                       <Image
@@ -207,14 +258,14 @@ const ProductDetails = ({ data }) => {
                   {/* increment button */}
 
                   <div className="flex items-center mt-4 justify-between pr-3">
-                    <div class="inline-flex pl-12">
+                    <div className="inline-flex pl-12">
                       <div
                         className={`bg-[#00453e] border-[#e4434373] mt-2  rounded-sm w-[30px] h-[30px] flex items-center  justify-center cursor-pointer  shadow-lg hover:opacity-75 transition duration-300 ease-in-out`}
                         onClick={incrementCount}
                       >
                         <HiPlus size={24} color="#fff" className="" />
                       </div>
-                      <span class="inline-flex  justify-center w-8 p-2 px-5">
+                      <span className="inline-flex  justify-center w-8 p-2 px-5">
                         {count}
                       </span>
                       <div
@@ -261,7 +312,7 @@ const ProductDetails = ({ data }) => {
                     >
                       <span
                         className="text-white flex items-center"
-                        // onClick={addToCartHandler}
+                        onClick={addToCartHandler}
                       >
                         Add to cart <AiOutlineShoppingCart className="ml-1" />
                       </span>

@@ -8,13 +8,14 @@ import SsrBestElectronic from "@/componants/route/bestElectronic/ssrBestElectron
 import ToyProducts from "@/componants/route/ToysProducts/toyProducts";
 import SsrToysProducts from "@/componants/route/ToysProducts/ssrToyProduct";
 import FeaturedProduct from "@/componants/route/featuredProduct/featuredProduct";
+import { getAllproductsFeature } from "@/allActions/product/product";
 
 export const dynamic = "force-dynamic";
-export default function Home() {
+export default async function Home() {
+  const data = await getAllproductsFeature(1);
   return (
     <main>
       <Header />
-
       <BestDeals>
         <Suspense fallback={<p>loading</p>}>
           <SsrBestDeals />
@@ -34,7 +35,7 @@ export default function Home() {
           <SsrToysProducts />
         </Suspense>
       </ToyProducts>
-      <FeaturedProduct />
+      <FeaturedProduct data={data} />
     </main>
   );
 }

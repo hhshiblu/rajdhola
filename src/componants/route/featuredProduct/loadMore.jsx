@@ -1,22 +1,30 @@
 "use client";
 import React, { useEffect, useState } from "react";
-
 import { useInView } from "react-intersection-observer";
 import { getAllproductsFeature } from "@/allActions/product/product";
+
 let page = 2;
-function LoadMore() {
-  const [data, setdata] = useState([]);
+
+function LoadMore({ products }) {
+  const [data, setdata] = useState(products);
+  const [hasMoreProducts, setHasMoreProducts] = useState(true);
 
   const { ref, inView } = useInView();
 
   useEffect(() => {
-    if (inView) {
-      getAllproductsFeature(page).then((products) =>
-        setdata([...data, ...products])
-      );
-      page++;
+    if (inView && hasMoreProducts) {
+      getAllproductsFeature(page)
+        .then((newProducts) => {
+          if (newProducts.length > 0) {
+            setdata([...data, ...newProducts]);
+            page++;
+          } else {
+            setHasMoreProducts(false);
+          }
+        })
+        .catch((error) => console.error(error));
     }
-  }, [inView, data]);
+  }, [inView, data, hasMoreProducts]);
 
   return (
     <div>
@@ -25,11 +33,19 @@ function LoadMore() {
           {data}
         </div>
       </section>
-      <section ref={ref}>
-        <div className="w-full ">
-          <h4>loading...</h4>
-        </div>
-      </section>
+      {hasMoreProducts ? (
+        <section ref={ref}>
+          <div className="w-full text-center">
+            <h4>loading...</h4>
+          </div>
+        </section>
+      ) : (
+        <section>
+          <div className="w-full text-center">
+            <h4>No more products</h4>
+          </div>
+        </section>
+      )}
     </div>
   );
 }

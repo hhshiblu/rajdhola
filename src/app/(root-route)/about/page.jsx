@@ -1,46 +1,83 @@
-import React from "react";
+// "use client";
+// import { AiOutlinePlusCircle } from "react-icons/ai";
+// import Photocard from "./photocard";
+// import SubmitButton from "@/componants/route/button/submitButton";
+// import { useState } from "react";
+// import { CreateProducts } from "@/allActions/products";
 
-function page() {
+// function Page() {
+//   const [images, setImages] = useState([]);
+//   const handleImageChange = (e) => {
+//     const files = e.target.files[0];
+//     // const newFiles = [...files].filter((file) => {
+//     //   if (file.size < 1024 * 1024 && file.type.startsWith("image/")) {
+//     //     return file;
+//     //   }
+//     // });
+//     setImages((prev) => [files, ...prev]);
+//   };
+//   const HandelSubmit = async () => {
+//     if (images.length > 5) return alert("upload up to 5 image files");
+
+//     const newForm = new FormData();
+
+//     images.forEach((image) => {
+//       newForm.append("images", image);
+//     });
+
+//     await CreateProducts(newForm)
+//       .then((res) => console.log(res))
+//       .catch((err) => console.log(err));
+//   };
+//   return (
+//     <div>
+//       <form action={HandelSubmit}>
+//         <div>
+//           <label className="pb-2">
+//             Upload Images <span className="text-red-500">*</span>
+//           </label>
+//           <input
+//             type="file"
+//             name=""
+//             id="upload"
+//             className="hidden"
+//             multiple
+//             onChange={handleImageChange}
+//           />
+//           <div className="w-full flex items-center flex-wrap">
+//             <label htmlFor="upload">
+//               <AiOutlinePlusCircle size={30} className="mt-3" color="#555" />
+//             </label>
+//             {images &&
+//               images.map((files, index) => (
+//                 <Photocard
+//                   key={index}
+//                   url={URL.createObjectURL(files)}
+//                   onClick={() => handelDeleteFile(index)}
+//                 />
+//               ))}
+//           </div>
+//           <br />
+//         </div>
+//         <div>
+//           <SubmitButton name="submit" type="loading" />
+//         </div>
+//       </form>
+//     </div>
+//   );
+// }
+
+// export default Page;
+
+"use client";
+
+import { UploadForm } from "./form";
+
+export default function Page() {
   return (
-    <div>
-      {" "}
-      <div className=" w-full h-[90vh]  gap-5 p-2 mx-auto bg-white shadow-lg select-none  rounded-md  ">
-        {/* <div className="w-full bg-gray-300 animate-pulse h-20 rounded-2xl"></div> */}
-        <div className="w-11/12  flex flex-col pt-4  gap-5 p-2 mx-auto   md:flex-row  ">
-          <div className="flex flex-col md:gap-4 gap-4">
-            <div className="bg-gray-300   h-[40vh] sm:h-[40vh] md:h-[45vh] md:w-full sm:w-full rounded-xl animate-pulse"></div>
-            <div className=" flex flex-row gap-5">
-              <div className="bg-gray-200 h-16  w-16 rounded-xl animate-pulse"></div>
-              <div className="bg-gray-200 h-16 w-16 rounded-xl animate-pulse"></div>
-              <div className="bg-gray-200 h-16  w-16 rounded-xl animate-pulse"></div>
-              <div className="bg-gray-200 h-16 w-16 rounded-xl animate-pulse"></div>
-            </div>
-          </div>
-
-          <div className="flex  flex-row flex-1  gap-5 w-full sm:p-2">
-            <div className="flex flex-col flex-1 gap-3 pr-4">
-              <div className="w-[15%] md:w-[20%] bg-gray-300 animate-pulse h-6 mt-4 rounded-2xl"></div>
-              <div className="w-full bg-gray-300 animate-pulse h-12 rounded-2xl"></div>
-              <div className="w-[40%] md:w-[60%] lg:w-[40%] h-10 bg-gray-200 animate-pulse rounded-2xl"></div>
-              <div className="w-[20%]  md:w-[25%] lg:w-[15%] h-8 bg-gray-200 animate-pulse rounded-2xl"></div>
-              <div className="w-[70%] md:w-[75%] lg:w-[70%] lg:block h-8 bg-gray-200 animate-pulse rounded-2xl"></div>
-              <div className="w-[80%]   h-10 bg-gray-200 animate-pulse rounded-2xl"></div>
-
-              <div className="w-[25%] mt-3 ml-4  h-10 bg-gray-200 animate-pulse rounded-2xl"></div>
-              <div className="flex flex-row justify-center gap-16 items-center">
-                <div className="w-[25%]  mt-6 md:mt-22 h-10  bg-gray-200 animate-pulse rounded-2xl"></div>
-                <div className="w-[25%]  mt-6 md:mt-22 h-10  bg-gray-200 animate-pulse rounded-2xl"></div>
-              </div>
-            </div>
-
-            <div className=" hidden lg:block">
-              <div className="bg-gray-300 h-[50vh]  sm:w-52 pl-20 rounded-xl animate-pulse"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <>
+      <h1>Upload Files to S3 Bucket</h1>
+      <UploadForm />
+    </>
   );
 }
-
-export default page;

@@ -6,18 +6,14 @@ import Link from "next/link";
 import { FiShoppingCart } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
 
-import { BsArrowLeftShort } from "react-icons/bs";
-
 import Image from "next/image";
 
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
-const Search = ({ children }) => {
+const Search = ({ user, children }) => {
+  const { cart } = useSelector((state) => state.cart);
   const router = useRouter();
-
-  const [isAuthenticated, se] = useState(false);
-  const user = "hekki";
-  const isSeller = true;
 
   const [isSticky, setIsSticky] = useState(false);
 
@@ -51,19 +47,17 @@ const Search = ({ children }) => {
 
   return (
     <>
-      <div
-        className={` search  shadow-md font-300 sticky  text-black pt-0 md:pt-1`}
-      >
+      <div className={` search  shadow-md font-300 sticky  pt-0 md:pt-1`}>
         <div className={`navbar ${isSticky ? "sticky" : ""}`}>
           <div className="  h-[60px] min- min-w-fit bg-[#00453e]   md:grid grid-cols-4">
-            <div className="hidden md:block text-white m-auto h-[30px] cursor-pointer">
+            <div className="hidden md:block text-white pl-20 my-auto h-[30px] cursor-pointer">
               <Link href="/">
                 <Image
-                  src="/vercel.svg"
+                  src="/logo/logo_title.svg"
                   alt=""
                   className="h-full"
-                  width={30}
-                  height={40}
+                  width={100}
+                  height={100}
                 />
               </Link>
             </div>
@@ -86,20 +80,25 @@ const Search = ({ children }) => {
                 </button>
               </form>
             </div>
-            <div className="hidden m-auto  md:flex items-center">
+            <div className="hidden ml-auto pr-10   md:flex items-center">
               <div className="flex items-center">
-                <div className="relative cursor-pointer mr-[20px]">
-                  <Link
-                    href={`${isAuthenticated ? "/account/profile" : "/login"}`}
-                  >
-                    {isAuthenticated ? (
-                      <div className=" bg-[#ffffff] !m-auto rounded-full h-[35px] w-[35px] flex items-center justify-center">
-                        <h1 className=" text-center text-black mt-[-3px] text-[20px]   font-[600] "></h1>
-                      </div>
-                    ) : (
-                      <CgProfile size={30} color="#fff" />
-                    )}
-                  </Link>
+                <div className="relative cursor-pointer mr-16">
+                  <div className="text-white my-auto h-full">
+                    <Link
+                      href={`${user && user ? "/account/profile" : "/login"}`}
+                    >
+                      <p className="text-xs">Hello , </p>
+                      {user ? (
+                        <div className="flex ">
+                          <h1 className=" text-semibold text-[16px]  pl-4">
+                            {user.name}
+                          </h1>
+                        </div>
+                      ) : (
+                        <h1 className="text-semibold text-sm pl-4">Sign in</h1>
+                      )}
+                    </Link>
+                  </div>
                 </div>
               </div>
 
@@ -108,7 +107,7 @@ const Search = ({ children }) => {
                   <Link href="/cart-products">
                     <FiShoppingCart size={30} className="text-white" />
                     <h1 className="absolute right-[-6px] top-[-5px] rounded-full bg-[#eb2828] w-5 h-5 top right p-0 m-0 text-white font-mono text-[14px] font-[50] loading-tight text-center">
-                      {/* {cart.length} */}
+                      {cart.length}
                     </h1>
                   </Link>
                 </div>

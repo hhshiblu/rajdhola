@@ -510,23 +510,45 @@ model shops {
   id               String   @id @default(auto()) @map("_id") @db.ObjectId
   v                Int      @map("__v")
   address          String
-  /// Multiple data types found: Float: 25%, Int: 75% out of 4 sampled entries
-  availableBalance Json
-  avatar           String
+  availableBalance Int?
+  avatar           String?
   createdAt        DateTime @db.Date
   description      String?
   email            String
   name             String
   password         String
-  /// Multiple data types found: Float: 25%, Int: 75% out of 4 sampled entries
-  phoneNumber      Json
-  role             String
-  status           String?
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  transections     Json?
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  withdrawMethod   Json?
+  cpassword        String
+
+  phoneNumber Int
+  status      String
+
+  transections transections[]
+
+  withdrawMethod String?
+  zipCode        Int
+}
+
+model sellers {
+  id               String         @id @default(auto()) @map("_id") @db.ObjectId
+  email            String
+  name             String
+  password         String
+  cpassword        String
+  address          String
+  phoneNumber      Int
+  status           String
   zipCode          Int
+  transections     transections[]
+  withdrawMethod   String?
+  availableBalance Int?
+  avatar           String?
+  description      String?
+  v                Int            @map("__v")
+  createdAt        DateTime       @db.Date
+}
+
+type transections {
+  id String?
 }
 
 model upeventschemas {
@@ -535,18 +557,21 @@ model upeventschemas {
 
 model users {
   id          String           @id @default(auto()) @map("_id") @db.ObjectId
-  /// Multiple data types found: Int: 50%, BigInt: 50% out of 4 sampled entries
-  v           Json             @map("__v")
+  v           Int              @map("__v")
   addresses   UsersAddresses[]
   avatar      String?
-  cpassword   String?
   createdAt   DateTime         @db.Date
-  email       String
+  email       String?
   name        String
   password    String
-  /// Multiple data types found: Int: 66.7%, BigInt: 33.3% out of 3 sampled entries
-  phoneNumber Json?
+  phoneNumber Int
   role        String
+}
+
+model unverifiedusers {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  phoneNumber Int
+  otp         Int
 }
 
 model withdraws {

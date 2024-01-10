@@ -13,10 +13,10 @@ import { IoIosArrowForward } from "react-icons/io";
 import Navbar from "../navbar";
 import { usePathname } from "next/navigation";
 
-function AnimateCategory({ categories }) {
+function AnimateCategory({ categories, user }) {
   const path = usePathname();
   const [isAuthenticated, se] = useState(false);
-  const user = "hekki";
+
   const isSeller = true;
   const [activemenu, setActiveMenu] = useState("nav_menu");
   const [activeMenu2, setactiveMenu2] = useState("nav_menu2");
@@ -72,11 +72,11 @@ function AnimateCategory({ categories }) {
         </div>
         <div className="my-auto">
           <Link
-            href={`${isSeller ? "/seller-dashboard" : "/become-seller"}`}
+            href={`https://rajdhola.com`}
             className="mr-8  text-[#ffffff] font-semibold hover:border-[1px] px-[8px] pt-[9px] pb-[9px]  rounded-md "
           >
             {" "}
-            {isSeller ? "Go Dashboard" : "Become Seller"}{" "}
+            Become Seller
           </Link>
         </div>
       </div>
@@ -100,12 +100,20 @@ function AnimateCategory({ categories }) {
         />
         <div className={activemenu}>
           <div className=" text-left border-b-2 bg-[#00453e] border-b-[#003c36]  py-2 pl-8 flex items-center">
-            <h1 className="font-bold pr-2 text-lg text-white">Hello , </h1>
-            <h1 className="font-semibold text-lg text-white ">
-              {isAuthenticated ? <p> {user?.name} </p> : <p> Sign In </p>}
+            <h1 className="font-semibold pr-2 text-[15px] text-white">
+              Hello ,{" "}
             </h1>
+            {user ? (
+              <div className="flex ">
+                <h1 className=" font-semibold text-lg text-white mt-1">
+                  {user.name}
+                </h1>
+              </div>
+            ) : (
+              <h1 className="text-semibold text-sm pl-2">Sign in</h1>
+            )}
           </div>
-          <div className="bg-[#195851] text-white py-[2px] m-auto">
+          <div className="bg-[#195851] text-white text-sm py-[2px] m-auto">
             <h2>Best wishes for you</h2>
           </div>
           <div className="pt-3">
