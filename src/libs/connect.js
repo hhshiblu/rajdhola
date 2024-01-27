@@ -1,8 +1,22 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, Db, ServerApiVersion } from "mongodb";
 
+let db;
+/**
+ * @returns {Promise<Db>} - Returns a promise that resolves to the database
+ */
 const connectToDB = async () => {
-  const client = await MongoClient.connect(process.env.DATABASE_URL);
-  return client.db("ecom-Shop");
+  if (!db) {
+    const client = new MongoClient(process.env.DATABASE_URL, {
+      serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+      },
+    });
+    db = client.db("ecom-Shop");
+  }
+
+  return db;
 };
 
 export default connectToDB;

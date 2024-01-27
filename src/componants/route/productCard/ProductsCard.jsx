@@ -9,7 +9,7 @@ function ProductsCard({ data, i }) {
   return (
     <div className="bg-white shadow-md hover:shadow-lg rounded-md ">
       <div className="w-full h-auto mb- p-3 relative rounded-md  cursor-pointer ">
-        <Link href={`/product/${data.id}`}>
+        <Link href={`/product/${data._id}`}>
           <Image
             src={``}
             width={100}
@@ -19,7 +19,7 @@ function ProductsCard({ data, i }) {
           />
         </Link>
 
-        <Link href={`/product/${data.id}`}>
+        <Link href={`/product/${data._id}`}>
           <h5 className="pb-1 font-[500] text-[14px] leading-[19px]  hover:text-red-500">
             {data?.name.length > 20
               ? data.name.slice(0, 30) + "..."

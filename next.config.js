@@ -1,7 +1,12 @@
-const nextConfig = {
+module.exports = {
   images: {
-    domains: ["res.cloudinary.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "rajdhola.s3.amazonaws.com",
+        port: "",
+        pathname: "**",
+      },
+    ],
   },
 };
-
-module.exports = nextConfig;

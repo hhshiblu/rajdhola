@@ -11,12 +11,11 @@ import { IoLocation } from "react-icons/io5";
 import { GrServices } from "react-icons/gr";
 
 // import Rating from "./Rating";
-
 import Image from "next/image";
 
-import Link from "next/link";
 import { addTocart } from "@/redux/action/cart";
 import { toast } from "sonner";
+import ProductDescription from "./productDescription";
 
 const ProductDetails = ({ data }) => {
   const dispatch = useDispatch();
@@ -37,14 +36,16 @@ const ProductDetails = ({ data }) => {
   const addToCartHandler = () => {
     if (cart === null) {
       const cartData = {
-        productId: data?.id,
+        productId: data?.product._id,
         quantity: count, // Assuming count is the quantity
         color: selectedColor.color,
         size: selectedSize.size,
       };
       dispatch(addTocart(cartData));
     } else {
-      const isItemExists = cart.find((item) => item.productId === data.id);
+      const isItemExists = cart.find(
+        (item) => item.productId === data.product._id
+      );
 
       if (isItemExists) {
         toast.error("Item already in cart!", {
@@ -54,7 +55,7 @@ const ProductDetails = ({ data }) => {
           },
         });
       } else {
-        if (data.stock <= 1) {
+        if (data.product.stock <= 1) {
           toast.error("Product stock limited!", {
             duration: 3000,
             cancel: {
@@ -63,7 +64,7 @@ const ProductDetails = ({ data }) => {
           });
         } else {
           const cartData = {
-            productId: data?.id,
+            productId: data?.product._id,
             quantity: count,
             color: selectedColor.color,
             size: selectedSize.size,
@@ -89,7 +90,7 @@ const ProductDetails = ({ data }) => {
     <>
       <div className="bg-white ">
         <br />
-        {data ? (
+        {data.product ? (
           <div className={` mx-auto w-[90%] 800px:w-[90%]`}>
             <div className="w-full py-7">
               <div className="block w-full md:flex gap-5 ">
@@ -136,8 +137,10 @@ const ProductDetails = ({ data }) => {
                 <div className="!w-full md:!w-[50%] lg:w-[40%] pt-5 ">
                   <p className="pb-2">
                     {" "}
-                    {data.stock > 0 ? (
-                      <span className=" text-red-700 font-[400]">In Stock</span>
+                    {data.product.stock > 0 ? (
+                      <span className=" text-red-700 font-[500] ">
+                        In Stock
+                      </span>
                     ) : (
                       <span>no Stock</span>
                     )}
@@ -145,13 +148,13 @@ const ProductDetails = ({ data }) => {
 
                   <hr />
                   <h1 className={`font-medium text-[16px] py-2`}>
-                    {data.name}
+                    {data.product.name}
                   </h1>
                   <hr />
                   <p className="font-medium pt-2">
                     Brand:
-                    {data?.brand ? (
-                      <span>{data?.brandName}</span>
+                    {data?.product.brandName ? (
+                      <span>{data?.product.brandName}</span>
                     ) : (
                       <span className="pl-2">No brand</span>
                     )}{" "}
@@ -161,7 +164,13 @@ const ProductDetails = ({ data }) => {
                     {/* <Rating rating={data?.ratings} /> */}
                     <div className="ml-3 text-gray-500"></div>
                     <span>
-                      ({data?.ratings ? <span>{averageRating}/5</span> : ""})
+                      (
+                      {data?.product.ratings ? (
+                        <span>{averageRating}/5</span>
+                      ) : (
+                        ""
+                      )}
+                      )
                     </span>
                     <span className="pl-3">
                       {" "}
@@ -179,14 +188,14 @@ const ProductDetails = ({ data }) => {
                     <h4
                       className={`font-bold  text-[18px] text-[#333] font-Roboto`}
                     >
-                      {data?.discountPrice}
+                      {data?.product.discountPrice}
                       <span className="font-medium pr-2"> ৳</span>{" "}
                     </h4>
                     <h3
                       className={`font-[500] text-[16px]  mt-[-4px] line-through pl-5 flex`}
                     >
-                      {data?.originalPrice ? (
-                        <span>{data?.originalPrice + "৳"} </span>
+                      {data?.product.originalPrice ? (
+                        <span>{data?.product.originalPrice + "৳"} </span>
                       ) : null}
                     </h3>
                     {/* <div className="text-sm  text-blue-950 pl-4">
@@ -197,11 +206,11 @@ const ProductDetails = ({ data }) => {
                   <hr />
                   <div className="py-2 flex items-center">
                     <h1 className="font-medium text-sm md:text-[17px]">
-                      {data?.color?.length > 0 ? "Color :" : ""}{" "}
+                      {data?.product.color?.length > 0 ? "Color :" : ""}{" "}
                     </h1>
-                    {data?.color ? (
+                    {data?.product.color ? (
                       <div className="flex">
-                        {data?.color.map((color, index) => {
+                        {data?.product.color.map((color, index) => {
                           // Change 'i' to 'color' here
                           return (
                             <span
@@ -228,11 +237,11 @@ const ProductDetails = ({ data }) => {
                   </div>
                   <div className="py-2 flex items-center">
                     <h1 className="font-medium text-sm md:text-[17px]">
-                      {data?.size?.length > 0 ? "Size :" : ""}{" "}
+                      {data?.product.size?.length > 0 ? "Size :" : ""}{" "}
                     </h1>
-                    {data?.size ? (
+                    {data?.product.size ? (
                       <h1 className="flex">
-                        {data?.size.map((size, index) => {
+                        {data?.product.size.map((size, index) => {
                           return (
                             <span
                               key={index}
@@ -300,7 +309,7 @@ const ProductDetails = ({ data }) => {
                   <div className="md:flex justify-center mr-5 pt-8 hidden ">
                     <div
                       className={`w-[150px] bg-[#050320]  my-3  justify-center  cursor-pointer !mt-6 !rounded !h-10 flex items-center mr-5`}
-                      onClick={() => addToCartHandler(data?.id)}
+                      onClick={() => addToCartHandler(data?.product._id)}
                     >
                       <span className="text-white flex items-center">
                         Buy Now
@@ -325,7 +334,7 @@ const ProductDetails = ({ data }) => {
                 <div className="hidden lg:block lg:w-[25%] border float-left  shadow-md px-4">
                   <div className="flex justify-between pt-8  text-base ">
                     <div className="text-gray-400">
-                      <p> shop Location</p>
+                      <p> Shop Information</p>
                     </div>
 
                     <IoLocation size={20} className="text-gray-400 " />
@@ -333,7 +342,7 @@ const ProductDetails = ({ data }) => {
 
                   <div className="block py-4 text-[15px] text-gray-700 ">
                     <h1 className="text-[#007185]"> {data?.seller?.name} </h1>
-                    <h1 className="">{data?.seller?.address}</h1>
+                    {/* <h1 className="">{data?.seller?.address}</h1> */}
                   </div>
                   <hr />
 
@@ -385,122 +394,7 @@ const ProductDetails = ({ data }) => {
             <br />
           </div>
         ) : null}
-
-        <section className="bg-white">
-          <div className="w-[90%]   h-full mx-auto pb-16  ">
-            <div className="flex    ">
-              <div className="w-full  lg:w-[65%] 800px:mx-auto  800px:pl-0 mr-2">
-                <div className="800px:px-4 px-0">
-                  <h1 className="text-[18px] font-medium md:text-[20px] py-2 text-slate-700  pl-4">
-                    Product description
-                  </h1>
-                  <hr className="mr-4 " />
-                  <hr className="mr-4 " />
-                  <div className=" pt-4 items-center  font-medium flex  justify-between 800px:justify-around w-[90%] mr-auto min-h-fit">
-                    <div>
-                      <h1>Brand Name : {data.brandName}</h1>
-                    </div>
-                    <div>
-                      <p>Available Color:</p>
-                      {data.color.map((color, index) => (
-                        <li key={index}> {color}</li>
-                      ))}
-                    </div>
-                  </div>
-                  <p className="py-5 text-slate-600">{data?.description}</p>
-                </div>
-                <div>
-                  <hr className="mr-4" />
-                  <h1 className="text-[18px] md:text-[20px] py-2 text-slate-800  font-medium pt-5 ">
-                    Some popular reviews of :{" "}
-                    <span className="text-[14px]  font-normal">
-                      {data?.name?.slice(0, 25)} ...
-                    </span>
-                  </h1>
-                  <Link href={`/shop/view/${data?.seller?._id}`}>
-                    <h2 className="text-[15px] cursor-pointer hover:text-[#db3615] text-gray-500 pb-2">
-                      {" "}
-                      Shop : {data?.seller?.name}
-                    </h2>
-                  </Link>
-
-                  <hr className="mr-4" />
-                  <hr className="mr-4" />
-                  {/* <h1 onClick={handelMessage}> chat me</h1> */}
-                  {!data &&
-                    !data?.reviews?.map((item, index) => {
-                      return (
-                        <div
-                          className="w-full h-min   my-4 p-4 rounded-md "
-                          key={index}
-                        >
-                          <div className="flex ">
-                            {item && item.user.avatar ? (
-                              <Image
-                                src={``}
-                                alt={item.name}
-                                width={50}
-                                height={50}
-                                className="w-[50px] h-[50px] rounded-full"
-                              />
-                            ) : null}
-                            <div className="w-full flex  pl-6 relative">
-                              <h1 className="font-[500] mr-3">
-                                {item.user.name}
-                              </h1>
-                              <span className="mr-2 !mt-1">
-                                {" "}
-                                {/* <Rating rating={data?.ratings} />{" "} */}
-                              </span>{" "}
-                            </div>
-                          </div>
-
-                          <div className="pl-16 mt-[-22px] text-gray-500 text-sm">
-                            {item.comment}
-                          </div>
-                        </div>
-                      );
-                    })}
-
-                  <div className="w-full flex justify-center py-3">
-                    {data && data?.reviews?.length === 0 && (
-                      <h5>No Reviews have for this product!</h5>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="hidden lg:block w-[30%] mr-auto pt-4 ">
-                <h2 className="text-[18px] pb-1 font-normal ">
-                  From {data && data?.seller?.name}
-                </h2>
-                <hr />
-                <hr />
-                <div className="flex flex-col pt-3 gap-4">
-                  {/* {products?.slice(0, 4).map((p, i) => {
-                  return ( */}
-                  <div className="w-[90%] 1000px:w-[75%] h-[120px] m-auto">
-                    <Link href={`${`/product/}`}`}>
-                      <div className="relative ">
-                        <Image
-                          src={``}
-                          alt=""
-                          className="w-[100%] h-[120px] mx-auto"
-                        />
-                        <div className="flex justify-center items-center absolute text-white w-[38px] h-[38px] rounded-full bg-[#00453e] font-medium text-xs left-2 top-2">
-                          {" "}
-                          50 %
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
-                  {/* );
-                })} */}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <ProductDescription data={data?.product} seller={data.seller} />
       </div>
 
       {/* small sceen product details page */}
@@ -537,6 +431,7 @@ const ProductDetails = ({ data }) => {
                   style={{
                     clipPath: "polygon(21% 0, 100% 0, 100% 100%, 0% 100%)",
                   }}
+                  onClick={addTocart}
                 >
                   Add to Cart
                 </h1>

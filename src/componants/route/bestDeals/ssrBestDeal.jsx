@@ -3,7 +3,7 @@ import { getqueryProduct } from "@/allActions/product/product";
 import { Fragment } from "react";
 import ProductCardA from "../productCard/productCardA";
 import ProductCardAMin from "../productCard/ProductCardAMin";
-
+export const dynamic = "force-dynamic";
 async function SsrBestDeals() {
   const queryUnderProduct = await getqueryProduct();
 

@@ -4,6 +4,7 @@ import { getRelatedProduct } from "@/allActions/product/product";
 
 async function SuggestProduct({ id }) {
   const relatedProducts = await getRelatedProduct(id);
+
   return (
     <div className="bg-white">
       <div className="w-[90%]   h-full mx-auto">
@@ -19,7 +20,7 @@ async function SuggestProduct({ id }) {
         <hr />
         <div className="pt-4">
           <div className="grid grid-cols-2 gap-[10px] md:grid-cols-3 md:gap-[10px] lg:grid-cols-5 lg:gap-[10px] xl:grid-cols-6 xl:gap-[10px]  ">
-            {relatedProducts.map((data, i) => (
+            {relatedProducts?.map((data, i) => (
               <ProductsCard data={data} key={i} />
             ))}
           </div>

@@ -5,14 +5,15 @@ import React from "react";
 function ProductCardAMin({ p }) {
   return (
     <div className="w-[45%]   ">
-      <Link href={`${`/product/${p.id}`}  `}>
+      <Link href={`${`/product/${p._id}`}  `}>
         <div className=" mx-auto p-3 h-[130px]  rounded-md">
           <Image
-            src={``}
+            src={p.images[0].url}
             alt=""
-            className="w-[100%] h-[100%] text-center "
-            width={100}
-            height={100}
+            className="w-auto h-[100%] text-center mx-auto"
+            width={1000}
+            height={1000}
+            style={{ objectFit: "contain" }}
           />
         </div>
       </Link>

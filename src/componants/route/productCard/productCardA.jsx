@@ -6,15 +6,16 @@ function ProductCardA({ p }) {
     <div>
       <div className="min-w-[245px] pb-4 rounded-lg max-w[250px] ">
         <div>
-          <Link href={"/product/" + p.id}>
-            <div className="  bg-gray-200 p-4 h-[200px] w-[240px] rounded-md">
-              {/* <Image
-                src={``}
+          <Link href={"/product/" + p._id}>
+            <div className="  bg-gray-200  rounded-md hover:rounded-none h-[190px]  max-w-[250px]  duration-500">
+              <Image
+                src={p.images[0].url}
                 alt={p.name}
-                className="w-[100%] h-[100%] mx-auto"
-                width={100}
-                height={100}
-              /> */}
+                className="h-[100%] w-auto rounded-md hover:rounded-none  object-cover mx-auto   "
+                height={10000}
+                width={10000}
+                // style={{ objectFit: "contain" }}
+              />
             </div>
           </Link>
           <div className="flex items-center pt-1 gap-2">
@@ -48,9 +49,9 @@ function ProductCardA({ p }) {
               </div>
             )}
           </div>
-          <Link href={`/products/${p.id}`}>
+          <Link href={`/products/${p._id}`}>
             <h5 className="pb-1 font-[500] text-[14px] leading-[19px]  hover:text-red-500">
-              {p?.name.length > 20 ? p?.name.slice(0, 36) + "..." : p?.name}
+              {p?.name.length > 20 ? p?.name.slice(0, 26) + "..." : p?.name}
             </h5>
           </Link>
         </div>

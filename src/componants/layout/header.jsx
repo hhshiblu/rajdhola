@@ -1,6 +1,5 @@
 import "./header.css";
 import Search from "./search";
-import AnimateCategory from "./Category/animateCategory";
 import { getCategory } from "@/allActions/category/category";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
@@ -11,12 +10,7 @@ async function Header() {
   const session = await getServerSession(authOptions);
   return (
     <div>
-      <Search user={session && session?.user}>
-        <AnimateCategory
-          categories={categories}
-          user={session && session?.user}
-        />
-      </Search>
+      <Search user={session && session?.user} categories={categories} />
     </div>
   );
 }

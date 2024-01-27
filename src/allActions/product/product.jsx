@@ -3,6 +3,8 @@ import { queryProducts } from "@/libs/QueryProducts";
 import prisma from "../../../prisma/prisma";
 import { Fragment } from "react";
 import ProductCard from "@/componants/route/productCard/productCard";
+import connectToDB from "@/libs/connect";
+import { ObjectId } from "mongodb";
 
 const formateProduct = (products) => {
   const productArray = [];
@@ -24,40 +26,37 @@ const formateProduct = (products) => {
 
 export const getqueryProduct = async () => {
   try {
-    const underProducts = await prisma.products.findMany({
-      where: {
-        OR: [
-          {
-            discountPrice: {
-              lt: 500,
-            },
-          },
-          {
-            originalPrice: {
-              lt: 500,
-            },
-          },
-        ],
-      },
-      orderBy: {
-        sold_out: "asc",
-      },
-      take: 25,
-    });
-    return underProducts;
+    const db = await connectToDB();
+
+    const Less500Product = await db
+      .collection("products")
+      .find({
+        $or: [{ discountPrice: { $lt: 500 } }, { originalPrice: { $lt: 500 } }],
+      })
+      .sort({ sold_out: 1 })
+      .limit(25)
+      .toArray();
+    const product = JSON.parse(JSON.stringify(Less500Product));
+    return product;
   } catch (error) {
     console.log(error);
   }
 };
 export const getproduct = async (id) => {
   try {
-    const product = await prisma.products.findUnique({
-      where: {
-        id: id,
-      },
-    });
+    const db = await connectToDB();
 
-    return product;
+    const productobject = await db
+      .collection("products")
+      .findOne({ _id: new ObjectId(id) });
+    const seller = await db
+      .collection("seller")
+      .findOne({ sellerId: productobject.sellerId });
+    const product = JSON.parse(JSON.stringify(productobject));
+    return {
+      product,
+      seller,
+    };
   } catch (error) {
     return error.message;
   }
@@ -65,25 +64,19 @@ export const getproduct = async (id) => {
 
 export const getRelatedProduct = async (id) => {
   try {
-    const product = await prisma.products.findUnique({
-      where: {
-        id: id,
-      },
+    const db = await connectToDB();
+    const product = await db.collection("products").findOne({
+      _id: new ObjectId(id),
     });
-    const relatedProducts = await prisma.products.findMany({
-      where: {
-        id: {
-          not: {
-            equals: product.id,
-          },
-        },
-        category: {
-          equals: product.category,
-        },
-      },
-      take: 20,
-    });
-
+    const suggestProduct = await db
+      .collection("products")
+      .find({
+        _id: { $ne: new ObjectId(id) },
+        category: product.category,
+      })
+      .limit(20)
+      .toArray();
+    const relatedProducts = JSON.parse(JSON.stringify(suggestProduct));
     return relatedProducts;
   } catch (error) {
     return error.message;
@@ -92,21 +85,21 @@ export const getRelatedProduct = async (id) => {
 
 export const getMoreProduct = async (id) => {
   try {
-    const moreProducts = await prisma.products.findMany({
-      where: {
-        id: {
-          not: {
-            equals: product.id,
-          },
-        },
-        sellerId: {
-          equals: product.sellerId,
-        },
-      },
-      take: 20,
+    const db = await connectToDB();
+    const product = await db.collection("products").findOne({
+      _id: new ObjectId(id),
     });
 
-    return moreProducts;
+    const moreProducts = await db
+      .collection("products")
+      .find({
+        _id: { $ne: new ObjectId(product._id) }, // not equals to the given productId
+        sellerId: product.sellerId,
+      })
+      .limit(20)
+      .toArray();
+    const products = JSON.parse(JSON.stringify(moreProducts));
+    return products;
   } catch (error) {
     return error.message;
   }
@@ -182,27 +175,21 @@ export const getAllproductsFeature = async (page) => {
 
 export const getbestElectronic = async () => {
   try {
-    const underProducts = await prisma.products.findMany({
-      where: {
-        OR: [
-          {
-            discountPrice: {
-              lt: 500,
-            },
-          },
-          {
-            originalPrice: {
-              lt: 500,
-            },
-          },
+    const db = await connectToDB();
+    const underProducts = await db
+      .collection("products")
+      .find({
+        $or: [
+          { discountPrice: { $lt: 500 } },
+          { originalPrice: { $lt: 500 } },
+          { category: "electronics" },
         ],
-      },
-      orderBy: {
-        sold_out: "asc",
-      },
-      take: 25,
-    });
-    return underProducts;
+      })
+      .sort({ sold_out: 1 })
+      .limit(25)
+      .toArray();
+    const products = JSON.parse(JSON.stringify(underProducts));
+    return products;
   } catch (error) {
     console.log(error);
   }
@@ -210,27 +197,21 @@ export const getbestElectronic = async () => {
 
 export const getToyProducts = async () => {
   try {
-    const underProducts = await prisma.products.findMany({
-      where: {
-        OR: [
-          {
-            discountPrice: {
-              lt: 500,
-            },
-          },
-          {
-            originalPrice: {
-              lt: 500,
-            },
-          },
+    const db = await connectToDB();
+    const underProducts = await db
+      .collection("products")
+      .find({
+        $or: [
+          { discountPrice: { $lt: 800 } },
+          { originalPrice: { $lt: 800 } },
+          { category: "Toys" },
         ],
-      },
-      orderBy: {
-        sold_out: "asc",
-      },
-      take: 25,
-    });
-    return underProducts;
+      })
+      .sort({ sold_out: 1 })
+      .limit(25)
+      .toArray();
+    const products = JSON.parse(JSON.stringify(underProducts));
+    return products;
   } catch (error) {
     console.log(error);
   }

@@ -8,11 +8,9 @@ import SsrBestElectronic from "@/componants/route/bestElectronic/ssrBestElectron
 import ToyProducts from "@/componants/route/ToysProducts/toyProducts";
 import SsrToysProducts from "@/componants/route/ToysProducts/ssrToyProduct";
 import FeaturedProduct from "@/componants/route/featuredProduct/featuredProduct";
-import { getAllproductsFeature } from "@/allActions/product/product";
 
 export const dynamic = "force-dynamic";
-export default async function Home() {
-  const data = await getAllproductsFeature(1);
+export default function Home() {
   return (
     <main>
       <Header />
@@ -35,7 +33,7 @@ export default async function Home() {
           <SsrToysProducts />
         </Suspense>
       </ToyProducts>
-      <FeaturedProduct data={data} />
+      <FeaturedProduct />
     </main>
   );
 }

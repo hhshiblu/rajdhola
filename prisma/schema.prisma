@@ -507,25 +507,19 @@ model seller_customers {
 }
 
 model shops {
-  id               String   @id @default(auto()) @map("_id") @db.ObjectId
-  v                Int      @map("__v")
-  address          String
-  availableBalance Int?
-  avatar           String?
-  createdAt        DateTime @db.Date
-  description      String?
-  email            String
-  name             String
-  password         String
-  cpassword        String
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  v       Int    @map("__v")
+  address String
+
+  email     String
+  name      String
+  password  String
+  cpassword String
 
   phoneNumber Int
   status      String
-
-  transections transections[]
-
-  withdrawMethod String?
-  zipCode        Int
+  zipCode     Int
+  createdAt   DateTime @db.Date
 }
 
 model sellers {
