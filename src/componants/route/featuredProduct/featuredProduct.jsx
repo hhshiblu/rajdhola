@@ -28,7 +28,7 @@
 "use client";
 // FeaturedProduct.js
 import React, { useEffect, useState } from "react";
-import LoadMore from "./LoadMore";
+import LoadMore from "./loadMore";
 import { getAllproductsFeature } from "@/allActions/product/product";
 import styles from "@/libs/styles";
 

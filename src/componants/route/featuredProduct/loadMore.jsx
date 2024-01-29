@@ -1,8 +1,5 @@
-//
-
 "use client";
 
-// LoadMore.js
 import React, { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import Image from "next/image";
