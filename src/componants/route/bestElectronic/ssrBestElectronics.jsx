@@ -10,7 +10,7 @@ async function SsrBestElectronic() {
   return (
     <div>
       <div className=" hidden 600px:flex px-3 gap-[7px]  ">
-        {bestElectronic.map((product, i) => (
+        {bestElectronic?.map((product, i) => (
           <Fragment key={i}>
             <ProductImageCard p={product} />
           </Fragment>
@@ -18,7 +18,7 @@ async function SsrBestElectronic() {
       </div>
 
       <div className="flex flex-wrap justify-center gap-3 600px:hidden">
-        {bestElectronic.slice(0, 4).map((product, i) => (
+        {bestElectronic?.slice(0, 4).map((product, i) => (
           <Fragment key={i}>
             <ProductImageCardMin p={product} />
           </Fragment>

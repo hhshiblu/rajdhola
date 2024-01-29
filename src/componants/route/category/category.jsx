@@ -5,7 +5,7 @@ import Link from "next/link";
 import React from "react";
 
 async function Cetagory() {
-  const categories = [];
+  const categories = await getCategory();
   return (
     <div>
       {/* catagory */}

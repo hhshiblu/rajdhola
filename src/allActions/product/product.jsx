@@ -155,17 +155,18 @@ export const getAllProducts = async (query) => {
 
 export const getAllproductsFeature = async (page) => {
   try {
-    const products = await prisma.products.findMany({
-      take: 3,
-      skip: (page - 1) * 3,
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+    const db = await connectToDB();
+    const products = await db
+      .collection("products")
+      .find()
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * 3)
+      .limit(3)
+      .toArray();
 
-    return products.map((products, index) => (
-      <Fragment key={index}>
-        <ProductCard data={products} i={index} />
+    return products.map((product, index) => (
+      <Fragment key={product._id}>
+        <ProductCard data={product} i={index} />
       </Fragment>
     ));
   } catch (e) {

@@ -1,49 +1,38 @@
+//
+
 "use client";
-import React, { useEffect, useState } from "react";
+
+// LoadMore.js
+import React, { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
-import { getAllproductsFeature } from "@/allActions/product/product";
+import Image from "next/image";
 
-let page = 2;
-
-function LoadMore({ products }) {
-  const [data, setdata] = useState(products);
-  const [hasMoreProducts, setHasMoreProducts] = useState(true);
-
+function LoadMore({ onLoadMore }) {
   const { ref, inView } = useInView();
+  const shouldLoadMore = useRef(true);
 
   useEffect(() => {
-    if (inView && hasMoreProducts) {
-      getAllproductsFeature(page)
-        .then((newProducts) => {
-          if (newProducts.length > 0) {
-            setdata([...data, ...newProducts]);
-            page++;
-          } else {
-            setHasMoreProducts(false);
-          }
-        })
-        .catch((error) => console.error(error));
+    if (inView && shouldLoadMore.current) {
+      shouldLoadMore.current = false;
+      onLoadMore();
     }
-  }, [inView, data, hasMoreProducts]);
+  }, [inView, onLoadMore]);
+
+  useEffect(() => {
+    shouldLoadMore.current = true;
+  }, [onLoadMore]);
 
   return (
-    <div>
-      <section>
-        <div className="grid grid-cols-2 gap-[10px] md:grid-cols-3 md:gap-[10px] lg:grid-cols-5 lg:gap-[10px] xl:grid-cols-6 xl:gap-[10px]">
-          {data}
-        </div>
-      </section>
-      {hasMoreProducts ? (
-        <section ref={ref}>
-          <div className="w-full text-center">
-            <h4>loading...</h4>
-          </div>
-        </section>
-      ) : (
-        <section>
-          <div className="w-full text-center">
-            <h4>No more products</h4>
-          </div>
+    <div ref={ref}>
+      {inView && (
+        <section className="flex justify-center items-center w-full">
+          <Image
+            src="./spinner.svg"
+            alt="spinner"
+            width={56}
+            height={56}
+            className="object-contain"
+          />
         </section>
       )}
     </div>

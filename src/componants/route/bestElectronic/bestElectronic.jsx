@@ -22,9 +22,9 @@ function BestElectronics({ children }) {
   };
 
   return (
-    <div>
+    <div className="my-8">
       <div
-        className={`w-11/12 mx-auto  my-3 rounded-sm bg-white h-[390px] py-[10px] px-[20px] relative group overflow-hidden `}
+        className={`w-11/12 mx-auto  my-3 rounded-sm bg-white  py-[10px]  px-[20px] relative group overflow-hidden `}
       >
         <div>
           <div className="flex pb-2">

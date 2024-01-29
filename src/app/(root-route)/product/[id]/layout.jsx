@@ -13,6 +13,11 @@ export async function generateMetadata({ params }) {
   return {
     title: ` rajdhola.com - ${product.name} `,
     description: product.description,
+    metadataBase: new URL("https://rajdhola.com"),
+    keywords: product.tags ? product.tags.map((tag) => tag.name) : [],
+    openGraph: {
+      images: product.images.map((image) => ({ url: image.url })),
+    },
   };
 }
 

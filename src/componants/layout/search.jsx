@@ -95,7 +95,7 @@ const Search = ({ user, categories }) => {
 
   return (
     <>
-      <div className={` search  shadow-md font-300 sticky  pt-0 md:pt-1`}>
+      <div className={` search  shadow-md font-300 sticky  `}>
         <div className={`navbar ${isSticky ? "sticky" : ""}`}>
           <div className="  h-[60px] min- min-w-fit bg-[#00453e]   md:grid grid-cols-4">
             <div className="hidden md:block text-white pl-20 my-auto h-[30px] cursor-pointer">
@@ -183,101 +183,100 @@ const Search = ({ user, categories }) => {
               </Link>
             </div>
           </div>
-          {/* show category animation i will try allah borosha */}
-
-          <div
-            className={
-              activemenu === "nav_menu nav_phone"
-                ? "fixed top-0 left-0 w-full h-screen bg-[#00000199]  z-[20000] "
-                : null
-            }
-          >
-            <ImCancelCircle
-              className={
-                activemenu === "nav_menu nav_phone"
-                  ? "fixed top-3 left-[310px]  z-[20000]  border-[3px] border-black cursor-pointer rounded-[100%] text-white"
-                  : "hidden"
-              }
-              size={30}
-              onClick={ToggleMenu}
-            />
-            <div className={activemenu}>
-              <div className=" text-left border-b-2 bg-[#00453e] border-b-[#003c36]  py-2 pl-8 flex items-center">
-                <h1 className="font-semibold pr-2 text-[15px] text-white">
-                  Hello ,{" "}
-                </h1>
-                {user ? (
-                  <div className="flex ">
-                    <h1 className=" font-semibold text-lg text-white mt-1">
-                      {user.name}
-                    </h1>
-                  </div>
-                ) : (
-                  <h1 className="text-semibold text-sm pl-2">Sign in</h1>
-                )}
-              </div>
-              <div className="bg-[#195851] text-white text-sm py-[2px] m-auto">
-                <h2>Best wishes for you</h2>
-              </div>
-              <div className="pt-3">
-                {categories.map((i, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className={`${styles.normalFlex}  justify-between px-4 hover:bg-[#EAEDED] mx-2 text-[16px]  rounded-md cursor-pointer  leading-[26px] forHover `}
-                      onClick={(e) => handleMenuItemClick(e, i)} // Pass the 'i' data as an argument
-                    >
-                      <h3 className=" cursor-pointer select-none m-2  font-[510]    text-gray-600">
-                        {i.name}
-                      </h3>
-                      <h2>
-                        <IoIosArrowForward className="text-gray-300" />
-                      </h2>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div className={activeMenu2}>
-                <div
-                  className="text-left border-b-2 border-black py-2 pl-6 flex  text-lg font-semibold"
-                  onClick={ToggleMenu2}
-                >
-                  <BsArrowLeftShort size={30} className="cursor-pointer" />
-                  <h1 className="pl-4 cursor-pointer"> Main Categories</h1>
-                </div>
-                <div className="pt-3 pb-1">
-                  <h1 className="text-left pl-8 font-semibold text-lg text-gray-900 mx-2 ">
-                    {SubMenuDetails.name}
-                  </h1>
-                </div>
-
-                <hr />
-                <hr />
-
-                <div className="pt-1">
-                  {SubMenuDetails?.children?.map((item, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="hover:bg-gray-300 mx-2 text-gray-700 hover:text-gray-950  rounded-md leading-[24px] py-[6px]  "
-                        onClick={() => subCateHandel(item.name, item.parentId)}
-                      >
-                        <h2 className="text-left pl-7 cursor-pointer text-[16px] ">
-                          {item.name}
-                        </h2>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
       {/* --------------------------------------------------------------------- */}
+      {/* show category animation i will try allah borosha */}
 
+      <div
+        className={
+          activemenu === "nav_menu nav_phone"
+            ? "fixed top-0 left-0 w-full h-screen bg-[#00000082]  z-[20000] "
+            : null
+        }
+      >
+        <ImCancelCircle
+          className={
+            activemenu === "nav_menu nav_phone"
+              ? "fixed top-3 left-[310px]  z-[20000]  border-[3px] border-black cursor-pointer rounded-[100%] text-white"
+              : "hidden"
+          }
+          size={30}
+          onClick={ToggleMenu}
+        />
+        <div className={activemenu}>
+          <div className=" text-left border-b-2 bg-[#00453e] border-b-[#003c36]  py-2 pl-8 flex items-center">
+            <h1 className="font-semibold pr-2 text-[15px] text-white">
+              Hello ,{" "}
+            </h1>
+            {user ? (
+              <div className="flex ">
+                <h1 className=" font-semibold text-lg text-white mt-1">
+                  {user.name}
+                </h1>
+              </div>
+            ) : (
+              <h1 className="text-semibold text-sm pl-2">Sign in</h1>
+            )}
+          </div>
+          <div className="bg-[#195851] text-white text-sm py-[2px] m-auto">
+            <h2>Best wishes for you</h2>
+          </div>
+          <div className="pt-3">
+            {categories?.map((i, index) => {
+              return (
+                <div
+                  key={index}
+                  className={`${styles.normalFlex}  justify-between px-4 hover:bg-[#EAEDED] mx-2 text-[16px]  rounded-md cursor-pointer  leading-[26px] forHover `}
+                  onClick={(e) => handleMenuItemClick(e, i)} // Pass the 'i' data as an argument
+                >
+                  <h3 className=" cursor-pointer select-none m-2  font-[510]    text-gray-600">
+                    {i.name}
+                  </h3>
+                  <h2>
+                    <IoIosArrowForward className="text-gray-300" />
+                  </h2>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className={activeMenu2}>
+            <div
+              className="text-left border-b-2 border-black py-2 pl-6 flex  text-lg font-semibold"
+              onClick={ToggleMenu2}
+            >
+              <BsArrowLeftShort size={30} className="cursor-pointer" />
+              <h1 className="pl-4 cursor-pointer"> Main Categories</h1>
+            </div>
+            <div className="pt-3 pb-1">
+              <h1 className="text-left pl-8 font-semibold text-lg text-gray-900 mx-2 ">
+                {SubMenuDetails.name}
+              </h1>
+            </div>
+
+            <hr />
+            <hr />
+
+            <div className="pt-1">
+              {SubMenuDetails?.children?.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="hover:bg-gray-300 mx-2 text-gray-700 hover:text-gray-950  rounded-md leading-[24px] py-[6px]  "
+                    onClick={() => subCateHandel(item.name, item.parentId)}
+                  >
+                    <h2 className="text-left pl-7 cursor-pointer text-[16px] ">
+                      {item.name}
+                    </h2>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
       {!path.includes("/product/") && (
         <div className="fixed bottom-0 left-0 w-full md:hidden bg-[#00453e] h-[50px] mx-auto z-50">
           <div className="flex">

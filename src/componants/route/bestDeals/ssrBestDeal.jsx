@@ -10,7 +10,7 @@ async function SsrBestDeals() {
   return (
     <div>
       <div className=" hidden 600px:flex px-3 gap-[7px]  ">
-        {queryUnderProduct.map((product, i) => (
+        {queryUnderProduct?.map((product, i) => (
           <Fragment key={i}>
             <ProductCardA p={product} />
           </Fragment>
@@ -18,7 +18,7 @@ async function SsrBestDeals() {
       </div>
 
       <div className="flex flex-wrap justify-center gap-3 600px:hidden">
-        {queryUnderProduct.slice(0, 4).map((product, i) => (
+        {queryUnderProduct?.slice(0, 4)?.map((product, i) => (
           <Fragment key={i}>
             <ProductCardAMin p={product} />
           </Fragment>

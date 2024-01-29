@@ -8,26 +8,25 @@ import SsrBestElectronic from "@/componants/route/bestElectronic/ssrBestElectron
 import ToyProducts from "@/componants/route/ToysProducts/toyProducts";
 import SsrToysProducts from "@/componants/route/ToysProducts/ssrToyProduct";
 import FeaturedProduct from "@/componants/route/featuredProduct/featuredProduct";
+import HomeHero from "@/componants/route/homeHero/HomeHero";
 
 export const dynamic = "force-dynamic";
 export default function Home() {
   return (
     <main>
       <Header />
+      <HomeHero />
       <BestDeals>
         <Suspense fallback={<p>loading</p>}>
           <SsrBestDeals />
         </Suspense>
       </BestDeals>
-
       <Category />
-
       <BestElectronics>
         <Suspense fallback={<p>loading</p>}>
           <SsrBestElectronic />
         </Suspense>
       </BestElectronics>
-
       <ToyProducts>
         <Suspense fallback={<p>loading</p>}>
           <SsrToysProducts />

@@ -16,7 +16,7 @@ export const authOptions = {
             phoneNumber: parseInt(user.phoneNumber, 10),
           },
         });
-
+        console.log(findUser);
         if (findUser) {
           return true;
         }
@@ -73,6 +73,7 @@ export const authOptions = {
       },
       async authorize(credentials, req) {
         const { phoneNumber, password } = credentials;
+        console.log(phoneNumber, password);
         if (!phoneNumber || !password) {
           return null;
         }
@@ -82,7 +83,7 @@ export const authOptions = {
             phoneNumber: parseInt(phoneNumber, 10),
           },
         });
-
+        console.log(user);
         if (!user) {
           return null;
         }
@@ -90,7 +91,7 @@ export const authOptions = {
         if (!ispasswordOk) {
           return null;
         }
-
+        console.log(user);
         return user;
       },
     }),

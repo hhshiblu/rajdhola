@@ -8,7 +8,7 @@ function ProductDescription({ data, seller }) {
       <div className="w-[90%]   h-full mx-auto pb-16  ">
         <div className="flex    ">
           <div className="w-full  lg:w-[65%] 800px:mx-auto  800px:pl-0 mr-2">
-            <div className="800px:px-4 px-0">
+            <div className="800px:px-4 px-0 overflow-hidden">
               <h1 className="text-[18px] font-medium md:text-[20px] py-2 text-slate-700  pl-4">
                 Product description
               </h1>

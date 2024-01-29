@@ -7,17 +7,25 @@ import {
 } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
 import { HiOutlineMinus, HiPlus } from "react-icons/hi";
-import { IoLocation } from "react-icons/io5";
-import { GrServices } from "react-icons/gr";
-
-// import Rating from "./Rating";
-import Image from "next/image";
-
 import { addTocart } from "@/redux/action/cart";
 import { toast } from "sonner";
 import ProductDescription from "./productDescription";
+import DetailsImage from "./detailsImage";
+import Rating from "../rating/rating";
+import ProductSideInfo from "./productSideInfo";
 
 const ProductDetails = ({ data }) => {
+  const {
+    name,
+    images,
+    color,
+    size,
+    stock,
+    discountPrice,
+    ratings,
+    originalPrice,
+    brandName,
+  } = data?.product;
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cart);
   const [selectedColor, setSelectedColor] = useState({
@@ -32,6 +40,9 @@ const ProductDetails = ({ data }) => {
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
   const [select, setSelect] = useState(0);
+  const handleClick = () => {
+    setClick(!click);
+  };
 
   const addToCartHandler = () => {
     if (cart === null) {
@@ -82,62 +93,40 @@ const ProductDetails = ({ data }) => {
       }
     }
   };
-  const incrementCount = () => {};
 
-  const decrementCount = () => {};
+  const incrementCount = () => {
+    if (stock <= 1) {
+      toast.error("Product stock limited!");
+    } else {
+      setCount(count + 1);
+    }
+  };
 
+  const decrementCount = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
   return (
     <>
       <div className="bg-white ">
         <br />
         {data.product ? (
           <div className={` mx-auto w-[90%] 800px:w-[90%]`}>
-            <div className="w-full py-7">
+            <div className="w-full md:py-7 py-4">
               <div className="block w-full md:flex gap-5 ">
                 {/* ---------------------------------------image part------------------- */}
-
-                <div className=" w-full sm:w-[90%] md:w-[40%] lg:w-[26%] h-[44vh] md:h-[55]">
-                  <div className="h-[80%]  m-auto">
-                    {data && data.images && data.images[select] && (
-                      <Image
-                        src={``}
-                        alt=""
-                        className=" overflow-hidden  w-[100%] 800px:w-[98%] m-auto h-[100%]"
-                        height={100}
-                        width={100}
-                      />
-                    )}
-                  </div>
-
-                  <div className=" flex gap-4 w-full pt-6">
-                    {data &&
-                      data?.images?.map((i, index) => (
-                        <div
-                          className={`${
-                            select === index
-                              ? "border-[2px] border-red-400"
-                              : "null border"
-                          } cursor-pointer h-[40px] w-[40px] flex justify-center items-center `}
-                          key={index}
-                        >
-                          <Image
-                            src={``}
-                            alt=""
-                            className="  h-full overflow-hidden mx-auto"
-                            width={100}
-                            height={100}
-                            onClick={() => setSelect(index)}
-                          />
-                        </div>
-                      ))}
-                  </div>
-                </div>
+                <DetailsImage
+                  images={images}
+                  select={select}
+                  setSelect={setSelect}
+                />
                 {/* ------------------------ product Information part ---------------------------- */}
 
-                <div className="!w-full md:!w-[50%] lg:w-[40%] pt-5 ">
+                <div className="!w-full md:!w-[50%] lg:w-[40%] pt-4 ">
                   <p className="pb-2">
                     {" "}
-                    {data.product.stock > 0 ? (
+                    {stock > 0 ? (
                       <span className=" text-red-700 font-[500] ">
                         In Stock
                       </span>
@@ -147,39 +136,26 @@ const ProductDetails = ({ data }) => {
                   </p>
 
                   <hr />
-                  <h1 className={`font-medium text-[16px] py-2`}>
-                    {data.product.name}
-                  </h1>
+                  <h1 className={`font-medium text-[16px] py-2`}>{name}</h1>
                   <hr />
-                  <p className="font-medium pt-2">
+                  <p className="font-normal pt-2">
                     Brand:
-                    {data?.product.brandName ? (
-                      <span>{data?.product.brandName}</span>
+                    {brandName ? (
+                      <span className="pl-3  font-medium">{brandName}</span>
                     ) : (
-                      <span className="pl-2">No brand</span>
+                      <span className="pl-3 font-medium">No brand</span>
                     )}{" "}
                   </p>
 
                   <div className="flex items-center pb-2">
-                    {/* <Rating rating={data?.ratings} /> */}
+                    <Rating rating={ratings} />
                     <div className="ml-3 text-gray-500"></div>
                     <span>
-                      (
-                      {data?.product.ratings ? (
-                        <span>{averageRating}/5</span>
-                      ) : (
-                        ""
-                      )}
-                      )
+                      ({ratings ? <span>{ratings}/5</span> : 0}
+                      /5)
                     </span>
                     <span className="pl-3">
-                      {" "}
-                      |{" "}
-                      <span className="text-[#0d14e4]">
-                        {" "}
-                        {/* {totalReviewsLength} */}
-                        Ratings
-                      </span>{" "}
+                      <span className="text-[#0d14e4]">Ratings</span>{" "}
                     </span>
                   </div>
                   <hr />
@@ -188,36 +164,32 @@ const ProductDetails = ({ data }) => {
                     <h4
                       className={`font-bold  text-[18px] text-[#333] font-Roboto`}
                     >
-                      {data?.product.discountPrice}
+                      {discountPrice ? discountPrice : originalPrice}
                       <span className="font-medium pr-2"> ৳</span>{" "}
                     </h4>
                     <h3
                       className={`font-[500] text-[16px]  mt-[-4px] line-through pl-5 flex`}
                     >
-                      {data?.product.originalPrice ? (
-                        <span>{data?.product.originalPrice + "৳"} </span>
+                      {discountPrice ? (
+                        <span>{originalPrice + "৳"} </span>
                       ) : null}
                     </h3>
-                    {/* <div className="text-sm  text-blue-950 pl-4">
-                      ({percentageDiscount.toFixed(0)}%)
-                    </div> */}
-                    {/* <h3 className="pl-3 mt-[-4px] "> {data?.originalPrice? ( "("+discountPercentage+"% )") :null }</h3> */}
                   </div>
                   <hr />
-                  <div className="py-2 flex items-center">
+                  <div className="pt-3  pb-2 flex items-center">
                     <h1 className="font-medium text-sm md:text-[17px]">
-                      {data?.product.color?.length > 0 ? "Color :" : ""}{" "}
+                      {color?.length > 0 ? "Color :" : ""}{" "}
                     </h1>
-                    {data?.product.color ? (
+                    {color ? (
                       <div className="flex">
-                        {data?.product.color.map((color, index) => {
+                        {color.map((color, index) => {
                           // Change 'i' to 'color' here
                           return (
                             <span
                               key={index}
                               className={`${
                                 selectedColor.index === index
-                                  ? "border border-red-400"
+                                  ? " border-red-400 border-[2px]  rounded-sm"
                                   : null
                               } cursor-pointer p-[3px] mx-2`}
                             >
@@ -237,17 +209,17 @@ const ProductDetails = ({ data }) => {
                   </div>
                   <div className="py-2 flex items-center">
                     <h1 className="font-medium text-sm md:text-[17px]">
-                      {data?.product.size?.length > 0 ? "Size :" : ""}{" "}
+                      {size?.length > 0 ? "Size :" : ""}{" "}
                     </h1>
-                    {data?.product.size ? (
+                    {size ? (
                       <h1 className="flex">
-                        {data?.product.size.map((size, index) => {
+                        {size.map((size, index) => {
                           return (
                             <span
                               key={index}
                               className={`${
                                 selectedSize.index === index
-                                  ? "border border-red-400"
+                                  ? " border-red-400 border-[2px]  rounded-sm"
                                   : null
                               } cursor-pointer px-[2px] mx-2`}
                             >
@@ -284,7 +256,7 @@ const ProductDetails = ({ data }) => {
                         <HiOutlineMinus size={24} color="#fff" />
                       </div>
                     </div>
-                    <div>
+                    <div onClick={handleClick}>
                       {click ? (
                         <AiFillHeart
                           size={30}
@@ -296,7 +268,6 @@ const ProductDetails = ({ data }) => {
                         <AiOutlineHeart
                           size={30}
                           className="cursor-pointer"
-                          // onClick={() => addToWishlistHandler(data?)}
                           color={click ? "red" : "#333"}
                           title="Add to wishlist"
                         />
@@ -331,60 +302,7 @@ const ProductDetails = ({ data }) => {
                   {/* -----------------------------------shop name------ */}
                 </div>
                 {/* ------------------------------------------- shop adress part------------------------           */}
-                <div className="hidden lg:block lg:w-[25%] border float-left  shadow-md px-4">
-                  <div className="flex justify-between pt-8  text-base ">
-                    <div className="text-gray-400">
-                      <p> Shop Information</p>
-                    </div>
-
-                    <IoLocation size={20} className="text-gray-400 " />
-                  </div>
-
-                  <div className="block py-4 text-[15px] text-gray-700 ">
-                    <h1 className="text-[#007185]"> {data?.seller?.name} </h1>
-                    {/* <h1 className="">{data?.seller?.address}</h1> */}
-                  </div>
-                  <hr />
-
-                  <div className="flex justify-between pt-8  text-base ">
-                    <div className="text-lg text-gray-500">
-                      <p> service</p>
-                    </div>
-
-                    <GrServices size={15} className="text-gray-400" />
-                  </div>
-                  <div className="flex flex-col pb-5">
-                    <div className="pt-2 pl-3 text-[18px]">
-                      <h2>7 days Returns</h2>
-                      <p className="text-gray-400 text-sm">
-                        {" "}
-                        change mind not allow
-                      </p>
-                    </div>
-                    <div className="pl-3 text-lg pt-2">
-                      <h3>Warranty not available</h3>
-                    </div>
-                  </div>
-                  <hr />
-                  <div className="py-5">
-                    <h2> Cash on Delivery Available</h2>
-                  </div>
-                  <hr />
-                  <div className="flex justify-around items-center py-4">
-                    <div>
-                      <p className="text-gray-400">Ship on Time</p>
-                      <h1 className=" text-bold text-xl pt-4 text-center">
-                        90%
-                      </h1>
-                    </div>
-                    <div>
-                      <p className="text-gray-400">Chat Response</p>
-                      <h1 className=" text-bold text-xl pt-4 text-center">
-                        100%
-                      </h1>
-                    </div>
-                  </div>
-                </div>
+                <ProductSideInfo seller={data.seller} />
               </div>
               {/* ----------------------------------- shop name---------------------- */}
             </div>
@@ -398,6 +316,7 @@ const ProductDetails = ({ data }) => {
       </div>
 
       {/* small sceen product details page */}
+
       <div className="fixed bottom-0 left-0 w-full md:hidden bg-[#050320] h-[48px] mx-auto z-50 ">
         <div className="flex">
           <div className="grow rounded-tr-[30px] ">

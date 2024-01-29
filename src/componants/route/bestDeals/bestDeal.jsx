@@ -30,9 +30,9 @@ function BestDeals({ children }) {
   };
 
   return (
-    <div>
+    <div className="mb-8">
       <div
-        className={`w-11/12 mx-auto  my-3 rounded-sm bg-white h-[390px] py-[10px] px-[20px] relative group overflow-hidden `}
+        className={`w-11/12 mx-auto  my-3 rounded-sm bg-white 600px:h-[388px]    py-[10px] px-[20px] relative group overflow-hidden `}
       >
         <div>
           <div className="flex pb-2">
@@ -45,13 +45,13 @@ function BestDeals({ children }) {
           </div>
           <button
             onClick={btnprev}
-            className="  bg-[#FFFFFF] border py-6 px-2 text-[30px] absolute top-[34%] left-0 shadow-2xl hidden 600px:group-hover:block transition duration-1000 "
+            className="  bg-[#FFFFFF] border py-6 px-2 text-[30px] absolute top-[34%] left-0 shadow-2xl hidden 600px:group-hover:block transition duration-1000 z-50 "
           >
             <MdOutlineKeyboardArrowLeft />
           </button>
           <button
             onClick={btnnext}
-            className="bg-[#FFFFFF] border py-6 px-2 text-[30px] absolute top-[34%] right-0 shadow-2xl hidden 600px:group-hover:block transition duration-1000 "
+            className="bg-[#FFFFFF] border py-6 px-2 text-[30px] absolute top-[34%] right-0 shadow-2xl hidden 600px:group-hover:block transition duration-1000 z-50"
           >
             <MdOutlineKeyboardArrowRight />
           </button>
@@ -62,7 +62,7 @@ function BestDeals({ children }) {
             {children}
           </div>
 
-          <div className="block 600px:hidden text-[13px] pl-2 pt-2 sm:text-[14px] sm:pl-6   hover:underline hover:text-red-500 cursor-pointer text-[#007185]">
+          <div className="block 600px:hidden text-[13px] pl-2 pt-2 sm:text-[15px] sm:pl-6   hover:underline hover:text-red-500 cursor-pointer text-[#007185]">
             <Link href={`/products?maxPrice=${500}`}>See more</Link>
           </div>
         </div>
