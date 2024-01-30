@@ -28,8 +28,8 @@ function ProductCard({ data, i }) {
             src={data.images[0].url}
             alt={data.name}
             className="h-[160px]  w-auto object-cover pb-1 m-auto rounded-md hover:rounded-none   mx-auto  transform hover:scale-105  transition duration-500 "
-            height={10000}
-            width={10000}
+            height={500}
+            width={500}
           />
         </Link>
 
