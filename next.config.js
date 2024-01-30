@@ -9,8 +9,4 @@ module.exports = {
       },
     ],
   },
-  env: {
-    metadataBase:
-      process.env.NEXT_PUBLIC_METADATA_BASE || "http://localhost:3000",
-  },
 };
