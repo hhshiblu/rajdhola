@@ -6,12 +6,10 @@ function DetailsImage({ images, setSelect, select }) {
     <div className="  w-[100%] md:w-[43%] lg:w-[32%] h-[44vh] md:h-[48vh] mx-auto">
       <div className=" md:h-[98%] h-[80%] w-auto mx-auto rounded-lg overflow-hidden">
         {images && images[select] && (
-          <Image
-            src={images[select].url.toLowerCase()}
+          <img
+            src={images[select].url}
             alt=""
             className=" overflow-hidden rounded-lg w-auto  m-auto h-[100%]"
-            height={1000}
-            width={1000}
           />
         )}
       </div>
