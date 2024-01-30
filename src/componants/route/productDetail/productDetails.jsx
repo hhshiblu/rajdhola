@@ -160,20 +160,26 @@ const ProductDetails = ({ data }) => {
                   </div>
                   <hr />
 
-                  <div className="flex pt-3 my-2">
-                    <h4
-                      className={`font-bold  text-[18px] text-[#333] font-Roboto`}
+                  <div className="flex pt-3 my-2 mt-[-2px]">
+                    <h5
+                      className={`font-bold  text-[18px] text-[#333] font-Roboto `}
                     >
                       {discountPrice ? discountPrice : originalPrice}
-                      <span className="font-medium pr-2"> ৳</span>{" "}
-                    </h4>
-                    <h3
-                      className={`font-[500] text-[16px]  mt-[-4px] line-through pl-5 flex`}
-                    >
-                      {discountPrice ? (
-                        <span>{originalPrice + "৳"} </span>
-                      ) : null}
-                    </h3>
+                      <span className="  font-medium"> ৳</span>
+                    </h5>
+                    {discountPrice && (
+                      <div className=" flex  ">
+                        <h5 className="pl-4 text-[12px] leading-[18px] text-[#565959] font-semibold ">
+                          {" "}
+                          Daily Price:{" "}
+                        </h5>
+                        <h4
+                          className={`pl-3  text-[16px] leading-[18px] font-medium text-[#303030] line-through`}
+                        >
+                          {originalPrice ? originalPrice + " ৳" : null}
+                        </h4>
+                      </div>
+                    )}
                   </div>
                   <hr />
                   <div className="pt-3  pb-2 flex items-center">

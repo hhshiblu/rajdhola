@@ -101,7 +101,7 @@ const Search = ({ user, categories }) => {
             <div className="hidden md:block text-white pl-20 my-auto h-[30px] cursor-pointer">
               <Link href="/">
                 <Image
-                  src="/logo/logo_title.svg"
+                  src="/rajdhola_title_logo_white.svg"
                   alt=""
                   className="h-full"
                   width={100}
@@ -309,9 +309,9 @@ const Search = ({ user, categories }) => {
                 >
                   <Link href="/" className=" cursor-pointer">
                     <Image
-                      src="/vercel.svg"
+                      src="/rd_icon_white.svg"
                       alt=""
-                      className="h-[35px] bg-white"
+                      className="h-[32px] "
                       width={30}
                       height={40}
                     />

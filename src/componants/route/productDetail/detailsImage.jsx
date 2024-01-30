@@ -3,8 +3,8 @@ import React from "react";
 
 function DetailsImage({ images, setSelect, select }) {
   return (
-    <div className="  w-[100%] md:w-[43%] lg:w-[32%] h-[44vh] md:h-[55] mx-auto">
-      <div className=" md:h-[88%] h-[80%] mx-auto rounded-lg overflow-hidden">
+    <div className="  w-[100%] md:w-[43%] lg:w-[32%] h-[44vh] md:h-[48vh] mx-auto">
+      <div className=" md:h-[98%] h-[80%] w-auto mx-auto rounded-lg overflow-hidden">
         {images && images[select] && (
           <Image
             src={images[select].url}

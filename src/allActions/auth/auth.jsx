@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import { uploadFileToS3 } from "@/libs/uploadimage";
 import connectToDB from "@/libs/connect";
 import { ObjectId } from "mongodb";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
 function generateOTP() {
   const otp = Math.floor(100000 + Math.random() * 900000);
@@ -360,5 +361,22 @@ export const resendCode = async (number) => {
     return {
       message: "server error",
     };
+  }
+};
+
+export const getUser = async () => {
+  try {
+    const session = await getServerSession(authOptions);
+    const db = await connectToDB();
+    const collection = db.collection("users");
+
+    const userInfo = await collection.findOne(
+      { _id: new ObjectId(session?.user?.sub) },
+      { projection: { password: 0, cpassword: 0 } }
+    );
+    const user = JSON.parse(JSON.stringify(userInfo));
+    return user;
+  } catch (error) {
+    return { error: error.message };
   }
 };

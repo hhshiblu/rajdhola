@@ -9,6 +9,7 @@ import ToyProducts from "@/componants/route/ToysProducts/toyProducts";
 import SsrToysProducts from "@/componants/route/ToysProducts/ssrToyProduct";
 import FeaturedProduct from "@/componants/route/featuredProduct/featuredProduct";
 import HomeHero from "@/componants/route/homeHero/HomeHero";
+import Footer from "@/componants/layout/footer";
 
 export const dynamic = "force-dynamic";
 export default function Home() {
@@ -33,6 +34,8 @@ export default function Home() {
         </Suspense>
       </ToyProducts>
       <FeaturedProduct />
+      <br />
+      <Footer />
     </main>
   );
 }

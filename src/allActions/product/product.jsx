@@ -53,9 +53,11 @@ export const getproduct = async (id) => {
       .collection("seller")
       .findOne({ sellerId: productobject.sellerId });
     const product = JSON.parse(JSON.stringify(productobject));
+    const sellerinfo = JSON.parse(JSON.stringify(seller));
+
     return {
       product,
-      seller,
+      sellerinfo,
     };
   } catch (error) {
     return error.message;
