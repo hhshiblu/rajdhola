@@ -11,8 +11,8 @@ function ProductCardAMin({ p }) {
             src={p.images[0].url}
             alt={p.name}
             className="h-[100%] w-auto rounded-md hover:rounded-none overflow-hidden  transform hover:scale-95  transition duration-500    object-cover mx-auto   "
-            height={1000}
-            width={1000}
+            height={500}
+            width={500}
           />
         </div>
       </Link>

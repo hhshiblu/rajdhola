@@ -24,8 +24,8 @@ function ProductImageCardMin({ p }) {
             src={p.images[0].url}
             alt={p.name}
             className="h-[100%] w-auto rounded-md hover:rounded-none  transform hover:scale-105   transition duration-500    object-cover mx-auto   "
-            height={10000}
-            width={10000}
+            height={500}
+            width={500}
           />
         </div>
       </Link>

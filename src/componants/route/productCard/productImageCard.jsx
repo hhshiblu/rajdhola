@@ -11,8 +11,8 @@ function ProductImageCard({ p }) {
             src={p.images[0].url}
             alt={p.name}
             className="h-[100%] w-auto rounded-md hover:rounded-none  object-cover mx-auto   "
-            height={10000}
-            width={10000}
+            height={500}
+            width={500}
             // style={{ objectFit: "contain" }}
           />
         </div>
