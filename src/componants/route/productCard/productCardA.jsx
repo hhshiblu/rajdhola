@@ -13,8 +13,8 @@ function ProductCardA({ p }) {
                 src={p.images[0].url}
                 alt={p.name}
                 className="h-[100%] w-auto rounded-md hover:rounded-none  object-cover mx-auto transform hover:scale-105   transition duration-500    "
-                height={100}
-                width={100}
+                height={1000}
+                width={1000}
               />
             </div>
           </Link>
