@@ -1,10 +1,10 @@
-"use client";
+// "use client";
 import { createSlice } from "@reduxjs/toolkit";
-
+import secureLocalStorage from "react-secure-storage";
 // Define an initial cart state
 const initialCart =
-  typeof localStorage !== "undefined"
-    ? JSON.parse(localStorage.getItem("cartItems")) || []
+  typeof secureLocalStorage !== "undefined"
+    ? JSON.parse(secureLocalStorage.getItem("c")) || []
     : [];
 
 const initialState = {
@@ -36,12 +36,14 @@ const CartSlice = createSlice({
       }
     },
     removeFromCart: (state, action) => {
+      const productIdToRemove = action.payload;
       state.cart = state.cart.filter(
-        (item) => item.productId !== action.payload
+        (item) => item.productId !== productIdToRemove
       );
     },
     updateQuantity: (state, action) => {
       const { productId, newQuantity } = action.payload;
+
       const itemToUpdate = state.cart.find((i) => i.productId === productId);
       if (itemToUpdate) {
         itemToUpdate.quantity = newQuantity;

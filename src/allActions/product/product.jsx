@@ -33,13 +33,31 @@ export const getqueryProduct = async () => {
       .find({
         $or: [{ discountPrice: { $lt: 500 } }, { originalPrice: { $lt: 500 } }],
       })
-      .sort({ sold_out: 1 })
+      .sort({ sold_out: -1 })
       .limit(25)
       .toArray();
     const product = JSON.parse(JSON.stringify(Less500Product));
     return product;
   } catch (error) {
     console.log(error);
+  }
+};
+export const topSelling = async () => {
+  try {
+    const db = await connectToDB();
+
+    const Less500Product = await db
+      .collection("products")
+      .find({})
+      .sort({ sold_out: -1 })
+      .limit(25)
+      .toArray();
+    const product = JSON.parse(JSON.stringify(Less500Product));
+    return product;
+  } catch (error) {
+    return {
+      error: error.message,
+    };
   }
 };
 export const getproduct = async (id) => {
@@ -188,7 +206,7 @@ export const getbestElectronic = async () => {
           { category: "electronics" },
         ],
       })
-      .sort({ sold_out: 1 })
+      .sort({ sold_out: -1 })
       .limit(25)
       .toArray();
     const products = JSON.parse(JSON.stringify(underProducts));
@@ -210,7 +228,7 @@ export const getToyProducts = async () => {
           { category: "Toys" },
         ],
       })
-      .sort({ sold_out: 1 })
+      .sort({ sold_out: -1 })
       .limit(25)
       .toArray();
     const products = JSON.parse(JSON.stringify(underProducts));

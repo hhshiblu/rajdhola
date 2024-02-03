@@ -10,12 +10,7 @@ async function Page() {
 
   return (
     <div>
-      <div>
-        <Header />
-      </div>
-      <br />
-      <br />
-      <CheckOut user={session.user} />
+      <CheckOut user={session?.user} />
     </div>
   );
 }

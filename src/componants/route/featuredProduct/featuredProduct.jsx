@@ -56,7 +56,7 @@ function FeaturedProduct() {
 
   return (
     <>
-      <section className={`${styles.section} py-6 `}>
+      <section className={`600px:w-11/12 w-[98%] mx-auto py-6 `}>
         <div
           className={`text-[16px] sm:text-[18px] md:text-[20px] font-semibold text-slate-600 pb-4 pl-2`}
         >

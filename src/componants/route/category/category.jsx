@@ -11,11 +11,11 @@ async function Cetagory() {
       {/* catagory */}
 
       <div
-        className={`${styles.section} bg-white px-3  rounded-lg mb-12`}
+        className={`600px:w-11/12 w-[98%] mx-auto bg-white px-3  rounded-lg mb-12`}
         id="cetagoris"
       >
         <div
-          className={`text-[16px] pt-3 pl-4 sm:text-[18px] md:text-[20px] font-semibold text-slate-600`}
+          className={`text-[16px] pt-3 pl-4 sm:text-[18px] md:text-[20px] font-semibold text-slate-600 mx-auto`}
         >
           <h1>Categoris</h1>
         </div>
@@ -25,15 +25,17 @@ async function Cetagory() {
               return (
                 <div
                   key={index}
-                  className="w-full overflow-hidden hover:shadow-blue-100  bg-gray-100 rounded-md  cursor-pointer  flex items-center flex-col justify-between"
+                  className="w-full overflow-hidden hover:shadow-blue-100  bg-gray-50 rounded-md  cursor-pointer  flex items-center flex-col justify-between m-auto"
                 >
                   <Link href={`/products/search?${i.name}`}>
                     <Image
-                      src=""
+                      src={i?.image?.url}
                       alt={i.title}
-                      className="w-[70px] h-[70px] rounded-full object-cover mt-2 transform hover:scale-110 transition duration-300"
+                      className="w-[70px] h-[70px] rounded-full object-cover mt-2 transform hover:scale-110 transition duration-300 mx-auto"
+                      height={500}
+                      width={500}
                     />
-                    <h5 className=" text-sm px-2 mb-2 ">{i.name}</h5>
+                    <h5 className=" text-sm px-2 mb-2 text-center">{i.name}</h5>
                   </Link>
                 </div>
               );
@@ -46,15 +48,17 @@ async function Cetagory() {
               return (
                 <div
                   key={index}
-                  className="w-full overflow-hidden hover:shadow-blue-100  bg-gray-100 rounded-md  cursor-pointer  flex items-center flex-col justify-between"
+                  className="w-full overflow-hidden hover:shadow-blue-100  bg-gray-50 rounded-md  cursor-pointer  flex items-center flex-col justify-between"
                 >
                   <Link href={`/products/search?${i.name}`}>
                     <Image
-                      src=""
+                      src={i?.image?.url}
                       alt={i.title}
-                      className="w-[70px] h-[70px] rounded-full object-cover mt-2 transform hover:scale-110 transition duration-300"
+                      className="w-[65px] h-[65px] rounded-full object-cover mt-2 transform hover:scale-110 transition duration-300 mx-auto"
                     />
-                    <h5 className=" text-sm px-2 mb-2 ">{i.name}</h5>
+                    <h5 className=" text-sm px-2 mb-2  text-center">
+                      {i.name}
+                    </h5>
                   </Link>
                 </div>
               );

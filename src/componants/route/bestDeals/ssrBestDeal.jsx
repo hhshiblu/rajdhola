@@ -17,7 +17,7 @@ async function SsrBestDeals() {
         ))}
       </div>
 
-      <div className="flex flex-wrap justify-center gap-3 600px:hidden">
+      <div className="flex flex-wrap justify-center gap-1 600px:hidden">
         {queryUnderProduct?.slice(0, 4)?.map((product, i) => (
           <Fragment key={i}>
             <ProductCardAMin p={product} />

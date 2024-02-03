@@ -1,12 +1,8 @@
-import Header from "@/componants/layout/header";
-import React from "react";
+import React, { Suspense } from "react";
+import Cartpage from "./cartpage";
 
 function page() {
-  return (
-    <div>
-      <Header />
-    </div>
-  );
+  return <Cartpage />;
 }
 
 export default page;

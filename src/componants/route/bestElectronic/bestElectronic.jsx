@@ -24,11 +24,11 @@ function BestElectronics({ children }) {
   return (
     <div className="my-8">
       <div
-        className={`w-11/12 mx-auto  my-3 rounded-sm bg-white  py-[10px]  px-[20px] relative group overflow-hidden `}
+        className={`600px:w-11/12 w-[98%] mx-auto  my-3 rounded-sm bg-white  py-[10px]  px-[4px] 600px:px-[20px] relative group overflow-hidden `}
       >
         <div>
           <div className="flex pb-2">
-            <h2 className="text-[16px]  sm:text-[18px] md:text-[20px] font-semibold text-slate-600">
+            <h2 className="text-[16px]  sm:text-[18px] pl-2 md:text-[20px] font-semibold text-slate-600">
               Deals Best Electronics
             </h2>
             <div className="hidden 600px:block text-[15px] pl-6 hover:underline hover:text-red-500 cursor-pointer text-[#007185]">

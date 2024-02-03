@@ -4,9 +4,9 @@ import React from "react";
 
 function ProductCardAMin({ p }) {
   return (
-    <div className="w-[45%]  overflow-hidden ">
+    <div className="w-[47%]  overflow-hidden ">
       <Link href={`${`/product/${p._id}`}  `}>
-        <div className=" mx-auto p-1  h-[140px]  overflow-hidden    rounded-md">
+        <div className=" mx-auto p-1  h-[135px] w-full  overflow-hidden    rounded-md">
           <Image
             src={p.images[0].url}
             alt={p.name}
@@ -39,22 +39,16 @@ function ProductCardAMin({ p }) {
           <span className="  font-medium"> ৳</span>
         </h5>
         {p?.discountPrice && (
-          <div className=" flex">
-            <h5 className="pl-2 text-[12px] leading-[18px] text-[#565959]  ">
-              {" "}
-              Daily Price:{" "}
-            </h5>
-            <h4
-              className={`pl-1 text-[12px] leading-[18px] text-[#565959] line-through`}
-            >
-              {p?.originalPrice ? p?.originalPrice + " ৳" : null}
-            </h4>
-          </div>
+          <h4
+            className={`pl-4 text-[12px] leading-[18px] text-[#565959] line-through`}
+          >
+            {p?.originalPrice ? p?.originalPrice + " ৳" : null}
+          </h4>
         )}
       </div>
       <Link href={"/product/" + p._id}>
-        <h5 className="font-[500] text-[12px] leading-[19px]  hover:text-red-500">
-          {p?.name.length > 20 ? p?.name.slice(0, 27) + "..." : p?.name}
+        <h5 className="font-[500] text-[12px] leading-[19px]  mt-[-2px] hover:text-red-500">
+          {p?.name.length > 20 ? p?.name.slice(0, 25) + "..." : p?.name}
         </h5>
       </Link>
     </div>

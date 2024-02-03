@@ -1,15 +1,16 @@
+import { topSelling } from "@/allActions/product/product";
+
 import { Fragment } from "react";
 import ProductCardA from "../productCard/productCardA";
 import ProductCardAMin from "../productCard/ProductCardAMin";
-import { getToyProducts } from "@/allActions/product/product";
-
-async function SsrToysProducts() {
-  const toyProducts = await getToyProducts();
+export const dynamic = "force-dynamic";
+async function SsrTopSell() {
+  const queryUnderProduct = await topSelling();
 
   return (
     <div>
       <div className=" hidden 600px:flex px-3 gap-[7px]  ">
-        {toyProducts.map((product, i) => (
+        {queryUnderProduct?.map((product, i) => (
           <Fragment key={i}>
             <ProductCardA p={product} />
           </Fragment>
@@ -17,7 +18,7 @@ async function SsrToysProducts() {
       </div>
 
       <div className="flex flex-wrap justify-center gap-1 600px:hidden">
-        {toyProducts.slice(0, 4).map((product, i) => (
+        {queryUnderProduct?.slice(0, 4)?.map((product, i) => (
           <Fragment key={i}>
             <ProductCardAMin p={product} />
           </Fragment>
@@ -27,4 +28,4 @@ async function SsrToysProducts() {
   );
 }
 
-export default SsrToysProducts;
+export default SsrTopSell;

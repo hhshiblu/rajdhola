@@ -14,7 +14,7 @@ import { footerProductLinks, footercompanyLinks } from "@/libs/data";
 function Footer() {
   return (
     <div className="bg-[#195851]  text-white pb-16 md:pb-0">
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:px-8 px-4 pt-8 pb-16 sm:text-center  items-center mx-auto">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:px-8 px-4 pt-8 pb-6 md sm:text-center  items-center mx-auto">
         <ul className="px-5 text-center sm:text-start flex sm:block  flex-col items-center mx-auto">
           <Image
             src="/rajdhola_title_logo_white.svg"
@@ -91,7 +91,7 @@ function Footer() {
         </ul>
       </div>
 
-      <div className="  flex items-center  justify-around md:pb-6 pb-3 flex-col sm:flex-row   gap-4 text-center pt-1 text-gray-400 text-sm ">
+      <div className="  flex items-center  justify-around md:pb-6 pb-3 flex-col sm:flex-row   gap-4 text-center  text-gray-400 text-sm ">
         <span>2024 Rajdhola team, all rights reserved</span>
         <span> Terms @ Privacy Policy</span>
       </div>

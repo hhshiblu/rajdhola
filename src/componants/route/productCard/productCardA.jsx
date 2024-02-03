@@ -48,7 +48,7 @@ function ProductCardA({ p }) {
             </h5>
             {p?.discountPrice && (
               <div className=" flex">
-                <h5 className="pl-2 text-[12px] leading-[18px] text-[#565959]  ">
+                <h5 className="pl-2   text-[12px] leading-[18px] text-[#565959]  ">
                   {" "}
                   Daily Price:{" "}
                 </h5>

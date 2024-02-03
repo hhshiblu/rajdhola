@@ -2,9 +2,14 @@
 import { Division } from "@/libs/data";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { HiPlus } from "react-icons/hi";
+import { useSelector } from "react-redux";
+import secureLocalStorage from "react-secure-storage";
+import CartData from "./route/checkout/checkoutProduct";
 
 const Checkout = ({ user }) => {
   const [name, setName] = useState("");
+  const { cart } = useSelector((state) => state.cart);
   const [number, setNumber] = useState("");
   const [division, setdivision] = useState("");
   const [district, setdistrict] = useState("");
@@ -13,8 +18,6 @@ const Checkout = ({ user }) => {
   const [zipCode, setZipCode] = useState(null);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(0);
 
-  const shipping = 3 * 74;
-  const totalProduct_price = localStorage.getItem("cartItems").redu;
   const create_order = async () => {
     try {
       const shippingAddress = {
@@ -25,18 +28,11 @@ const Checkout = ({ user }) => {
         zipCode: zipCode,
         division: Division[division]?.name,
       };
-      let userId = user._id;
+      let userId = user?._id;
       const paymentInfo = {
         status: "unpaid",
         info: "Cash on delivey",
       };
-
-      const cart = products.map((product) => ({
-        product: product.product._id,
-        quantity: product.quantity,
-        color: product.color,
-        size: product.size,
-      }));
 
       const orderData = {
         cart,
@@ -69,12 +65,12 @@ const Checkout = ({ user }) => {
     <div className="w-full flex flex-col items-center py-2">
       <div className="w-[90%] 1000px:w-[80%] block 800px:flex">
         <div className="w-full 800px:w-[65%]">
-          <div className="w-full 800px:w-[95%] bg-white rounded-lg p-3 pb-8 min-h-[319px] flex flex-col items-">
+          <div className="w-full 800px:w-[95%] bg-white rounded-lg p-3 pb-8  flex flex-col items-center">
             <h5 className="text-[16px] text-center font-[500] pb-2">
               Shipping Address
             </h5>
             <hr className="py-1" />
-            {user.addresses.length > 0 ? (
+            {user?.addresses.length > 0 ? (
               <div>
                 {" "}
                 <div className="flex justify-between md:justify-normal ">
@@ -84,16 +80,15 @@ const Checkout = ({ user }) => {
                   >
                     Choose your address
                   </h5>
-                  <h5
-                    className="!bg-[#00453e] p-1 text-sm text-white rounded-md  mt-1 cursor-pointer"
-                    // onClick={HandelNavigate}
-                  >
-                    {" "}
-                    Add address
-                  </h5>
+                  <Link href="/">
+                    <div className="flex gap-1">
+                      <HiPlus size={20} />
+                      <h5 className="text-sm cursor-pointer"> Add address</h5>
+                    </div>
+                  </Link>
                 </div>
                 {user &&
-                  user.addresses.map((item, index) => (
+                  user?.addresses.map((item, index) => (
                     <div className="w-full flex mt-1" key={index}>
                       <input
                         type="checkbox"
@@ -128,7 +123,7 @@ const Checkout = ({ user }) => {
                 </div>
               </div>
             ) : (
-              <div className="mt-[86px] flex justify-center text-sm cursor-pointer">
+              <div className=" flex justify-center text-sm cursor-pointer">
                 <Link href="/">
                   <div className="w-80 h-20 border-dashed border-2 border-gray-400 text-center flex justify-center items-center">
                     <h1> Add your address</h1>
@@ -139,88 +134,32 @@ const Checkout = ({ user }) => {
           </div>
         </div>
         <div className="w-full 800px:w-[35%] 800px:mt-0 mt-8">
-          <CartData
-            // handleSubmit={handleSubmit}
-            shipping={shipping}
-            // price={price}
-            // totalPrice={totalPrice}
-          />
+          <CartData />
         </div>
       </div>
 
       <br />
-      <div className="bg-white mt-5 800px:mt-6  w-[90%] 1000px:w-[80%]  p-4">
+      <div className="bg-white mt-5 800px:mt-6  w-[90%] 1000px:w-[80%]  p-4 ">
         <h1 className="text-[17px] pb-2 font-[500]">Payment Info</h1>
         <hr /> <hr />
-        <div className="flex flex-row pt-3">
+        <div className="flex flex-row pt-3 items-center">
           <input
             type="checkbox"
-            className="mr-3"
+            className="mr-3 w-[20px] h-[20px]"
             checked={true}
-            onChange={() => checkCustomRoutes()}
+            defaultChecked
+            readOnly
           />
           <h2>Cash on delivery</h2>
         </div>
       </div>
 
       <div
-        className={` !bg-[#D61355] !h-[40px] w-[150px] 800px:w-[280px] `}
+        className={` bg-[#195851] py-2   px-12 cursor-pointer mt-4 rounded-md`}
         onClick={create_order}
       >
-        <h5 className="text-white">Confirm Order</h5>
+        <h5 className="text-white text-centers">Confirm Order</h5>
       </div>
-    </div>
-  );
-};
-
-const CartData = ({
-  handleSubmit,
-  totalPrice,
-  shipping,
-  price,
-  couponCode,
-  setCouponCode,
-  discountPercentenge,
-}) => {
-  return (
-    <div className="w-full bg-[#fff] rounded-md p-4 ">
-      <div className="flex justify-between">
-        <h3 className="text-[15px] font-[400] text-[#000000a4] ">Subtotal:</h3>
-        <h5 className="text-[16px] font-[600]">৳ {price}</h5>
-      </div>
-      <br />
-      <div className="flex justify-between mt-[-4px]">
-        <h3 className="text-[15px] font-[400] text-[#000000a4]">Shipping:</h3>
-        <h5 className="text-[14px] font-[400]"> ৳ {shipping.toFixed(2)}</h5>
-      </div>
-      <br />
-      <div className="flex justify-between border-b mt-[-4px] pb-3">
-        <h3 className="text-[16px] font-[400] text-[#000000a4]">Discount:</h3>
-        <h5 className="text-[18px] font-[400]">
-          {/* - {discountPercentenge ? "৳" + discountPercentenge.toString() : null} */}
-          0.00
-        </h5>
-      </div>
-      <h5 className="text-[18px] font-[600] text-end pt-1">
-        ৳{/* {totalPrice} */}
-      </h5>
-      <br />
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          className={`w-full border p-1 rounded-[4px] text-[13px] 800px:text-[16px] h-[35px] pl-2`}
-          placeholder="Coupoun code"
-          value={couponCode}
-          onChange={(e) => setCouponCode(e.target.value)}
-          required
-        />
-        <input
-          className={`w-full h-[35px] m-auto border border-[#f63b60] text-center text-[#f63b60] rounded-[3px] mt-8 cursor-pointer`}
-          required
-          value="Apply code"
-          type="submit"
-        />
-      </form>
     </div>
   );
 };

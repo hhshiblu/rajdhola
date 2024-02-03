@@ -16,7 +16,7 @@ import { useRef } from "react";
 //   description: "Rajdhole e-commerce website",
 // };
 
-function BestDeals({ children }) {
+function TopSell({ children }) {
   const boxRef = useRef(null);
 
   const btnprev = () => {
@@ -36,8 +36,8 @@ function BestDeals({ children }) {
       >
         <div>
           <div className="flex pb-2">
-            <h2 className="text-[16px]  sm:text-[18px] md:text-[20px] font-semibold text-slate-600 px-[20px] ">
-              Deals Under 500 <span className=" font-medium">৳</span>
+            <h2 className="text-[16px] pb-3  sm:text-[18px] md:text-[20px] font-semibold text-slate-600 px-[20px] ">
+              Top selling products
             </h2>
             <div className="hidden 600px:block text-[15px] pl-6 hover:underline hover:text-red-500 cursor-pointer text-[#007185]">
               <Link href={`/products?maxPrice=${500}`}>See more</Link>
@@ -71,4 +71,4 @@ function BestDeals({ children }) {
   );
 }
 
-export default BestDeals;
+export default TopSell;
