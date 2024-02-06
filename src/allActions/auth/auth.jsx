@@ -117,7 +117,7 @@ export const createSeller = async (fromData) => {
     if (res.acknowledged == true) {
       const ActivationToken = createActivationToken(String(res.insertedId));
 
-      const activeUrl = `http://localhost:3000/create-seller/activation/${ActivationToken}`;
+      const activeUrl = `https://rajdhola.com/create-seller/activation/${ActivationToken}`;
 
       try {
         await sendMail({
