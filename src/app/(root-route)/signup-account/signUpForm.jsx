@@ -6,19 +6,11 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import secureLocalStorage from "react-secure-storage";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { ImCancelCircle } from "react-icons/im";
 import { toast } from "sonner";
-
-const formatTime = (seconds) => {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  const formattedTime = `${minutes}:${
-    remainingSeconds < 10 ? "0" : ""
-  }${remainingSeconds}`;
-  return formattedTime;
-};
+import CountDown from "@/componants/loader/hello";
 
 function SignUpForm({ searchParams }) {
   const otpuserNaame = searchParams.name;
@@ -30,35 +22,8 @@ function SignUpForm({ searchParams }) {
   const [password, setPassword] = useState("");
   const [showPassword1, setShowPassword1] = useState(false);
 
-  const [cooldown, setCooldown] = useState();
-  const [showResend, setShowResend] = useState(false);
-
-  // useEffect to initialize the timer on component mount
-  useEffect(() => {
-    const storedValue = secureLocalStorage.getItem("secure");
-    if (storedValue) {
-      startCooldown(parseInt(storedValue, 10));
-    }
-  }, []);
-
-  const decreaseInterval = (value) => {
-    if (value > 0) {
-      setTimeout(() => {
-        setCooldown(value - 1);
-        secureLocalStorage.setItem("secure", value - 1);
-        decreaseInterval(value - 1);
-      }, 1000);
-    } else {
-      setShowResend(true);
-    }
-  };
-
-  const startCooldown = (initialValue) => {
-    setCooldown(initialValue);
-    secureLocalStorage.setItem("secure", initialValue);
-
-    decreaseInterval(initialValue);
-  };
+  const storedData = secureLocalStorage.getItem("sp");
+  const limitTime = storedData ? storedData.time : 180;
 
   const handleOtpChange = (e) => {
     let newValue = e.target.value;
@@ -79,12 +44,12 @@ function SignUpForm({ searchParams }) {
         });
       }
       if (res.success == true) {
-        startCooldown(parseInt(res.time, 10));
-        secureLocalStorage.setItem("rajdhola.com", password);
+        secureLocalStorage.setItem("sp", { password, time: 180 });
+
         toast.success(res.message, {
           duration: 3000,
           cancel: {
-            label: <ImCancelCircle />,
+            label: "Cancel",
           },
         });
         router.push(
@@ -92,24 +57,24 @@ function SignUpForm({ searchParams }) {
         );
       }
     } catch (error) {
-      toast.error(error, {
+      toast.error(error.message || "An error occurred", {
         duration: 2000,
         cancel: {
-          label: <ImCancelCircle />,
+          label: "Cancel",
         },
       });
     }
   };
 
   const handelOtp = async () => {
-    const usePassword = secureLocalStorage.getItem("rajdhola.com");
+    const usePassword = secureLocalStorage.getItem("sp");
 
     try {
       const res = await verifyOtp(
         otp,
         otpuserNaame,
         otpUserNumber,
-        usePassword
+        usePassword.password
       );
       if (res.error) {
         toast.error(res.error, {
@@ -152,7 +117,7 @@ function SignUpForm({ searchParams }) {
       >
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-3" action={HandelSubmit}>
-            <div onClick={() => startCooldown(180)}>
+            <div>
               <label
                 htmlFor="phoneNumber"
                 className="block text-sm font-medium text-gray-700"
@@ -255,17 +220,10 @@ function SignUpForm({ searchParams }) {
               />
             </div>
             <div className="py-3 pl-20">
-              {cooldown ? (
-                <p>Resend OTP in {formatTime(cooldown)}</p>
+              {limitTime <= 0 ? (
+                <h2>Re-send</h2>
               ) : (
-                showResend && (
-                  <button
-                    onClick={handleResendClick}
-                    className="px-2 py-[2px] border text-black rounded-md focus:outline-none text-[14px]"
-                  >
-                    Resend OTP
-                  </button>
-                )
+                <CountDown limitTime={limitTime} />
               )}
             </div>
             <div>

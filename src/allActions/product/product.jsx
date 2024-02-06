@@ -173,24 +173,42 @@ export const getAllProducts = async (query) => {
   }
 };
 
-export const getAllproductsFeature = async (page) => {
+// export const getAllproductsFeature = async (page) => {
+//   try {
+//     const db = await connectToDB();
+//     const products = await db
+//       .collection("products")
+//       .find()
+//       .sort({ createdAt: -1 })
+//       .skip((page - 1) * 3)
+//       .limit(3)
+//       .toArray();
+
+//     return products.map((product, index) => (
+//       <Fragment key={product._id}>
+//         <ProductCard data={product} i={index} />
+//       </Fragment>
+//     ));
+//   } catch (e) {
+//     return e.message;
+//   }
+// };
+// product.js
+export const getAllproductsFeature = async (page, pageSize = 3) => {
   try {
     const db = await connectToDB();
     const products = await db
       .collection("products")
       .find()
       .sort({ createdAt: -1 })
-      .skip((page - 1) * 3)
-      .limit(3)
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
       .toArray();
-
-    return products.map((product, index) => (
-      <Fragment key={product._id}>
-        <ProductCard data={product} i={index} />
-      </Fragment>
-    ));
+    const product = JSON.parse(JSON.stringify(products));
+    return product;
   } catch (e) {
-    return e.message;
+    console.error("Error fetching products:", e.message);
+    throw e; // Rethrow the error to handle it in the calling code
   }
 };
 

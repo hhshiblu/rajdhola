@@ -9,6 +9,7 @@ import { uploadFileToS3 } from "@/libs/uploadimage";
 import connectToDB from "@/libs/connect";
 import { ObjectId } from "mongodb";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import { getServerSession } from "next-auth";
 
 function generateOTP() {
   const otp = Math.floor(100000 + Math.random() * 900000);
@@ -27,16 +28,30 @@ const createActivationToken = (sellerId) => {
 
 export const createSeller = async (fromData) => {
   const shopName = fromData.get("name");
+  const userName = fromData.get("userName");
   const email = fromData.get("email");
+  const address = JSON.parse(fromData.get("address"));
   const phoneNumber = fromData.get("phoneNumber");
-  const address = fromData.get("address");
   const category = fromData.get("category");
   const zipCode = fromData.get("zipCode");
   const password = fromData.get("password");
   const cpassword = fromData.get("cpassword");
   const image = fromData.get("file");
+  const phoneNumberRegex = /^(019|013|014|018|015|016|017)\d{8}$/;
+  if (!phoneNumberRegex.test(phoneNumber) || phoneNumber.length !== 11) {
+    return {
+      error: "Invalid phone number",
+    };
+  }
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  if (!emailRegex.test(email)) {
+    return {
+      error: "Invalid email address",
+    };
+  }
 
   if (
+    !userName ||
     !shopName ||
     !email ||
     !phoneNumber ||
@@ -77,8 +92,17 @@ export const createSeller = async (fromData) => {
     } catch (error) {
       return { error: "Something  wrong! Try Later" };
     }
-
+    console.log(
+      userName,
+      shopName,
+      email,
+      images,
+      address,
+      hashPassword,
+      phoneNumber
+    );
     const res = await db.collection("tempShops").insertOne({
+      userName,
       shopName,
       images,
       email,
@@ -109,7 +133,7 @@ export const createSeller = async (fromData) => {
       <body style="background-color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen-Sans,Ubuntu,Cantarell,&quot;Helvetica Neue&quot;,sans-serif">
         <table align="center" role="presentation" cellSpacing="0" cellPadding="0" border="0" width="100%" style="max-width:37.5em;margin:0 auto;padding:20px 0 48px">
           <tr style="width:100%">
-            <td><img alt="Koala" src="https://react-email-demo-ijnnx5hul-resend.vercel.app/static/koala-logo.png" width="170" height="50" style="display:block;outline:none;border:none;text-decoration:none;margin:0 auto" />
+            <td><img alt="rajdhola.com" src="https://firebasestorage.googleapis.com/v0/b/my-portfolio-d208f.appspot.com/o/rajdhola_white_logo.svg?alt=media&token=c72b4e45-54ea-410e-a9d1-167695190311" width="170" height="50" style="display:block;outline:none;border:none;text-decoration:none;margin:0 auto" />
               <p style="font-size:16px;line-height:26px;margin:16px 0">Hi ${shopName},</p>
               <p style="font-size:16px;line-height:26px;margin:16px 0">Welcome to Rajdhola, transform your sales journey! Discover leads, close deals, and become a vendor powerhouse. Click below to activate your account now..</p>
               <table style="text-align:center" align="center" border="0" cellPadding="0" cellSpacing="0" role="presentation" width="100%">
@@ -158,6 +182,7 @@ export async function activationSeller(token) {
       _id: new ObjectId(id.id),
     });
     const {
+      userName,
       shopName,
       email,
       phoneNumber,
@@ -173,6 +198,7 @@ export async function activationSeller(token) {
     });
     if (!sellerExit) {
       const res = db.collection("sellers").insertOne({
+        userName,
         shopName,
         images,
         email,
@@ -218,6 +244,9 @@ export async function activationSeller(token) {
 
 export const createUser = async (name, phoneNumber, password) => {
   try {
+    const db = await connectToDB();
+
+    //  const productobject = await db.collection("products");
     if (!name || !phoneNumber || !password) {
       return {
         error: "all fields are required",
@@ -234,11 +263,8 @@ export const createUser = async (name, phoneNumber, password) => {
         error: "Password must be 5 characters long",
       };
     }
-
-    const user = await prisma.users.findFirst({
-      where: {
-        phoneNumber: parseInt(phoneNumber, 10),
-      },
+    const user = await db.collection("users").findOne({
+      phoneNumber: parseInt(phoneNumber, 10),
     });
 
     if (user) {
@@ -249,36 +275,28 @@ export const createUser = async (name, phoneNumber, password) => {
       const ontimeOtp = generateOTP();
       const res = await sentOtp(phoneNumber, ontimeOtp);
       if (res.success == 1) {
-        const unverified = await prisma.unverifiedusers.findFirst({
-          where: {
-            phoneNumber: parseInt(phoneNumber, 10),
-          },
+        const unverified = await db.collection("unverifiedusers").findOne({
+          phoneNumber: parseInt(phoneNumber, 10),
         });
 
         if (!unverified) {
-          await prisma.unverifiedusers.create({
-            data: {
-              phoneNumber: parseInt(phoneNumber, 10),
-              otp: parseInt(ontimeOtp, 10),
-            },
-          });
-        } else {
-          await prisma.unverifiedusers.update({
-            where: {
-              id: unverified.id,
-            },
-            data: {
-              otp: parseInt(ontimeOtp, 10),
-            },
+          await db.collection("unverifiedusers").insertOne({
+            phoneNumber: parseInt(phoneNumber, 10),
+            otp: parseInt(ontimeOtp, 10),
           });
         }
+      } else {
+        const filter = { _id: new ObjectId(unverifiedId) };
+        const update = { $set: { otp: parseInt(ontimeOtp, 10) } };
+
+        await collection.updateOne(filter, update);
       }
-      return {
-        time: 180,
-        success: true,
-        message: "6 digits otp sent successfully",
-      };
     }
+    return {
+      time: 180,
+      success: true,
+      message: "6 digits otp sent successfully",
+    };
   } catch (error) {
     return {
       success: false,
@@ -289,6 +307,7 @@ export const createUser = async (name, phoneNumber, password) => {
 
 export const verifyOtp = async (givenOtp, name, phoneNumber, password) => {
   try {
+    const db = await connectToDB();
     if (!givenOtp) {
       return {
         error: "otp field required",
@@ -297,28 +316,24 @@ export const verifyOtp = async (givenOtp, name, phoneNumber, password) => {
 
     const hashPassword = await bcrypt.hash(password, 10);
     const giveotp = parseInt(givenOtp, 10);
-    const unverifieduser = await prisma.unverifiedusers.findFirst({
-      where: {
-        phoneNumber: parseInt(phoneNumber, 10),
-      },
+    const unverifieduser = await db.collection("unverifiedusers").findOne({
+      phoneNumber: parseInt(phoneNumber, 10),
     });
+
     if (giveotp !== unverifieduser.otp) {
       return { error: "Invalid OTP. Retry or get a new one." };
     } else {
-      await prisma.unverifiedusers.delete({
-        where: {
-          id: unverifieduser.id,
-        },
-      });
-      await prisma.users.create({
-        data: {
-          name: name,
-          phoneNumber: parseInt(phoneNumber, 10),
-          password: hashPassword,
-          createdAt: new Date(),
-          role: "user",
-          v: parseInt(0, 10),
-        },
+      await db
+        .collection("unverifiedusers")
+        .deleteOne({ _id: new ObjectId(unverifieduser._id) });
+
+      await db.collection("users").insertOne({
+        name: name,
+        phoneNumber: parseInt(phoneNumber, 10),
+        password: hashPassword,
+        createdAt: new Date(),
+        role: "user",
+        v: parseInt(0, 10),
       });
       return {
         success: true,
@@ -371,7 +386,7 @@ export const getUser = async () => {
     const collection = db.collection("users");
 
     const userInfo = await collection.findOne(
-      { _id: new ObjectId(session?.user?.sub) },
+      { _id: new ObjectId(session?.user?.id) },
       { projection: { password: 0, cpassword: 0 } }
     );
     const user = JSON.parse(JSON.stringify(userInfo));

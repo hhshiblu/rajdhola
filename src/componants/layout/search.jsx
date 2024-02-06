@@ -132,18 +132,20 @@ const Search = ({ user, categories }) => {
               <div className="flex items-center">
                 <div className="relative cursor-pointer mr-16">
                   <div className="text-white my-auto h-full">
-                    <Link
-                      href={`${user && user ? "/account/profile" : "/login"}`}
-                    >
-                      <p className="text-xs">Hello , </p>
+                    <Link href={`${user && user ? "/user-account" : "/login"}`}>
                       {user ? (
                         <div className="flex ">
                           <h1 className=" text-semibold text-[16px]  pl-4">
-                            {user.name}
+                            {user.name.slice(0, 7) + "..."}
                           </h1>
                         </div>
                       ) : (
-                        <h1 className="text-semibold text-sm pl-4">Sign in</h1>
+                        <>
+                          <p className="text-xs">Hello , </p>
+                          <h1 className="text-semibold text-sm pl-4">
+                            Sign in
+                          </h1>
+                        </>
                       )}
                     </Link>
                   </div>

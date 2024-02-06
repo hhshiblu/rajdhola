@@ -2,6 +2,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 import { compare } from "bcryptjs";
 import prisma from "../../../../../prisma/prisma";
+import connectToDB from "@/libs/connect";
 
 export const authOptions = {
   pages: {
@@ -11,21 +12,19 @@ export const authOptions = {
   callbacks: {
     async signIn({ user }) {
       try {
-        const findUser = await prisma.users.findFirst({
-          where: {
-            phoneNumber: parseInt(user.phoneNumber, 10),
-          },
+        const db = await connectToDB();
+
+        const findUser = await db.collection("users").findOne({
+          phoneNumber: parseInt(user.phoneNumber, 10),
         });
-        console.log(findUser);
+
         if (findUser) {
           return true;
         }
-        await prisma.users.create({
-          data: {
-            email: user.email,
-            name: user.name,
-            role: "user",
-          },
+        await db.collection("users").insertOne({
+          email: user.email,
+          name: user.name,
+          role: "user",
         });
 
         return true;
@@ -36,14 +35,13 @@ export const authOptions = {
 
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
+        token.id = user._id;
         token.name = user.name;
         token.email = user.email;
         token.avatar = user.avatar;
         token.addresses = user.addresses;
         token.phoneNumber = user.phoneNumber;
       }
-
       return token;
     },
 
@@ -71,19 +69,18 @@ export const authOptions = {
         },
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials, req) {
         const { phoneNumber, password } = credentials;
-        console.log(phoneNumber, password);
+
         if (!phoneNumber || !password) {
           return null;
         }
-
-        const user = await prisma.users.findFirst({
-          where: {
-            phoneNumber: parseInt(phoneNumber, 10),
-          },
+        const db = await connectToDB();
+        const user = await db.collection("users").findOne({
+          phoneNumber: parseInt(phoneNumber, 10),
         });
-        console.log(user);
+
         if (!user) {
           return null;
         }
@@ -91,7 +88,7 @@ export const authOptions = {
         if (!ispasswordOk) {
           return null;
         }
-        console.log(user);
+
         return user;
       },
     }),

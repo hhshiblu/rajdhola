@@ -2,6 +2,7 @@ import Link from "next/link.js";
 import "@/componants/animate.css";
 import SignUpForm from "./signUpForm";
 import Image from "next/image";
+import CountDown from "@/componants/loader/hello";
 
 function Page({ searchParams }) {
   return (
@@ -132,15 +133,15 @@ function Page({ searchParams }) {
           <div className="flex justify-center text-center">
             <Link href="/" className="text-center">
               <Image
-                src="/logo/logo_title.svg"
+                src="/rajdhola_title_logo.svg"
                 alt=""
                 className="h-full "
-                width={120}
+                width={160}
                 height={100}
               />
             </Link>
           </div>
-          <div className="text-red-700 flex justify-center">
+          <div className="text-[#195851] flex justify-center">
             <p> - - - - - - - - - - -</p>
           </div>
           <h2 className="mt-6 text-center text-xl font-semibold text-gray-900">
@@ -149,7 +150,7 @@ function Page({ searchParams }) {
               : "Create on your account"}
           </h2>
         </div>
-        <SignUpForm searchParams={searchParams} />{" "}
+        <SignUpForm searchParams={searchParams} />
         <div
           className="flex justify-center text-center font-semibold pt-8 text-gray-600 gap-4 w-full mx-auto text-[14px]"
           style={{ zIndex: "inherit" }}

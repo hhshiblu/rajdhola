@@ -6,10 +6,9 @@ function layout({ children }) {
   return (
     <div>
       <Header />
-      <br />
-      <br />
+
       {children}
-      <br />
+
       <Footer />
     </div>
   );

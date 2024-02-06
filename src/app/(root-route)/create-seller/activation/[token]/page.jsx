@@ -42,9 +42,8 @@ function Page({ params }) {
   };
 
   useEffect(() => {
-    console.log("useEffect triggered");
     handleActivation();
-  }, []);
+  });
 
   return (
     <div className="flex justify-center items-center bg-slate-200">
@@ -73,13 +72,13 @@ function Page({ params }) {
             <p className="text-[#1A5D1A] text-[19px] text-center">
               Keep an eye on your email for confirmation and exciting updates!
             </p>
-            <h5 className="text-[#1A5D1A] text-center text-sm">
+            <h5 className="text-[#1A5D1A] text-center text-sm pt-2">
               {" "}
               Click here to go home.
             </h5>
             <Link
-              href="http://localhost:3000"
-              className="bg-[#2ABBA7] border rounded-md px-2 py-1 text-white font-semibold"
+              href="https://rajdhola.com"
+              className="bg-[#2ABBA7] border rounded-md px-2 py-1 pt-4 text-white font-semibold"
             >
               Click me
             </Link>

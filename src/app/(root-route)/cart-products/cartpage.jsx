@@ -1,8 +1,8 @@
 "use client";
-import React, { Suspense, useEffect, useState, lazy } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getproduct } from "@/allActions/product/product";
-const CartProduct = lazy(() => import("./singleCartProduct"));
+
 import {
   modifyProductQuantity,
   removeProductFromCart,
@@ -12,6 +12,7 @@ import CartpageLoading from "@/componants/loader/cartpageLoading";
 import DotsLoading from "@/componants/loader/dotsLoading";
 import Image from "next/image";
 import secureLocalStorage from "react-secure-storage";
+import CartProduct from "./singleCartProduct";
 
 function Cartpage() {
   const dispatch = useDispatch();
@@ -85,14 +86,16 @@ function Cartpage() {
     document.getElementById("cart_" + data).style.display = "none";
   };
   const shipping = cart.length > 0 && cart.length * 70;
-  secureLocalStorage.setItem(
-    "p",
-    JSON.stringify({ price: totalPrice, shipping: shipping })
-  );
 
   return (
     <div>
       <div className="h-full md:min-h-[cale(100vh_-_400px)] min-h-[cale(100vh_-_250px) m-auto mb-4]   my-5 mb-8">
+        {cart &&
+          cart?.length > 0 &&
+          secureLocalStorage.setItem(
+            "p",
+            JSON.stringify({ price: totalPrice, shipping: shipping })
+          )}
         {cart && cart?.length === 0 ? (
           <div className="flex flex-col 600px:w-11/12 w-[98%] bg-white drop-shadow-lg items-center justify-center rounded-md border   border-dashed  min-h-[400px] mx-auto ">
             <Image
@@ -158,6 +161,7 @@ function Cartpage() {
                       )}
                     </h3>
                   </div>
+
                   <div className="flex justify-between mt-[-4px]">
                     <h3 className="text-[15px] font-[400] text-[#000000a4]">
                       Shipping :
@@ -183,7 +187,7 @@ function Cartpage() {
                     </h5>
                   </div>
 
-                  <Link href="/checkout-order">
+                  <Link href="/confirm-orders">
                     <h2 className="bg-[#195851] py-[6px] px-2 text-center text-white font-medium rounded-md ">
                       {" "}
                       Checkout

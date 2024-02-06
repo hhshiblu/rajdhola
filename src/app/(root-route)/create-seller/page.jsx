@@ -132,13 +132,15 @@ const ShopCreate = ({ searchParams }) => {
           style={{ zIndex: "1" }}
           className=" sm:mx-auto sm:w-full sm:max-w-md pl-32 pb-1"
         >
-          <Image
-            src={"/rajdhola_white_logo.svg"}
-            alt="rajdhola_logo"
-            className="text-center flex justify-center items-center w-[170px]"
-            width={100}
-            height={100}
-          />
+          <Link href="/">
+            <Image
+              src={"/rajdhola_title_logo.svg"}
+              alt="rajdhola_logo"
+              className="text-center flex justify-center items-center w-[170px]"
+              width={100}
+              height={100}
+            />
+          </Link>
         </div>
 
         <div
@@ -147,13 +149,13 @@ const ShopCreate = ({ searchParams }) => {
         >
           <hr />
           <hr />
-          <div className="w-full border border-dashed  bg-[#e29584]"></div>
+          <div className="w-full border border-dashed  bg-[#c0bebed1]"></div>
           <h2 className="pt-2 text-center text-2xl font-semibold text-gray-900">
             Register as a seller
           </h2>
         </div>
         <div
-          className="mt-8 sm:mx-auto sm:w-full  sm:max-w-[40rem] px-4"
+          className="mt-8 w-full md:w-[65%] mx-auto  px-4"
           style={{ zIndex: "1" }}
         >
           {searchParams.success ? (

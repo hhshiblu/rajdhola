@@ -5,17 +5,16 @@ export async function middleware(request) {
   const { pathname } = request.nextUrl;
 
   const token = await getToken({ req: request });
-  const userProtectedRoutes = [
-    "/add-to-cart",
-
-    // "/admin-dashboard/category",
-  ];
+  const userProtectedRoutes = ["/cart-products", "/checkout-order"];
   if (!token && userProtectedRoutes.includes(pathname)) {
     return NextResponse.redirect(
-      new URL("/?error=Please login first to access this route", request.url)
+      new URL(
+        "/login?error=Please login first to access this route",
+        request.url
+      )
     );
   }
-  const tokengivenRoutes = ["/login"];
+  const tokengivenRoutes = ["/login", "/signup-account"];
   if (token && tokengivenRoutes.includes(pathname)) {
     return NextResponse.redirect(new URL("/", request.url));
   }
