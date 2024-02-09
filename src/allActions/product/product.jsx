@@ -1,8 +1,6 @@
 "use server";
 import { queryProducts } from "@/libs/QueryProducts";
-import prisma from "../../../prisma/prisma";
-import { Fragment } from "react";
-import ProductCard from "@/componants/route/productCard/productCard";
+
 import connectToDB from "@/libs/connect";
 import { ObjectId } from "mongodb";
 
@@ -125,53 +123,53 @@ export const getMoreProduct = async (id) => {
   }
 };
 
-export const getAllProducts = async (query) => {
-  try {
-    const query = {};
-    // for (const [key, value] of searchParams.entries()) {
-    //   query[key] = value;
-    // }
+// export const getAllProducts = async (query) => {
+//   try {
+//     const query = {};
+//     // for (const [key, value] of searchParams.entries()) {
+//     //   query[key] = value;
+//     // }
 
-    const pageNumber = parseInt(query.pageNumber) || 1;
-    const parPage = parseInt(query.parPage) || 25;
+//     const pageNumber = parseInt(query.pageNumber) || 1;
+//     const parPage = parseInt(query.parPage) || 25;
 
-    const products = await prisma.products.findMany({
-      take: parPage,
-      skip: (pageNumber - 1) * parPage,
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+//     const products = await prisma.products.findMany({
+//       take: parPage,
+//       skip: (pageNumber - 1) * parPage,
+//       orderBy: {
+//         createdAt: "desc",
+//       },
+//     });
 
-    const result = new queryProducts(products, query)
-      .categoryQuery()
-      .subCategoryQuery()
-      .ratingQuery()
-      .priceQuery()
-      .highPriceQuery()
-      .searchQuery()
-      // .sortByPrice()
-      .skip()
-      .limit()
-      .getProducts();
-    const totalproduct = new queryProducts(products, query)
-      .categoryQuery()
-      .subCategoryQuery()
-      .ratingQuery()
-      .priceQuery()
-      .highPriceQuery()
-      .searchQuery()
-      // .sortByPrice()
-      .countProducts();
+//     const result = new queryProducts(products, query)
+//       .categoryQuery()
+//       .subCategoryQuery()
+//       .ratingQuery()
+//       .priceQuery()
+//       .highPriceQuery()
+//       .searchQuery()
+//       // .sortByPrice()
+//       .skip()
+//       .limit()
+//       .getProducts();
+//     const totalproduct = new queryProducts(products, query)
+//       .categoryQuery()
+//       .subCategoryQuery()
+//       .ratingQuery()
+//       .priceQuery()
+//       .highPriceQuery()
+//       .searchQuery()
+//       // .sortByPrice()
+//       .countProducts();
 
-    return {
-      result,
-      totalproduct,
-    };
-  } catch (e) {
-    return e.message;
-  }
-};
+//     return {
+//       result,
+//       totalproduct,
+//     };
+//   } catch (e) {
+//     return e.message;
+//   }
+// };
 
 // export const getAllproductsFeature = async (page) => {
 //   try {

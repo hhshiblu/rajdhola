@@ -1,7 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import { compare } from "bcryptjs";
-import prisma from "../../../../../prisma/prisma";
 import connectToDB from "@/libs/connect";
 
 export const authOptions = {

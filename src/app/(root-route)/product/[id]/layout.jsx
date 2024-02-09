@@ -1,6 +1,5 @@
 import Header from "@/componants/layout/header";
 import React from "react";
-import prisma from "../../../../../prisma/prisma";
 import connectToDB from "@/libs/connect";
 import { ObjectId } from "mongodb";
 

@@ -1,6 +1,5 @@
 "use server";
 import jwt from "jsonwebtoken";
-import prisma from "../../../prisma/prisma";
 import bcrypt from "bcryptjs";
 import { sendMail } from "@/libs/sendMail";
 import { sentOtp } from "@/libs/sentOtp";
@@ -10,6 +9,7 @@ import connectToDB from "@/libs/connect";
 import { ObjectId } from "mongodb";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
+import { revalidatePath } from "next/cache";
 
 function generateOTP() {
   const otp = Math.floor(100000 + Math.random() * 900000);
@@ -92,15 +92,7 @@ export const createSeller = async (fromData) => {
     } catch (error) {
       return { error: "Something  wrong! Try Later" };
     }
-    console.log(
-      userName,
-      shopName,
-      email,
-      images,
-      address,
-      hashPassword,
-      phoneNumber
-    );
+
     const res = await db.collection("tempShops").insertOne({
       userName,
       shopName,
@@ -274,6 +266,7 @@ export const createUser = async (name, phoneNumber, password) => {
     } else {
       const ontimeOtp = generateOTP();
       const res = await sentOtp(phoneNumber, ontimeOtp);
+
       if (res.success == 1) {
         const unverified = await db.collection("unverifiedusers").findOne({
           phoneNumber: parseInt(phoneNumber, 10),
@@ -284,19 +277,18 @@ export const createUser = async (name, phoneNumber, password) => {
             phoneNumber: parseInt(phoneNumber, 10),
             otp: parseInt(ontimeOtp, 10),
           });
-        }
-      } else {
-        const filter = { _id: new ObjectId(unverifiedId) };
-        const update = { $set: { otp: parseInt(ontimeOtp, 10) } };
+        } else {
+          const filter = { _id: new ObjectId(unverified._id) };
+          const update = { $set: { otp: parseInt(ontimeOtp, 10) } };
 
-        await collection.updateOne(filter, update);
+          await db.collection("unverifiedusers").updateOne(filter, update);
+        }
+        return {
+          success: true,
+          message: "6 digits otp sent successfully",
+        };
       }
     }
-    return {
-      time: 180,
-      success: true,
-      message: "6 digits otp sent successfully",
-    };
   } catch (error) {
     return {
       success: false,
@@ -323,18 +315,19 @@ export const verifyOtp = async (givenOtp, name, phoneNumber, password) => {
     if (giveotp !== unverifieduser.otp) {
       return { error: "Invalid OTP. Retry or get a new one." };
     } else {
-      await db
-        .collection("unverifiedusers")
-        .deleteOne({ _id: new ObjectId(unverifieduser._id) });
-
       await db.collection("users").insertOne({
         name: name,
         phoneNumber: parseInt(phoneNumber, 10),
         password: hashPassword,
-        createdAt: new Date(),
+        address: [],
         role: "user",
+        createdAt: new Date(),
         v: parseInt(0, 10),
       });
+      await db
+        .collection("unverifiedusers")
+        .deleteOne({ _id: new ObjectId(unverifieduser._id) });
+
       return {
         success: true,
         message: "user verified successfully",
@@ -347,37 +340,37 @@ export const verifyOtp = async (givenOtp, name, phoneNumber, password) => {
   }
 };
 
-export const resendCode = async (number) => {
-  try {
-    const unverifieduser = await prisma.unverifiedusers.findFirst({
-      where: {
-        phoneNumber: parseInt(number, 10),
-      },
-    });
-    const ontimeOtp = generateOTP();
-    const res = await sentOtp(number, ontimeOtp);
-    if (res.success == 1) {
-      await prisma.unverifiedusers.update({
-        where: {
-          id: unverifieduser.id,
-        },
-        data: {
-          otp: parseInt(ontimeOtp, 10),
-        },
-      });
+// export const resendCode = async (number) => {
+//   try {
+//     const unverifieduser = await prisma.unverifiedusers.findFirst({
+//       where: {
+//         phoneNumber: parseInt(number, 10),
+//       },
+//     });
+//     const ontimeOtp = generateOTP();
+//     const res = await sentOtp(number, ontimeOtp);
+//     if (res.success == 1) {
+//       await prisma.unverifiedusers.update({
+//         where: {
+//           id: unverifieduser.id,
+//         },
+//         data: {
+//           otp: parseInt(ontimeOtp, 10),
+//         },
+//       });
 
-      return {
-        time: 180,
-        success: true,
-        message: "onetime otp sent successfully",
-      };
-    }
-  } catch (error) {
-    return {
-      message: "server error",
-    };
-  }
-};
+//       return {
+//         time: 180,
+//         success: true,
+//         message: "onetime otp sent successfully",
+//       };
+//     }
+//   } catch (error) {
+//     return {
+//       message: "server error",
+//     };
+//   }
+// };
 
 export const getUser = async () => {
   try {
@@ -393,5 +386,88 @@ export const getUser = async () => {
     return user;
   } catch (error) {
     return { error: error.message };
+  }
+};
+
+export const addAddress = async (fromData) => {
+  try {
+    const address = JSON.parse(fromData.get("address"));
+    const phoneNumberRegex = /^(019|013|014|018|015|016|017)\d{8}$/;
+    if (
+      !phoneNumberRegex.test(address.number) ||
+      !phoneNumberRegex.test(address.altNumber) ||
+      address.number.length !== 11 ||
+      address.altNumber.length !== 11
+    ) {
+      return {
+        error: "Invalid phone number",
+      };
+    }
+
+    const session = await getServerSession(authOptions);
+    const db = await connectToDB();
+    const collection = db.collection("users");
+    const userWithSameTypeAddress = await collection.findOne({
+      _id: new ObjectId(session?.user?.id),
+      "addresses.addressType": address.addressType,
+    });
+    if (userWithSameTypeAddress) {
+      return {
+        error: `${address.addressType} address already exists`,
+      };
+    }
+    const updateResult = await collection.updateOne(
+      { _id: new ObjectId(session?.user?.id) },
+      {
+        $push: {
+          addresses: address,
+        },
+      }
+    );
+    if (updateResult.acknowledged == true) {
+      revalidatePath("/user-account/address-book");
+      return {
+        success: true,
+        message: "Address updated successfully",
+      };
+    }
+  } catch (error) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
+export const deleteAddress = async (addressType) => {
+  try {
+    console.log(addressType);
+    const session = await getServerSession(authOptions);
+    const db = await connectToDB();
+    const collection = db.collection("users");
+
+    const updateResult = await collection.updateOne(
+      { _id: new ObjectId(session?.user?.id) },
+      {
+        $pull: {
+          addresses: { addressType: addressType },
+        },
+      }
+    );
+    if (updateResult.acknowledged == true) {
+      revalidatePath("/user-account/address-book");
+      return {
+        success: true,
+        message: "Address deleted successfully",
+      };
+    } else {
+      return {
+        success: false,
+        error: "Some error occurred",
+      };
+    }
+  } catch (error) {
+    return {
+      error: error.message,
+    };
   }
 };

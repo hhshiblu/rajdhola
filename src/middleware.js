@@ -5,7 +5,14 @@ export async function middleware(request) {
   const { pathname } = request.nextUrl;
 
   const token = await getToken({ req: request });
-  const userProtectedRoutes = ["/cart-products", "/checkout-order"];
+  const userProtectedRoutes = [
+    "/cart-products",
+    "/confirm-orders",
+    "/user-account",
+    "/user-account/profile",
+    "/user-account//address-book",
+    "/user-account/all-orders",
+  ];
   if (!token && userProtectedRoutes.includes(pathname)) {
     return NextResponse.redirect(
       new URL(

@@ -1,18 +1,24 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import "@/componants/animate.css";
 import Link from "next/link.js";
 import { signIn } from "next-auth/react";
 import SubmitButton from "@/componants/route/button/submitButton";
+import Image from "next/image";
 
 function Page({ searchParams }) {
-  const [phoneNumber, setphoneNumber] = useState("");
-  const [password, setPassword] = useState("");
+  console.log(searchParams);
+  const number = useRef();
+  const passwords = useRef();
+
   const [showPassword1, setShowPassword1] = useState(false);
-  const HandelSubmit = async () => {
+  const HandelSubmit = async (e) => {
+    e.preventDefault();
     try {
-      await signIn("credentials", {
+      const phoneNumber = number.current.value;
+      const password = passwords.current.value;
+      const res = await signIn("credentials", {
         phoneNumber,
         password,
         callbackUrl: "/",
@@ -147,7 +153,18 @@ function Page({ searchParams }) {
           className=" sm:mx-auto sm:w-full sm:max-w-md "
           style={{ zIndex: "inherit" }}
         >
-          <h2 className="mt-6 text-center text-xl font-semibold text-gray-900">
+          <div className="flex justify-center text-center">
+            <Link href="/" className="text-center">
+              <Image
+                src="/rajdhola_title_logo.svg"
+                alt=""
+                className="h-full "
+                width={160}
+                height={100}
+              />
+            </Link>
+          </div>
+          <h2 className="pt-3 text-center text-xl font-semibold text-gray-900">
             Login on your account
           </h2>
         </div>
@@ -157,7 +174,7 @@ function Page({ searchParams }) {
           style={{ zIndex: "inherit" }}
         >
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form className="space-y-3" action={HandelSubmit}>
+            <form className="space-y-3" onSubmit={HandelSubmit}>
               <div>
                 <label
                   htmlFor="phoneNumber"
@@ -167,13 +184,12 @@ function Page({ searchParams }) {
                 </label>
                 <div className="mt-1">
                   <input
+                    ref={number}
                     type="number"
                     name="phoneNumber"
                     autoComplete="phoneNumber"
                     placeholder="+880 000000"
                     required
-                    value={phoneNumber}
-                    onChange={(e) => setphoneNumber(e.target.value)}
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-500 sm:text-sm"
                   />
                 </div>
@@ -188,13 +204,12 @@ function Page({ searchParams }) {
                 </label>
                 <div className="mt-1 relative">
                   <input
+                    ref={passwords}
                     type={showPassword1 ? "text" : "password"}
                     name="password"
                     autoComplete="curent-password"
                     placeholder="*****"
                     required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-500 sm:text-sm"
                   />
                   {showPassword1 ? (
@@ -218,7 +233,10 @@ function Page({ searchParams }) {
               </div>
               <div className={`flex items-center w-full`}>
                 <h4> Not have any account?</h4>
-                <Link href="/signup-account" className="text-blue-500 p-2">
+                <Link
+                  href="/signup-account"
+                  className="text-[#00453e] hover:underline  p-2"
+                >
                   {" "}
                   Sign up
                 </Link>

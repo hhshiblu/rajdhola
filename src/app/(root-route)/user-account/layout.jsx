@@ -1,3 +1,4 @@
+import Footer from "@/componants/layout/footer";
 import Header from "@/componants/layout/header";
 import Link from "next/link";
 import React from "react";
@@ -6,9 +7,9 @@ function layout({ children }) {
   return (
     <div>
       <Header />
-      <div className="bg-[#EFF0F4] h-full">
+      <div className="bg-[#EFF0F4]  pb-4">
         <div className="flex  lg:gap-36 md:gap-20 md:px-20 pt-12 px-10">
-          <div className="w-[250px]  h-screen flex flex-col ">
+          <div className="w-[250px]  h-[77vh] flex flex-col ">
             <div className=" text-gray-800  text-[12px] ">
               <p>
                 <span>Hello, </span>
@@ -17,16 +18,22 @@ function layout({ children }) {
             </div>
             <ul className="pt-4">
               <li className=" pb-4 ">
-                <Link href="" className="text-[#195851] font-semibold">
+                <Link
+                  href="/user-account"
+                  className="text-[#195851] font-semibold"
+                >
                   My Account
                 </Link>
                 <ul className="text-[14px] pl-3 py-1 text-gray-800 ">
                   <li className=" hover:text-[#1A9CB7]">
                     <Link href="/user-account/profile">Profile</Link>
                   </li>
-                  <li className=" hover:text-[#1A9CB7]">
-                    <p> Address Book</p>
-                  </li>
+                  <Link
+                    href="/user-account/address-book"
+                    className=" hover:text-[#1A9CB7]"
+                  >
+                    Address Book
+                  </Link>
                 </ul>
               </li>
 
@@ -34,10 +41,10 @@ function layout({ children }) {
                 <h2 className="text-[#195851] font-semibold">My Orders</h2>
                 <ul className="text-[14px] pl-3 py-1 text-gray-800 ">
                   <li className=" hover:text-[#1A9CB7]">
-                    <p> All orders </p>
+                    <p>All orders</p>
                   </li>
                   <li className=" hover:text-[#1A9CB7]">
-                    <p> Return orders</p>
+                    <p>Return orders</p>
                   </li>
                 </ul>
               </li>
@@ -49,9 +56,10 @@ function layout({ children }) {
               </li>
             </ul>
           </div>
-          <div className="  w-[100%]">{children}</div>
+          <div className=" w-[100%]">{children}</div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

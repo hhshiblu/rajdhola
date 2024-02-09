@@ -7,6 +7,7 @@ import {
 import Link from "next/link";
 
 import { useRef } from "react";
+import { toast } from "sonner";
 
 function ToyProducts({ children }) {
   const boxRef = useRef(null);
@@ -20,6 +21,14 @@ function ToyProducts({ children }) {
     let width = boxRef.current.clientWidth;
     boxRef.current.scrollLeft = boxRef.current.scrollLeft + width / 2;
   };
+  const seeMore = () => {
+    toast.success("Product upload in progress", {
+      duration: 3000,
+      cancel: {
+        label: "cancel",
+      },
+    });
+  };
 
   return (
     <div>
@@ -32,8 +41,13 @@ function ToyProducts({ children }) {
               Toy Vehicles & Playsets Under 800{" "}
               <span className=" font-medium">৳</span>
             </h2>
-            <div className="hidden 600px:block text-[15px] pl-6 hover:underline hover:text-red-500 cursor-pointer text-[#007185]">
-              <Link href={`/products?maxPrice=${500}`}>See more</Link>
+            <div
+              className="hidden 600px:block text-[15px] pl-6 hover:underline hover:text-red-500 cursor-pointer text-[#007185]"
+              onClick={seeMore}
+            >
+              {/* <Link href={`/products?maxPrice=${500}`}> */}
+              See more
+              {/* </Link> */}
             </div>
           </div>
           <button
@@ -55,8 +69,13 @@ function ToyProducts({ children }) {
             {children}
           </div>
 
-          <div className="block 600px:hidden text-[13px] pl-2 pt-2 sm:text-[14px] sm:pl-6   hover:underline hover:text-red-500 cursor-pointer text-[#007185]">
-            <Link href={`/products?maxPrice=${500}`}>See more</Link>
+          <div
+            className="block 600px:hidden text-[13px] pl-2 pt-2 sm:text-[14px] sm:pl-6   hover:underline hover:text-red-500 cursor-pointer text-[#007185]"
+            onClick={seeMore}
+          >
+            {/* <Link href={`/products?maxPrice=${500}`}> */}
+            See more
+            {/* </Link> */}
           </div>
         </div>
       </div>
@@ -65,18 +84,3 @@ function ToyProducts({ children }) {
 }
 
 export default ToyProducts;
-
-// export default function Skeleton() {
-//   return (
-//     <ul className='grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-x-6 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8'>
-//       {[...Array(10)].map((movie, index) => (
-//         <li key={index} className='relative animate-pulse'>
-//           <div className='aspect-square h-[300] w-full overflow-hidden rounded-lg bg-gray-300'></div>
-//           <p className='mt-2 h-4 w-1/2 rounded-lg bg-gray-600'></p>
-//           <p className='mt-2 block h-4 rounded-lg bg-gray-600 text-sm font-medium'></p>
-//           <p className='mt-2 block h-4 rounded-lg bg-gray-600 text-sm font-medium'></p>
-//         </li>
-//       ))}
-//     </ul>
-//   )
-// }

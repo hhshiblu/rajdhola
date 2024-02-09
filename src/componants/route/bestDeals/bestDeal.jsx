@@ -7,14 +7,8 @@ import {
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
 
-import Link from "next/link";
-
 import { useRef } from "react";
-
-// export const metadata = {
-//   title: "Rajdhola.com",
-//   description: "Rajdhole e-commerce website",
-// };
+import { toast } from "sonner";
 
 function BestDeals({ children }) {
   const boxRef = useRef(null);
@@ -28,7 +22,14 @@ function BestDeals({ children }) {
     let width = boxRef.current.clientWidth;
     boxRef.current.scrollLeft = boxRef.current.scrollLeft + width / 2;
   };
-
+  const seeMore = () => {
+    toast.success("Product upload in progress", {
+      duration: 3000,
+      cancel: {
+        label: "cancel",
+      },
+    });
+  };
   return (
     <div className="mb-8">
       <div
@@ -39,8 +40,13 @@ function BestDeals({ children }) {
             <h2 className="text-[16px]  sm:text-[18px] md:text-[20px] font-semibold text-slate-600 px-[20px] ">
               Deals Under 500 <span className=" font-medium">৳</span>
             </h2>
-            <div className="hidden 600px:block text-[15px] pl-6 hover:underline hover:text-red-500 cursor-pointer text-[#007185]">
-              <Link href={`/products?maxPrice=${500}`}>See more</Link>
+            <div
+              className="hidden 600px:block text-[15px] pl-6 hover:underline hover:text-red-500 cursor-pointer text-[#007185]"
+              onClick={seeMore}
+            >
+              {/* <Link href={`/products?maxPrice=${500}`}> */}
+              <p>See more</p>
+              {/* </Link> */}
             </div>
           </div>
           <button
@@ -62,8 +68,13 @@ function BestDeals({ children }) {
             {children}
           </div>
 
-          <div className="block 600px:hidden text-[13px] pl-2 pt-2 sm:text-[15px] sm:pl-6   hover:underline hover:text-red-500 cursor-pointer text-[#007185]">
-            <Link href={`/products?maxPrice=${500}`}>See more</Link>
+          <div
+            className="block 600px:hidden text-[13px] pl-2 pt-2 sm:text-[15px] sm:pl-6   hover:underline hover:text-red-500 cursor-pointer text-[#007185]"
+            onClick={seeMore}
+          >
+            {/* <Link href={`/products?maxPrice=${500}`}> */}
+            <p>See more</p>
+            {/* </Link> */}
           </div>
         </div>
       </div>

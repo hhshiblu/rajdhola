@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 
 import { useRef } from "react";
+import { toast } from "sonner";
 
 // export const metadata = {
 //   title: "Rajdhola.com",
@@ -28,7 +29,14 @@ function TopSell({ children }) {
     let width = boxRef.current.clientWidth;
     boxRef.current.scrollLeft = boxRef.current.scrollLeft + width / 2;
   };
-
+  const seeMore = () => {
+    toast.success("Product upload in progress", {
+      duration: 3000,
+      cancel: {
+        label: "cancel",
+      },
+    });
+  };
   return (
     <div className="mb-8">
       <div
@@ -39,8 +47,13 @@ function TopSell({ children }) {
             <h2 className="text-[16px] pb-3  sm:text-[18px] md:text-[20px] font-semibold text-slate-600 px-[20px] ">
               Top selling products
             </h2>
-            <div className="hidden 600px:block text-[15px] pl-6 hover:underline hover:text-red-500 cursor-pointer text-[#007185]">
-              <Link href={`/products?maxPrice=${500}`}>See more</Link>
+            <div
+              className="hidden 600px:block text-[15px] pl-6 hover:underline hover:text-red-500 cursor-pointer text-[#007185]"
+              onClick={seeMore}
+            >
+              {/* <Link href={`/products?maxPrice=${500}`}> */}
+              See more
+              {/* </Link> */}
             </div>
           </div>
           <button
@@ -63,7 +76,9 @@ function TopSell({ children }) {
           </div>
 
           <div className="block 600px:hidden text-[13px] pl-2 pt-2 sm:text-[15px] sm:pl-6   hover:underline hover:text-red-500 cursor-pointer text-[#007185]">
-            <Link href={`/products?maxPrice=${500}`}>See more</Link>
+            {/* <Link href={`/products?maxPrice=${500}`}> */}
+            See more
+            {/* </Link> */}
           </div>
         </div>
       </div>

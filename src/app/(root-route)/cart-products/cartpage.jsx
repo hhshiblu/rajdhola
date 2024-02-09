@@ -14,7 +14,10 @@ import Image from "next/image";
 import secureLocalStorage from "react-secure-storage";
 import CartProduct from "./singleCartProduct";
 
-function Cartpage() {
+function Cartpage({ searchParams }) {
+  const id = searchParams.id;
+  const paramsColor = searchParams.color;
+  const paramsSize = searchParams.size;
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cart);
   const [totalPrice, setTotalPrice] = useState(0);

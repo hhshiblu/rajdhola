@@ -1,10 +1,27 @@
 import DotsLoading from "@/componants/loader/dotsLoading";
-import React from "react";
+import React, { useRef } from "react";
 import secureLocalStorage from "react-secure-storage";
+import { toast } from "sonner";
 
-function CartData({ handleSubmit, couponCode, setCouponCode, popup }) {
+function CartData({ popup }) {
+  const coponref = useRef();
   const checkout = JSON.parse(secureLocalStorage.getItem("p")) || [];
   let shipping = checkout.shipping;
+  const handleSubmit = () => {
+    const couponCode = coponref.current.value;
+
+    // Assuming you are using some library for toasts (like react-toastify)
+    toast.error(`${couponCode}, Invalid coupon code !`, {
+      duration: 3000,
+      cancel: {
+        label: "cancel",
+      },
+    });
+
+    // Reset the value of the input field
+    coponref.current.value = "";
+  };
+
   return (
     <div className="w-full bg-[#fff] rounded-md p-4 ">
       <div className="flex justify-between">
@@ -48,13 +65,12 @@ function CartData({ handleSubmit, couponCode, setCouponCode, popup }) {
       </div>
 
       <br />
-      <form onSubmit={handleSubmit}>
+      <form action={handleSubmit}>
         <input
+          ref={coponref}
           type="text"
           className={`w-full border p-1 rounded-[4px] text-[13px] 800px:text-[16px] h-[35px] pl-2`}
           placeholder="Coupoun code"
-          value={couponCode}
-          onChange={(e) => setCouponCode(e.target.value)}
           required
         />
         <input

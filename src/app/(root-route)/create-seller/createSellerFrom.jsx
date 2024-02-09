@@ -8,73 +8,12 @@ import { createSeller } from "@/allActions/auth/auth";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Division } from "@/libs/data";
-const DivisionSelector = ({ divisions, onSelectDivision }) => {
-  return (
-    <div className="flex flex-col w-[98%] md:w-[45%]">
-      {" "}
-      <label className="block text-sm font-medium text-gray-700 py-1">
-        {" "}
-        My divisions{" "}
-      </label>
-      <select
-        onChange={(e) => onSelectDivision(e.target.value)}
-        className="border px-8  py-2 rounded-md items-center cursor-pointer"
-      >
-        <option value="">Select Division</option>
-        {divisions.map((division) => (
-          <option key={division.value} value={division.name}>
-            {division.name}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-};
+import {
+  DistrictSelector,
+  DivisionSelector,
+  UpazilaSelector,
+} from "@/libs/division";
 
-const DistrictSelector = ({ districts, onSelectDistrict }) => {
-  return (
-    <div className="flex flex-col w-[98%] md:w-[45%]">
-      <label className="py-1 block text-sm font-medium text-gray-700">
-        My district
-      </label>
-      <select
-        onChange={(e) => onSelectDistrict(e.target.value)}
-        className="border px-8  py-2 rounded-md items-center cursor-pointer"
-      >
-        <option value="">Select District</option>
-        {districts &&
-          districts.map((district) => (
-            <option key={district.name} value={district.name}>
-              {district.name}
-            </option>
-          ))}
-      </select>
-    </div>
-  );
-};
-
-const UpazilaSelector = ({ upazilas, onSelectUpazila }) => {
-  return (
-    <div className="flex flex-col w-[98%] md:w-[45%]">
-      <label className="py-1 block text-sm font-medium text-gray-700">
-        My upazila
-      </label>
-      <select
-        onChange={(e) => onSelectUpazila(e.target.value)}
-        className="border px-8  py-2 rounded-md items-center cursor-pointer "
-      >
-        <option value="" className="pb-2">
-          Select Upazila
-        </option>
-        {upazilas.map((upazila) => (
-          <option key={upazila} value={upazila} className="py-2 custom-option">
-            {upazila}{" "}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-};
 function CreateSellerFrom() {
   const selectedDivisionRef = useRef("");
   const selectedDistrictRef = useRef("");
@@ -273,7 +212,7 @@ function CreateSellerFrom() {
       </div>
       {/* -------------------------------------------------------------------------------
        */}
-      <div className="gap-3 flex flex-wrap">
+      <div className="gap-[2px]  flex flex-wrap">
         <DivisionSelector
           divisions={Division}
           onSelectDivision={handleDivisionChange}

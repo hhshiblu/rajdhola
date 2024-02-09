@@ -141,14 +141,12 @@ function Page({ searchParams }) {
               />
             </Link>
           </div>
-          <div className="text-[#195851] flex justify-center">
-            <p> - - - - - - - - - - -</p>
-          </div>
-          <h2 className="mt-6 text-center text-xl font-semibold text-gray-900">
-            {searchParams.verify == "verify"
-              ? "Verify Your Account"
-              : "Create on your account"}
-          </h2>
+
+          {!searchParams.verify && (
+            <h2 className="pt-4 text-center text-xl font-semibold text-gray-900">
+              Create on your account
+            </h2>
+          )}
         </div>
         <SignUpForm searchParams={searchParams} />
         <div

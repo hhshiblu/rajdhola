@@ -16,6 +16,9 @@ const Checkout = ({ user }) => {
   const { cart } = useSelector((state) => state.cart);
   const [number, setNumber] = useState("");
   const [division, setdivision] = useState("");
+  const [altNumber, setAltNumber] = useState("");
+  const [area, setArea] = useState("");
+  const [upazila, setUpazilla] = useState("");
   const [district, setdistrict] = useState("");
   const [userInfo, setUserInfo] = useState(true);
   const [address, setAddress] = useState("");
@@ -25,7 +28,11 @@ const Checkout = ({ user }) => {
   const [popup, setPopup] = useState(false);
 
   useEffect(() => {
-    if (!secureLocalStorage.getItem("c") && !popup) {
+    if (
+      !secureLocalStorage.getItem("c") &&
+      !popup &&
+      !secureLocalStorage.getItem("b")
+    ) {
       window.location.href = "/";
     }
     if (popup) {
@@ -103,6 +110,9 @@ const Checkout = ({ user }) => {
     setZipCode(selectedAddress.zipCode);
     setdivision(selectedAddress.division);
     setdistrict(selectedAddress.district);
+    setAltNumber(selectedAddress.altNumber);
+    setUpazilla(selectedAddress.upazila);
+    setArea(selectedAddress.area);
     setName(selectedAddress.name);
     setNumber(selectedAddress.number);
     setSelectedAddressIndex(index);
@@ -160,25 +170,26 @@ const Checkout = ({ user }) => {
                         </h2>
                       </div>
                     ))}
-                  <div className="border-gray-400  mt-4 border  border-dashed p-3 rounded-md text-sm md:text-[17px] 800px:max-w-[90%] w-[85%] mx-auto flex-grow ">
-                    <div className="">
-                      <p>{name}</p>
-                    </div>
-                    <p> {number}</p>
+                  <div className="border-gray-400  mt-4 border text-[1px] text-[#343333]  border-dashed p-3 rounded-md text-sm md:text-[17px] 800px:max-w-[90%] w-[85%] mx-auto flex-grow ">
+                    <p className="text-[15px] ">{name}</p>
+                    <h1 className="text-[14px] ">
+                      {" "}
+                      {number} , {altNumber}
+                    </h1>
 
-                    <div className="py-1">
-                      <p> {address}</p>
-                    </div>
-                    <div className="flex">
-                      <p>
-                        {district} , {Division[division]?.name}
-                      </p>
-                    </div>
+                    <p className="text-[15px] ">
+                      {" "}
+                      {area} , {upazila}
+                    </p>
+
+                    <p className="text-[15px] ">
+                      {district} , {division}
+                    </p>
                   </div>
                 </div>
               ) : (
                 <div className=" flex justify-center text-sm cursor-pointer">
-                  <Link href="/">
+                  <Link href="/user-account/address-book?check_out=true">
                     <div className="w-80 h-20 border-dashed border-2 border-gray-400 text-center flex justify-center items-center">
                       <h1> Add your address</h1>
                     </div>

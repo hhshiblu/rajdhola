@@ -118,3 +118,17 @@ export const createOrder = async (data) => {
     };
   }
 };
+
+export const getOrders = async () => {
+  try {
+    const db = await connectToDB();
+    const orderCollection = db.collection("orders");
+    const orderArray = orderCollection.find({}).toArray();
+    const orders = JSON.parse(JSON.stringify(orderArray));
+    return orders || [];
+  } catch (error) {
+    return {
+      error: error.message,
+    };
+  }
+};

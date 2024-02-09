@@ -13,8 +13,13 @@ import ProductDescription from "./productDescription";
 import DetailsImage from "./detailsImage";
 import Rating from "../rating/rating";
 import ProductSideInfo from "./productSideInfo";
+import Link from "next/link";
+import Image from "next/image";
+import secureLocalStorage from "react-secure-storage";
+import { useRouter } from "next/navigation";
 
 const ProductDetails = ({ data }) => {
+  const router = useRouter();
   const {
     name,
     images,
@@ -66,7 +71,7 @@ const ProductDetails = ({ data }) => {
           },
         });
       } else {
-        if (data.product.stock <= 1) {
+        if (data.product.stock < 1) {
           toast.error("Product stock limited!", {
             duration: 3000,
             cancel: {
@@ -105,6 +110,31 @@ const ProductDetails = ({ data }) => {
   const decrementCount = () => {
     if (count > 1) {
       setCount(count - 1);
+    }
+  };
+  const buyNowHandlar = () => {
+    const priceToStore = data?.product.discountedPrice
+      ? data.product.discountedPrice
+      : data.product.originalPrice;
+    if (data.product.stock < 1) {
+      toast.error("Product stock limited!", {
+        duration: 3000,
+        cancel: {
+          label: "cancel",
+        },
+      });
+    } else {
+      secureLocalStorage.setItem(
+        "b",
+        JSON.stringify({
+          productId: data?.product._id,
+          price: priceToStore,
+          quantity: count,
+          color: selectedColor.color,
+          size: selectedSize.size,
+        })
+      );
+      router.push("/confirm-orders");
     }
   };
   return (
@@ -286,7 +316,7 @@ const ProductDetails = ({ data }) => {
                   <div className="md:flex justify-center mr-5 pt-8 hidden ">
                     <div
                       className={`w-[150px] bg-[#050320]  my-3  justify-center  cursor-pointer !mt-6 !rounded !h-10 flex items-center mr-5`}
-                      onClick={() => addToCartHandler(data?.product._id)}
+                      onClick={buyNowHandlar}
                     >
                       <span className="text-white flex items-center">
                         Buy Now
@@ -295,11 +325,9 @@ const ProductDetails = ({ data }) => {
                     </div>
                     <div
                       className={`w-[150px] bg-[#00453e]  my-3  justify-center  cursor-pointer !mt-6 !rounded !h-10 flex items-center`}
+                      onClick={addToCartHandler}
                     >
-                      <span
-                        className="text-white flex items-center"
-                        onClick={addToCartHandler}
-                      >
+                      <span className="text-white flex items-center">
                         Add to cart <AiOutlineShoppingCart className="ml-1" />
                       </span>
                     </div>
@@ -323,7 +351,7 @@ const ProductDetails = ({ data }) => {
 
       {/* small sceen product details page */}
 
-      <div className="fixed bottom-0 left-0 w-full md:hidden bg-[#050320] h-[48px] mx-auto z-50 ">
+      <div className="fixed bottom-0 left-0 w-full md:hidden bg-[#050320] h-[52px] mx-auto z-50 ">
         <div className="flex">
           <div className="grow rounded-tr-[30px] ">
             <div className="flex mx-auto justify-between ">
@@ -341,22 +369,30 @@ const ProductDetails = ({ data }) => {
                   className="text-center px-3 py-4  flex flex-col justify-center items-center "
                 >
                   <p className="pt-[-2px] text-[15px] text-white font-[500] ">
-                    Rajdhola
+                    <Image
+                      src="/apple_favicon.png"
+                      alt="rajdhola logo"
+                      width={25}
+                      height={25}
+                    />
                   </p>
                 </button>
               </div>
 
               <div className="flex w-[55%] bg-[#00453e] font-medium ">
-                <h1 className="text-center  pt-3 text-white  w-[45%]   bg-[#00453e] cursor-pointer">
+                <h2
+                  className="text-center  pt-4 text-white  w-[45%]   bg-[#00453e] cursor-pointer"
+                  onClick={buyNowHandlar}
+                >
                   Buy Now
-                </h1>
+                </h2>
 
                 <h1
-                  className="text-center h-full bg-[#22988a] w-[55%] pt-3 px-2  text-white  font-medium  cursor-pointer"
+                  className="text-center h-full bg-[#22988a] w-[55%] pt-4 px-2  text-white  font-medium  cursor-pointer"
                   style={{
                     clipPath: "polygon(21% 0, 100% 0, 100% 100%, 0% 100%)",
                   }}
-                  onClick={addTocart}
+                  onClick={addToCartHandler}
                 >
                   Add to Cart
                 </h1>

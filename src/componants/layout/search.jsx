@@ -21,7 +21,7 @@ import styles from "@/libs/styles";
 const Search = ({ user, categories }) => {
   const path = usePathname();
   const router = useRouter();
-  const [carts, setCarts] = useState([]);
+  const { cart } = useSelector((state) => state.cart);
   const [activemenu, setActiveMenu] = useState("nav_menu");
   const [activeMenu2, setactiveMenu2] = useState("nav_menu2");
   const [SubMenuDetails, setSubMenuDetails] = useState("");
@@ -76,8 +76,6 @@ const Search = ({ user, categories }) => {
   };
 
   useEffect(() => {
-    const fetchedCarts = JSON.parse(localStorage.getItem("cartItems")) || [];
-    setCarts(fetchedCarts);
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -128,36 +126,35 @@ const Search = ({ user, categories }) => {
                 </button>
               </form>
             </div>
-            <div className="hidden ml-auto pr-10   md:flex items-center">
-              <div className="flex items-center">
-                <div className="relative cursor-pointer mr-16">
+            <div className="hidden ml-auto pr-10   md:flex md:justify-center  items-center">
+              <div className="flex items-center ">
+                <div className="relative cursor-pointer pr-4">
                   <div className="text-white my-auto h-full">
                     <Link href={`${user && user ? "/user-account" : "/login"}`}>
                       {user ? (
-                        <div className="flex ">
-                          <h1 className=" text-semibold text-[16px]  pl-4">
-                            {user.name.slice(0, 7) + "..."}
+                        <div className="flex  items-center gap-1">
+                          <CgProfile size={22} />
+                          <h1 className=" font-semibold text-[17px]  ">
+                            {user.name.split(" ")[0]}
                           </h1>
                         </div>
                       ) : (
-                        <>
+                        <div className="flex gap-1 item-center">
                           <p className="text-xs">Hello , </p>
-                          <h1 className="text-semibold text-sm pl-4">
-                            Sign in
-                          </h1>
-                        </>
+                          <h1 className="font-semibold text-sm ">Sign in</h1>
+                        </div>
                       )}
                     </Link>
                   </div>
                 </div>
               </div>
 
-              <div className={`flex item-center mx-1`}>
-                <div className="relative cursor-pointer mr-[15px] text-white">
+              <div className={`flex item-center `}>
+                <div className="relative cursor-pointer pr-[15px] text-white">
                   <Link href="/cart-products">
                     <FiShoppingCart size={30} className="text-white" />
-                    <h1 className="absolute right-[-6px] top-[-5px] rounded-full bg-[#eb2828] w-5 h-5 top right p-0 m-0 text-white font-mono text-[14px] font-[50] loading-tight text-center">
-                      {carts.length}
+                    <h1 className="absolute right-[2px] top-[-5px] rounded-full bg-[#eb2828] w-5 h-5 top right p-0 m-0 text-white font-semibold text-[14px] loading-tight text-center">
+                      {cart.length}
                     </h1>
                   </Link>
                 </div>
@@ -177,7 +174,7 @@ const Search = ({ user, categories }) => {
             </div>
             <div className="my-auto">
               <Link
-                href={`https://rajdhola.com`}
+                href={`/create-seller`}
                 className="mr-8  text-[#ffffff] font-semibold hover:border-[1px] px-[8px] pt-[9px] pb-[9px]  rounded-md "
               >
                 {" "}
@@ -294,7 +291,7 @@ const Search = ({ user, categories }) => {
                     Category
                   </p>
                 </button>
-                <Link href={`/`}>
+                <Link href={`${user && user ? "/user-account" : "/login"}`}>
                   <button
                     type="button"
                     className="text-center px-3 py-4  flex flex-col justify-center items-center mt-[-5px]"
@@ -339,9 +336,9 @@ const Search = ({ user, categories }) => {
                       className="text-white  relative"
                       size={18}
                     />
-                    <span className=" absolute  right-[-7px] top-[-4px] rounded-full bg-[#eb2828] w-5 h-5 top right p-0 m-0 text-white font-mono text-[13px] loading-tight text-center">
-                      {carts.length}
-                    </span>
+                    <h2 className=" absolute  right-[-7px] top-[-4px] rounded-full bg-[#eb2828] w-5 h-5 top right p-0 m-0 text-white font-mono text-[13px] loading-tight text-center">
+                      {cart.length}
+                    </h2>
                     <p className="mt-[1px] text-xs text-white font-[700] ">
                       Cart
                     </p>
