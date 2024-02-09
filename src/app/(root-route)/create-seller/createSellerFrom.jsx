@@ -109,7 +109,7 @@ function CreateSellerFrom() {
         });
       }
       if (res.success == true) {
-        router.push(`/create-seller?email=${user.email}&seller=true`);
+        router.push(`/create-seller?email=${user.email}&success=true`);
         toast.success(res.message, {
           duration: 3000,
           cancel: {
