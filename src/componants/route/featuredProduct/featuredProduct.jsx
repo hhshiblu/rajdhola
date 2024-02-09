@@ -73,7 +73,7 @@
 // export default FeaturedProduct;
 // FeaturedProduct.js
 import React, { Fragment, useEffect, useState } from "react";
-import LoadMore from "./loadMore";
+import LoadMore from "./LoadMore";
 import { getAllproductsFeature } from "@/allActions/product/product";
 import ProductCard from "../productCard/productCard";
 
