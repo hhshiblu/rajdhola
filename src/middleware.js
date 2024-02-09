@@ -12,6 +12,7 @@ export async function middleware(request) {
     "/user-account/profile",
     "/user-account//address-book",
     "/user-account/all-orders",
+    "/user-account/refund-orders",
   ];
   if (!token && userProtectedRoutes.includes(pathname)) {
     return NextResponse.redirect(
