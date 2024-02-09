@@ -1,15 +1,18 @@
 import Footer from "@/componants/layout/footer";
 import Header from "@/componants/layout/header";
+import Image from "next/image";
 
 const YourComponent = () => {
   return (
     <div>
       <Header />
       <div className="h-96 relative">
-        <img
+        <Image
           className="w-full h-full"
           src="https://www.shannonspringshotel.com/wp-content/uploads/2020/06/shopping-shannon-springs-2.jpg"
           alt=""
+          width={100}
+          height={100}
         />
         <div className="absolute h-full w-full bg-black opacity-60 top-0"></div>
         <div className="bottom-0 absolute w-full pb-10">
@@ -43,27 +46,33 @@ const YourComponent = () => {
         </div>
         <div className="mb-10 pt-10">
           <h2 className="text-4xl font-bold text-center mb-10">Our Values</h2>
-          <img
+          <Image
             src="https://icms-image.slatic.net/images/ims-web/0d3d43e8-d6de-4424-bab6-88bac82cd11d.png"
-            alt=""
+            alt="jhshj"
+            width={100}
+            height={100}
           />
         </div>
         <div className="mb-10 pt-10">
           <h2 className="text-4xl font-bold text-center mb-10">Our Promise</h2>
           <div className="block md:flex">
             <div className="md:w-2/4 w-full">
-              <img
+              <Image
                 className="w-full h-full"
                 src="https://s40424.pcdn.co/in/wp-content/uploads/2023/04/what-does-a-business-analyst-do.png"
                 alt=""
+                width={100}
+                height={100}
               />
             </div>
             <div className="w-full md:w-2/4 bg-orange-500">
               <div className="flex px-5 py-3 items-center">
-                <img
+                <Image
                   className="h-10 w-10"
                   src="https://cdn-icons-png.flaticon.com/512/1/1437.png"
-                  alt=""
+                  alt="fdsfs"
+                  height={100}
+                  width={100}
                 />
                 <div className="ml-5">
                   <h2 className="text-xl font-bold">Best price</h2>
@@ -73,10 +82,12 @@ const YourComponent = () => {
                 </div>
               </div>
               <div className="flex px-5 py-3 items-center">
-                <img
+                <Image
                   className="h-10 w-10"
                   src="https://cdn-icons-png.flaticon.com/512/1/1437.png"
-                  alt=""
+                  alt="sf"
+                  height={100}
+                  width={100}
                 />
                 <div className="ml-5">
                   <h2 className="text-xl font-bold">Best price</h2>
@@ -86,10 +97,12 @@ const YourComponent = () => {
                 </div>
               </div>
               <div className="flex px-5 py-3 items-center">
-                <img
+                <Image
                   className="h-10 w-10"
                   src="https://cdn-icons-png.flaticon.com/512/1/1437.png"
-                  alt=""
+                  alt="ah"
+                  height={100}
+                  width={100}
                 />
                 <div className="ml-5">
                   <h2 className="text-xl font-bold">Best price</h2>
@@ -99,10 +112,12 @@ const YourComponent = () => {
                 </div>
               </div>
               <div className="flex px-5 py-3 items-center">
-                <img
+                <Image
                   className="h-10 w-10"
                   src="https://cdn-icons-png.flaticon.com/512/1/1437.png"
-                  alt=""
+                  alt="sdff"
+                  height={100}
+                  width={100}
                 />
                 <div className="ml-5">
                   <h2 className="text-xl font-bold">Best price</h2>

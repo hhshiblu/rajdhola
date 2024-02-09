@@ -113,9 +113,6 @@ const ProductDetails = ({ data }) => {
     }
   };
   const buyNowHandlar = () => {
-    const priceToStore = data?.product.discountedPrice
-      ? data.product.discountedPrice
-      : data.product.originalPrice;
     if (data.product.stock < 1) {
       toast.error("Product stock limited!", {
         duration: 3000,
@@ -124,17 +121,14 @@ const ProductDetails = ({ data }) => {
         },
       });
     } else {
-      secureLocalStorage.setItem(
-        "b",
-        JSON.stringify({
-          productId: data?.product._id,
-          price: priceToStore,
-          quantity: count,
-          color: selectedColor.color,
-          size: selectedSize.size,
-        })
-      );
-      router.push("/confirm-orders");
+      const cartData = {
+        productId: data?.product._id,
+        quantity: count,
+        color: selectedColor.color,
+        size: selectedSize.size,
+      };
+      dispatch(addTocart(cartData));
+      router.push("/cart-products");
     }
   };
   return (
