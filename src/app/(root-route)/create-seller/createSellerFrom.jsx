@@ -109,9 +109,7 @@ function CreateSellerFrom() {
         });
       }
       if (res.success == true) {
-        router.push(
-          `/create-seller?&24354g%^%hvbjnk 354g%^%hvbjnknfe3%^%45678uijhg%^%fdrew2v34567v%^%8uionbhv%^%&email=${user.email}&fdesw32456789%^%354g%^%hvbjnknfe3%^%45678uijhg%^%fdrew2v34567v%^%8uionbhv%^%fdesw32456789%^%nfe3%^%45678&success=success&uijhg%^%fdrew2v34567v%^%8uionbhv%^%fdesw32456789%^%%&`
-        );
+        router.push(`/create-seller?email=${user.email}&seller=true`);
         toast.success(res.message, {
           duration: 3000,
           cancel: {

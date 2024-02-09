@@ -190,7 +190,7 @@ function Cartpage({ searchParams }) {
                     </h5>
                   </div>
 
-                  <Link href="/confirm-orders">
+                  <Link href="/confirm-orders?cart_product=true">
                     <h2 className="bg-[#195851] py-[6px] px-2 text-center text-white font-medium rounded-md ">
                       {" "}
                       Checkout

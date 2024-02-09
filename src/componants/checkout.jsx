@@ -28,13 +28,9 @@ const Checkout = ({ user }) => {
   const [popup, setPopup] = useState(false);
 
   useEffect(() => {
-    if (
-      !secureLocalStorage.getItem("c") &&
-      !popup &&
-      !secureLocalStorage.getItem("b")
-    ) {
-      window.location.href = "/";
-    }
+    // if (!popup) {
+    //   window.location.href = "/";
+    // }
     if (popup) {
       const timeoutId = setTimeout(() => {
         window.location.href = "/";
@@ -144,7 +140,7 @@ const Checkout = ({ user }) => {
                     >
                       Choose your address
                     </h5>
-                    <Link href="/">
+                    <Link href="/user-account/address-book">
                       <div className="flex gap-1">
                         <HiPlus size={20} />
                         <h5 className="text-sm cursor-pointer"> Add address</h5>
