@@ -7,9 +7,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 const ShopCreate = ({ searchParams }) => {
-  if (searchParams.success) {
-    console.log("hshjfh");
-  }
   return (
     <>
       <div className="loginbackground box-background--white padding-top--64">
@@ -161,7 +158,7 @@ const ShopCreate = ({ searchParams }) => {
           className="mt-8 w-full md:w-[65%] mx-auto  px-4"
           style={{ zIndex: "1" }}
         >
-          {searchParams.success && searchParams.email ? (
+          {searchParams.success ? (
             <div className="bg-white py-8 px-4  sm:rounded-lg sm:px-10 shadow-2xl border border-green-500">
               <p className="text-green-900 text-[17px] font-semibold">
                 Welcome to Rajdhola ,{" "}

@@ -8,7 +8,7 @@ function ProductCardA({ p }) {
       <div className="min-w-[245px] pb-4 rounded-lg max-w[245px] ">
         <div>
           <Link href={"/product/" + p._id}>
-            <div className="  bg-gray-200  rounded-md hover:rounded-none h-[190px]  max-w-[250px]  overflow-hidden mx-auto duration-500">
+            <div className="  bg-[#0F111108]  rounded-md hover:rounded-none h-[190px]  max-w-[250px]  overflow-hidden mx-auto duration-500">
               <Image
                 src={p.images[0].url}
                 alt={p.name}

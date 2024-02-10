@@ -116,7 +116,6 @@ function CreateSellerFrom() {
             label: "cancel",
           },
         });
-        formRef.current.reset();
       }
     } catch (error) {
       if (error) {
@@ -130,7 +129,7 @@ function CreateSellerFrom() {
     }
   };
   return (
-    <form ref={formRef} className="space-y-3" action={handleSubmit}>
+    <form className="space-y-3" action={handleSubmit}>
       <div className="flex flex-wrap gap-5">
         <div className="w-[98%]  md:w-[45%]  ">
           <label

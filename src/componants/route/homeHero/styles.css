@@ -18,3 +18,11 @@
   color: #00453e;
   background-color: #00453e;
 }
+.home_image{
+  width: 100%;
+  
+  z-index: -1;
+  /* mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0.0)); */
+mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0.0) 100%);
+
+}

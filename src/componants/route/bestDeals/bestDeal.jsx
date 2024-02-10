@@ -33,7 +33,7 @@ function BestDeals({ children }) {
   return (
     <div className="mb-8">
       <div
-        className={`600px:w-11/12 w-[98%] mx-auto  my-3 rounded-sm bg-white 600px:h-[388px]    py-[10px] 600px:px-[20px] px-[2px] relative group overflow-hidden `}
+        className={`600px:w-11/12 w-[98%] mx-auto  mb-3 rounded-sm bg-white 600px:h-[388px]    py-[10px] 600px:px-[20px] px-[2px] relative group overflow-hidden `}
       >
         <div>
           <div className="flex pb-2">
