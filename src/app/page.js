@@ -10,6 +10,7 @@ import SsrToysProducts from "@/componants/route/ToysProducts/ssrToyProduct";
 import FeaturedProduct from "@/componants/route/featuredProduct/featuredProduct";
 import HomeHero from "@/componants/route/homeHero/HomeHero";
 import Footer from "@/componants/layout/footer";
+import CategoryFilter from "@/componants/route/categoryFilter/categoryFilter";
 
 export const dynamic = "force-dynamic";
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
     <main>
       <Header />
       <HomeHero />
+      <CategoryFilter />
       <BestDeals>
         <Suspense fallback={<p>loading</p>}>
           <SsrBestDeals />

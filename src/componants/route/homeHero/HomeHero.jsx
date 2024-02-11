@@ -1,7 +1,6 @@
 import Image from "next/image";
 import React from "react";
 
-import "./styles.css";
 import Link from "next/link";
 import { getBanars } from "@/allActions/home";
 import HeroSlider from "./HomeSlider";
