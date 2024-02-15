@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import Link from "next/link";
 
@@ -19,6 +19,7 @@ import { BsArrowLeftShort } from "react-icons/bs";
 import styles from "@/libs/styles";
 
 const Search = ({ user, categories }) => {
+  const ref = useRef();
   const path = usePathname();
   const router = useRouter();
   const { cart } = useSelector((state) => state.cart);
@@ -30,7 +31,11 @@ const Search = ({ user, categories }) => {
   const [searchValue, setSearchValue] = useState("");
 
   // animate categories
-
+  const withoutSideDiv = (e) => {
+    if (e.target.contains(ref.current)) {
+      setActiveMenu("nav_menu");
+    }
+  };
   const ToggleMenu = () => {
     if (activemenu === "nav_menu") {
       setActiveMenu("nav_menu nav_phone");
@@ -189,11 +194,13 @@ const Search = ({ user, categories }) => {
       {/* show category animation i will try allah borosha */}
 
       <div
+        ref={ref}
         className={
           activemenu === "nav_menu nav_phone"
             ? "fixed top-0 left-0 w-full h-screen bg-[#00000082]  z-[20000] "
             : null
         }
+        onClick={(e) => withoutSideDiv(e)}
       >
         <ImCancelCircle
           className={
@@ -205,6 +212,7 @@ const Search = ({ user, categories }) => {
           onClick={ToggleMenu}
         />
         <div className={activemenu}>
+          {/* <div className="relative"> */}
           <div className=" text-left border-b-2 bg-[#00453e] border-b-[#003c36]  py-2 pl-8 flex items-center">
             <h1 className="font-semibold pr-2 text-[15px] text-white">
               Hello ,{" "}
@@ -219,6 +227,7 @@ const Search = ({ user, categories }) => {
               <h1 className="text-semibold text-sm pl-2">Sign in</h1>
             )}
           </div>
+          {/* </div> */}
           <div className="bg-[#195851] text-white text-sm py-[2px] m-auto">
             <h2>Best wishes for you</h2>
           </div>
@@ -241,7 +250,10 @@ const Search = ({ user, categories }) => {
             })}
           </div>
 
-          <div className={activeMenu2}>
+          <div
+          // className={activeMenu2}
+          // className=" absolute h-sceen top-0 bg-black "
+          >
             <div
               className="text-left border-b-2 border-black py-2 pl-6 flex  text-lg font-semibold"
               onClick={ToggleMenu2}
@@ -276,6 +288,8 @@ const Search = ({ user, categories }) => {
           </div>
         </div>
       </div>
+      <div className=""></div>
+
       {!path.includes("/product/") && (
         <div className="fixed bottom-0 left-0 w-full md:hidden bg-[#00453e] h-[50px] mx-auto z-50">
           <div className="flex">

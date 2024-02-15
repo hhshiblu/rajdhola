@@ -1,5 +1,6 @@
 import Footer from "@/componants/layout/footer";
 import Header from "@/componants/layout/header";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -7,7 +8,7 @@ function layout({ children }) {
   return (
     <div>
       <Header />
-      <div className="bg-[#EFF0F4]  pb-4">
+      <div className="bg-[#EFF0F4] hidden md:block pb-4">
         <div className="flex  lg:gap-36 md:gap-20 md:px-20 pt-12 px-10">
           <div className="w-[250px]  h-[77vh] flex flex-col ">
             <div className=" text-gray-800  text-[12px] ">
@@ -58,6 +59,42 @@ function layout({ children }) {
           </div>
           <div className=" w-[100%]">{children}</div>
         </div>
+      </div>
+      <div className="p-8">
+        <div>
+          <Image
+            src="/watch.jpg"
+            alt=""
+            width={500}
+            height={500}
+            className="w-[80px] h-[80px] rounded-full"
+          />
+          <h2 className="text-[13px]"> md Hasanul Haque Shiblu</h2>
+          <h2 className="text-[13px]"> 01782572426</h2>
+        </div>
+        <div className="border-b-[2px] py-1"></div>
+        <div className="py-4 flex  overflow-x-auto gap-3">
+          <Link
+            href="/user-account/address-book"
+            className="border px-[2px] py-[1px] rounded-md  shadow-md"
+          >
+            Address book
+          </Link>
+          <Link
+            href="/user-account/all-orders"
+            className="border px-[2px] py-[1px] rounded-md  shadow-md"
+          >
+            All orders
+          </Link>
+          <Link
+            href="#"
+            className="border px-[2px] py-[1px] rounded-md shadow-md"
+          >
+            {" "}
+            Return Orders
+          </Link>
+        </div>
+        <div className="py-4">{children}</div>
       </div>
       <Footer />
     </div>

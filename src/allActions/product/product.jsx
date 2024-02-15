@@ -65,9 +65,11 @@ export const getproduct = async (id) => {
     const productobject = await db
       .collection("products")
       .findOne({ _id: new ObjectId(id) });
+
     const seller = await db
-      .collection("seller")
-      .findOne({ sellerId: productobject.sellerId });
+      .collection("sellers")
+      .findOne({ _id: new ObjectId(productobject.sellerId) });
+
     const product = JSON.parse(JSON.stringify(productobject));
     const sellerinfo = JSON.parse(JSON.stringify(seller));
 
@@ -86,6 +88,7 @@ export const getRelatedProduct = async (id) => {
     const product = await db.collection("products").findOne({
       _id: new ObjectId(id),
     });
+
     const suggestProduct = await db
       .collection("products")
       .find({
@@ -95,6 +98,7 @@ export const getRelatedProduct = async (id) => {
       .limit(20)
       .toArray();
     const relatedProducts = JSON.parse(JSON.stringify(suggestProduct));
+
     return relatedProducts;
   } catch (error) {
     return error.message;

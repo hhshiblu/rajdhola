@@ -1,9 +1,12 @@
-import { getCategory } from "@/allActions/category/category";
+import {
+  getCategory,
+  getChildrensChildren,
+} from "@/allActions/category/category";
+import Header from "@/componants/layout/header";
 import React from "react";
 
-async function layout() {
-  const categories = await getCategory();
-  return <div></div>;
+async function layout({ children }) {
+  return <div>{children}</div>;
 }
 
 export default layout;

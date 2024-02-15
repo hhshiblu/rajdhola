@@ -5,7 +5,7 @@ import React from "react";
 function ProductDescription({ data, seller }) {
   return (
     <section className="bg-white">
-      <div className="w-[90%]   h-full mx-auto pb-16  ">
+      <div className="w-[90%]   h-full mx-auto   ">
         <div className="flex    ">
           <div className="w-full  lg:w-[65%] 800px:mx-auto  800px:pl-0 mr-2">
             <div className="800px:px-4 px-0 overflow-hidden">
@@ -38,7 +38,7 @@ function ProductDescription({ data, seller }) {
               <Link href={``}>
                 <h2 className="text-[15px] cursor-pointer hover:text-[#db3615] text-gray-500 pb-2">
                   {" "}
-                  Shop : {seller?.name}
+                  Shop : {seller?.shopName}
                 </h2>
               </Link>
 

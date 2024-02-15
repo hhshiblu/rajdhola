@@ -2,6 +2,7 @@ import Header from "@/componants/layout/header";
 import React from "react";
 import connectToDB from "@/libs/connect";
 import { ObjectId } from "mongodb";
+import Footer from "@/componants/layout/footer";
 
 export async function generateMetadata({ params }) {
   const db = await connectToDB();
@@ -25,6 +26,7 @@ function layout({ children }) {
     <div>
       <Header />
       {children}
+      <Footer />
     </div>
   );
 }

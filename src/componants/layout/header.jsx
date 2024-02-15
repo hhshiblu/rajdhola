@@ -7,6 +7,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 export const dynamic = "force-dynamic";
 async function Header() {
   const categories = await getCategory();
+
   const session = await getServerSession(authOptions);
   return (
     <div>

@@ -33,5 +33,5 @@ mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0.0) 
 
 }
 .image-item{
-    transition: transform 0.3s;
+    transition: transform 0.4s;
 }

@@ -17,11 +17,7 @@ function generateOTP() {
 }
 
 const createActivationToken = (sellerId) => {
-  const sellerid = {
-    id: sellerId,
-  };
-
-  return jwt.sign(sellerid, process.env.ACTIVATED_KEY, {
+  return jwt.sign(sellerId, process.env.ACTIVATED_KEY, {
     expiresIn: "4m",
   });
 };
@@ -70,8 +66,6 @@ export const createSeller = async (fromData) => {
     };
   }
 
-  const hashPassword = await bcrypt.hash(password, 10);
-  const hashCPassword = await bcrypt.hash(cpassword, 10);
   try {
     const db = await connectToDB();
     const isSeller = await db.collection("sellers").findOne({
@@ -93,29 +87,26 @@ export const createSeller = async (fromData) => {
       return { error: "Something  wrong! Try Later" };
     }
 
-    const res = await db.collection("tempShops").insertOne({
+    const seller = {
       userName,
       shopName,
       images,
       email,
       address,
       category,
-      hashPassword,
-      hashCPassword,
+      password,
+      cpassword,
       phoneNumber: parseInt(phoneNumber, 10),
       zipCode: parseInt(zipCode, 10),
-      createdAt: new Date(),
-    });
-    if (res.acknowledged == true) {
-      const ActivationToken = createActivationToken(String(res.insertedId));
+    };
+    const ActivationToken = createActivationToken(seller);
+    const activeUrl = `https://rajdhola.com/create-seller/activation/${ActivationToken}`;
 
-      const activeUrl = `https://rajdhola.com/create-seller/activation/${ActivationToken}`;
-
-      try {
-        await sendMail({
-          email: email,
-          subject: "Activate your shop",
-          html: `
+    try {
+      await sendMail({
+        email: email,
+        subject: "Activate your shop",
+        html: `
         <html lang="en">
 
       <head></head>
@@ -145,15 +136,14 @@ export const createSeller = async (fromData) => {
 
     </html>
       `,
-        });
+      });
 
-        return {
-          success: true,
-          message: `please cheak your email : ${email} to activate your account`,
-        };
-      } catch (error) {
-        return { error: error.message, status: 500 };
-      }
+      return {
+        success: true,
+        message: `please cheak your email : ${email} to activate your account`,
+      };
+    } catch (error) {
+      return { error: error.message, status: 500 };
     }
   } catch (error) {
     return { error: error.message };
@@ -163,70 +153,53 @@ export const createSeller = async (fromData) => {
 export async function activationSeller(token) {
   try {
     const db = await connectToDB();
-    const id = jwt.verify(token, process.env.ACTIVATED_KEY);
+    const seller = jwt.verify(token, process.env.ACTIVATED_KEY);
 
-    if (!id) {
-      return {
-        error: "Invalid token",
-      };
-    }
-    const isSeller = await db.collection("tempShops").findOne({
-      _id: new ObjectId(id.id),
-    });
-    const {
-      userName,
-      shopName,
-      email,
-      phoneNumber,
-      address,
-      zipCode,
-      category,
-      hashPassword,
-      hashCPassword,
-      images,
-    } = isSeller;
-    const sellerExit = await db.collection("sellers").findOne({
-      email: email,
-    });
-    if (!sellerExit) {
-      const res = db.collection("sellers").insertOne({
-        userName,
-        shopName,
-        images,
-        email,
-        address,
-        category,
-        hashPassword,
-        hashCPassword,
-        phoneNumber: parseInt(phoneNumber, 10),
-        zipCode: parseInt(zipCode, 10),
-        status: "pending",
-        v: parseInt(0, 10),
-        available_Banalace: parseInt(0, 10),
-        withdrawRequest: [],
-        createdAt: new Date(),
-      });
-
-      if (res.acknowledged == true) {
-        await db.collection("tempShops").deleteOne({
-          _id: new ObjectId(id.id),
-        });
-        return {
-          success: true,
-          message: "shop created successfully",
-        };
-      }
-    } else
+    if (!seller) {
       return {
         success: false,
-        error: "shop already exists",
+        error: "Link timed out !",
       };
+    }
+
+    const sellerExit = await db.collection("sellers").findOne({
+      email: seller.email,
+    });
+    if (sellerExit) {
+      return {
+        success: false,
+        error: "user already activated",
+      };
+    }
+    const password = await bcrypt.hash(seller.password, 10);
+    const cPassword = await bcrypt.hash(seller.cpassword, 10);
+
+    db.collection("sellers").insertOne({
+      userName: seller.userName,
+      shopName: seller.shopName,
+      images: seller.images,
+      email: seller.email,
+      address: seller.address,
+      category: seller.category,
+      password,
+      cPassword,
+      phoneNumber: parseInt(seller.phoneNumber, 10),
+      zipCode: parseInt(seller.zipCode, 10),
+      status: "pending",
+      v: parseInt(0, 10),
+      available_Banalace: parseInt(0, 10),
+      withdrawRequest: [],
+      createdAt: new Date(),
+    });
+
     return {
-      success: false,
+      success: true,
+      message: "shop created successfully",
     };
   } catch (error) {
     return {
-      error: error.message,
+      success: false,
+      error: "Too late link timed out !",
       statusCode: 500,
     };
   }

@@ -8,7 +8,7 @@ async function Page({ params }) {
   const product = await getproduct(params.id);
 
   return (
-    <div className="pb-20">
+    <div>
       <ProductDetails data={product} />
 
       <Suspense fallback={<p>load relative ...</p>}>

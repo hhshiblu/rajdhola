@@ -13,7 +13,7 @@ function ProductSideInfo({ seller }) {
       </div>
 
       <div className="block py-4 text-[15px] text-gray-700 ">
-        <h1 className="text-[#007185]"> {seller?.name} </h1>
+        <h1 className="text-[#007185]"> {seller?.shopName} </h1>
         {/* <h1 className="">{data?.seller?.address}</h1> */}
       </div>
       <hr />

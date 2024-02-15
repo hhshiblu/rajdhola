@@ -8,7 +8,6 @@ import SubmitButton from "@/componants/route/button/submitButton";
 import Image from "next/image";
 
 function Page({ searchParams }) {
-  console.log(searchParams);
   const number = useRef();
   const passwords = useRef();
 
@@ -18,7 +17,7 @@ function Page({ searchParams }) {
     try {
       const phoneNumber = number.current.value;
       const password = passwords.current.value;
-      const res = await signIn("credentials", {
+      await signIn("credentials", {
         phoneNumber,
         password,
         callbackUrl: "/",
@@ -174,7 +173,7 @@ function Page({ searchParams }) {
           style={{ zIndex: "inherit" }}
         >
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form className="space-y-3" onSubmit={HandelSubmit}>
+            <form className="space-y-3" action={HandelSubmit}>
               <div>
                 <label
                   htmlFor="phoneNumber"
@@ -237,7 +236,6 @@ function Page({ searchParams }) {
                   href="/signup-account"
                   className="text-[#00453e] hover:underline  p-2"
                 >
-                  {" "}
                   Sign up
                 </Link>
               </div>

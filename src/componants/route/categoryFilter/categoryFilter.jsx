@@ -100,7 +100,7 @@ function CategoryFilter() {
       </div>
       <div className="600px:w-11/12 w-[98%]  md:hidden mx-auto ">
         <div className="flex gap-2 home_cate_slide overflow-x-auto">
-          <div className="  min-w-[160px] hover:shadow-md z-50">
+          <div className="  min-w-[160px] hover:shadow-md z-10">
             <p className="text-[15px] bg-gray-200 font-[500] p-[4px] text-gray-800">
               Best Toy for kids
             </p>
@@ -112,7 +112,7 @@ function CategoryFilter() {
               className=" w-full"
             />
           </div>
-          <div className="  min-w-[160px] hover:shadow-md z-50">
+          <div className="  min-w-[160px] hover:shadow-md z-10">
             <p className="text-[15px] bg-gray-200 font-[500] p-[4px] text-gray-800">
               Popular electronic
             </p>
@@ -124,7 +124,7 @@ function CategoryFilter() {
               className=" w-full"
             />
           </div>
-          <div className="  min-w-[160px] hover:shadow-md z-50">
+          <div className="  min-w-[160px] hover:shadow-md z-10">
             <p className="text-[15px] bg-gray-200 font-[500] p-[4px] text-gray-800">
               Elevate your fashion.
             </p>
@@ -136,7 +136,7 @@ function CategoryFilter() {
               className=" w-full"
             />
           </div>
-          <div className="  min-w-[160px] hover:shadow-md  z-50">
+          <div className="  min-w-[160px] hover:shadow-md  z-10">
             <p className="text-[15px] bg-gray-200 font-[500] p-[4px] text-gray-800">
               Popular juyalari
             </p>

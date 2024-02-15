@@ -8,8 +8,6 @@ async function Cetagory() {
   const categories = await getCategory();
   return (
     <div>
-      {/* catagory */}
-
       <div
         className={`600px:w-11/12 w-[98%] mx-auto bg-white px-3  rounded-lg mb-12`}
         id="cetagoris"
@@ -19,7 +17,7 @@ async function Cetagory() {
         >
           <h1>Categoris</h1>
         </div>
-        <div className=" p-4 hidden 600px:grid  grid-cols-3 gap-[5px] md:grid-cols-4 md:gap-[10px] lg:grid-cols-5 lg:gap-[10px] xl:grid-cols-8 xl:gap-[10px]">
+        {/* <div className=" p-4 hidden 600px:grid  grid-cols-3 gap-[5px] md:grid-cols-4 md:gap-[10px] lg:grid-cols-5 lg:gap-[10px] xl:grid-cols-8 xl:gap-[10px]">
           {categories &&
             categories?.slice(0, 9).map((i, index) => {
               return (
@@ -28,42 +26,42 @@ async function Cetagory() {
                   className="w-full overflow-hidden hover:shadow-blue-100  bg-gray-50 rounded-md  cursor-pointer  flex items-center flex-col justify-between m-auto"
                 >
                   {/* <Link href={`/products/search?${i.name}`}> */}
-                  <Image
+        {/* <Image
                     src={i?.image?.url}
                     alt={i.title}
                     height={500}
                     width={500}
                     className="w-[50px] h-[50px] rounded-full object-fill  mt-2 transform hover:scale-110 transition duration-300 mx-auto"
-                  />
-                  <h5 className=" text-sm px-2 mb-2 text-center">{i.name}</h5>
-                  {/* </Link> */}
-                </div>
-              );
-            })}
-        </div>
+                  /> */}
+        {/* <h5 className=" text-sm px-2 mb-2 text-center">{i.name}</h5> */}
+        {/* </Link> */}
+        {/* </div> */}
+        {/* ); */}
+        {/* })} */}
+        {/* </div> */}
 
-        <div className=" p-3 grid 600px:hidden grid-cols-3 gap-[5px] md:grid-cols-4 md:gap-[10px] lg:grid-cols-5 lg:gap-[10px] xl:grid-cols-7 xl:gap-[10px]">
+        {/* <div className=" p-3 grid 600px:hidden grid-cols-3 gap-[5px] md:grid-cols-4 md:gap-[10px] lg:grid-cols-5 lg:gap-[10px] xl:grid-cols-7 xl:gap-[10px]">
           {categories &&
             categories?.slice(0, 6).map((i, index) => {
               return (
                 <div
                   key={index}
                   className="w-full overflow-hidden hover:shadow-blue-100  bg-gray-50 rounded-md  cursor-pointer  flex items-center flex-col justify-between"
-                >
-                  {/* <Link href={`/products/search?${i.name}`}> */}
-                  <Image
+                > */}
+        {/* <Link href={`/products/search?${i.name}`}> */}
+        {/* <Image
                     src={i?.image?.url}
                     alt={i.title}
                     width={500}
                     height={500}
                     className="w-[65px] h-[65px] rounded-full object-cover mt-2 transform hover:scale-110 transition duration-300 mx-auto"
-                  />
-                  <h5 className=" text-sm px-2 mb-2  text-center">{i.name}</h5>
-                  {/* </Link> */}
-                </div>
-              );
-            })}
-        </div>
+                  /> */}
+        {/* <h5 className=" text-sm px-2 mb-2  text-center">{i.name}</h5> */}
+        {/* </Link> */}
+        {/* </div> */}
+        {/* ); */}
+        {/* // })} */}
+        {/* </div> */}
       </div>
     </div>
   );

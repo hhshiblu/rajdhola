@@ -330,7 +330,7 @@ const ProductDetails = ({ data }) => {
                   {/* -----------------------------------shop name------ */}
                 </div>
                 {/* ------------------------------------------- shop adress part------------------------           */}
-                <ProductSideInfo seller={data.seller} />
+                <ProductSideInfo seller={data?.sellerinfo} />
               </div>
               {/* ----------------------------------- shop name---------------------- */}
             </div>
@@ -340,7 +340,7 @@ const ProductDetails = ({ data }) => {
             <br />
           </div>
         ) : null}
-        <ProductDescription data={data?.product} seller={data.seller} />
+        <ProductDescription data={data?.product} seller={data.sellerinfo} />
       </div>
 
       {/* small sceen product details page */}

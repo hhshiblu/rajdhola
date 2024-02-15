@@ -41,12 +41,13 @@ header ul li a:hover {
 }
 .nav_menu2 {
   background: #fff;
-  position: fixed;
+  position: absolute;
   right: 0;
   top: 45px;
- /* top:30px; */
-  height: calc(100vh - 45.6px);
 
+  /* height: calc(100vh - 45.6px); */
+
+height:100%;
   width: 300px;
   transition: 0.4s ease-in-out;
   transform: translateX(100%);

@@ -22,21 +22,21 @@ function ProductCard({ data, i }) {
       viewport={{ amount: 0 }}
       className="bg-white hover:shadow-lg rounded-md "
     >
-      <div className="w-full h-auto  p-[2px] 600px:p-3 overflow-hidden relative rounded-md  cursor-pointer ">
+      <div className="w-full h-auto  p-[1px] 600px:p-3 overflow-hidden relative rounded-md  cursor-pointer ">
         <Link href={`/product/${data._id}`}>
           <Image
             src={data.images[0].url}
             alt={data.name}
-            className="h-[135px] px-[2px] sm:h-[160px] pt-[4px]  w-auto object-cover pb-[6px]  m-auto rounded-md hover:rounded-none   mx-auto  transform hover:scale-105  transition duration-500 "
+            className="h-[180px]  sm:h-[190px]   w-auto object-cover pb-[6px]  m-auto rounded-md hover:rounded-none   mx-auto  transform hover:scale-105  transition duration-500 "
             height={500}
             width={500}
           />
         </Link>
 
         <Link href={`/product/${data._id}`}>
-          <h5 className="pb-1 font-normal text-[14px] px-[4px] 600px:px-0 leading-[15px]   hover:text-red-500">
+          <h5 className="pb-1 font-normal text-[14px] px-[4px] pt-[6px] 600px:px-0 leading-[15px]   hover:text-red-500">
             {data?.name.length > 20
-              ? data.name.slice(0, 35) + "..."
+              ? data.name.slice(0, 36) + "..."
               : data?.name}
           </h5>
         </Link>

@@ -126,7 +126,7 @@ function FeaturedProduct() {
           <h2>For you !</h2>
         </div>
 
-        <div className="grid grid-cols-2 gap-[10px] md:grid-cols-3 md:gap-[10px] lg:grid-cols-5 lg:gap-[10px] xl:grid-cols-6 xl:gap-[10px]">
+        <div className="grid grid-cols-2 gap-[10px] 600px:grid-cols-3 800px:grid-cols-4 md:gap-[8px] lg:grid-cols-5 lg:gap-[10px] xl:grid-cols-6 2xl:grid-cols-7 xl:gap-[10px]">
           {products.map((product, index) => (
             <Fragment key={product._id}>
               <ProductCard data={product} i={index} />
