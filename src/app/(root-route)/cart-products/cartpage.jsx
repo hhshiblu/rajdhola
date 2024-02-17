@@ -65,13 +65,13 @@ function Cartpage({ searchParams }) {
 
     for (const item of cart) {
       const productData = fetchedProductsData.find(
-        (data) => data.product.product._id === item.productId
+        (data) => data?.product.product?._id === item.productId
       );
 
       if (productData) {
         const priceToUse =
-          productData.product.product.discountPrice ||
-          productData.product.product.originalPrice;
+          productData.product.product?.discountPrice ||
+          productData.product.product?.originalPrice;
 
         newTotalPrice += priceToUse * item.quantity;
       }

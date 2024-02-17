@@ -1,7 +1,7 @@
 import React from "react";
 import { IoLocation } from "react-icons/io5";
 import { GrServices } from "react-icons/gr";
-function ProductSideInfo({ seller }) {
+function ProductSideInfo({ seller, warranty }) {
   return (
     <div className="hidden lg:block lg:w-[24%] border float-left  shadow-md px-4">
       <div className="flex justify-between pt-8  text-base ">
@@ -31,7 +31,13 @@ function ProductSideInfo({ seller }) {
           <p className="text-gray-400 text-sm"> change mind not allow</p>
         </div>
         <div className="pl-3 text-[15px] pt-2">
-          <h3>Warranty not available</h3>
+          {warranty ? (
+            <div className="text-[15px] font-[500]">
+              warranty : <span className="font-medium">{warranty}</span>
+            </div>
+          ) : (
+            <h3>Warranty not available</h3>
+          )}
         </div>
       </div>
       <hr />

@@ -12,6 +12,9 @@ async function Header() {
   return (
     <div>
       <Search user={session && session?.user} categories={categories} />
+      {/* {categories.map((cate, i) => (
+        <h1 key={i}>{cate.name}</h1>
+      ))} */}
     </div>
   );
 }

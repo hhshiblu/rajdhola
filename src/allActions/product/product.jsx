@@ -72,10 +72,19 @@ export const getproduct = async (id) => {
 
     const product = JSON.parse(JSON.stringify(productobject));
     const sellerinfo = JSON.parse(JSON.stringify(seller));
+    // Retrieve 10 products from the same seller
+    const sellerProducts = await db
+      .collection("products")
+      .find({ sellerId: productobject.sellerId })
+      .limit(10)
+      .toArray();
+
+    const sellerProductsInfo = JSON.parse(JSON.stringify(sellerProducts));
 
     return {
       product,
       sellerinfo,
+      sellerProducts: sellerProductsInfo,
     };
   } catch (error) {
     return error.message;

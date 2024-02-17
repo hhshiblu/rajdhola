@@ -15,7 +15,7 @@ function CartProduct({
   size,
 }) {
   const [value, setValue] = useState(quantity);
-  const totalPrice = (data.discountPrice || data.originalPrice) * value;
+  const totalPrice = (data?.discountPrice || data?.originalPrice) * value;
 
   const increment = () => {
     if (data.stock < value + 1) {
@@ -43,23 +43,23 @@ function CartProduct({
 
   return (
     <>
-      <div className="flex gap-3 items-center mt-1" id={`cart_${data._id}`}>
+      <div className="flex gap-3 items-center mt-1" id={`cart_${data?._id}`}>
         <div>
           <Image
-            alt={data.name}
+            alt={data?.name}
             loading="lazy"
             width="80"
             height="130"
             decoding="async"
             data-nimg="1"
             className="mx-auto 600px:w-[90px] w-[60px] h-[50px] 600px:h-[70px] rounded-sm  text-transparent transition-opacity duration-300 ease-in-out opacity-100 "
-            src={data.images[0].url}
+            src={data?.images[0].url}
           />
         </div>
         <div className="flex flex-1">
           <div className="flex flex-col justify-between flex-1">
             <p className="text-[14px] 600px:text-[15px] text-gray-700 line-clamp-1 pr-2 ">
-              {data.name}
+              {data?.name}
             </p>
             <div className="inline-flex ">
               <div
@@ -98,7 +98,7 @@ function CartProduct({
             </p>
             <button
               className="mt-2 font-medium text-gray-500 underline hover:text-red-700 text-[15px] 600px:text-[16px]"
-              onClick={() => removeFromCartHandler(data._id)}
+              onClick={() => removeFromCartHandler(data?._id)}
             >
               Remove
             </button>

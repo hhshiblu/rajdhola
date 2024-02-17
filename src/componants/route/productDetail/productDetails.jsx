@@ -15,7 +15,7 @@ import Rating from "../rating/rating";
 import ProductSideInfo from "./productSideInfo";
 import Link from "next/link";
 import Image from "next/image";
-import secureLocalStorage from "react-secure-storage";
+
 import { useRouter } from "next/navigation";
 
 const ProductDetails = ({ data }) => {
@@ -25,6 +25,12 @@ const ProductDetails = ({ data }) => {
     images,
     color,
     size,
+    country,
+    warranty,
+    capacity,
+    powerConsumed,
+    powerSupply,
+    productMaterial,
     stock,
     discountPrice,
     ratings,
@@ -53,7 +59,7 @@ const ProductDetails = ({ data }) => {
     if (cart === null) {
       const cartData = {
         productId: data?.product._id,
-        quantity: count, // Assuming count is the quantity
+        quantity: count,
         color: selectedColor.color,
         size: selectedSize.size,
       };
@@ -162,8 +168,12 @@ const ProductDetails = ({ data }) => {
                   <hr />
                   <h1 className={`font-medium text-[16px] py-2`}>{name}</h1>
                   <hr />
-                  <p className="font-normal pt-2">
-                    Brand:
+                  <p className="pt-2 text-[14px] font-[400]">
+                    Country of origin :{" "}
+                    <span className="font-medium">{country}</span>
+                  </p>
+                  <p className="font-normal text-[14px] ">
+                    Brand :
                     {brandName ? (
                       <span className="pl-3  font-medium">{brandName}</span>
                     ) : (
@@ -236,6 +246,41 @@ const ProductDetails = ({ data }) => {
                         })}
                       </div>
                     ) : null}
+                  </div>
+                  <div>
+                    {productMaterial && (
+                      <div className="text-[17px] font-[500] text-gray-700">
+                        Product material :{" "}
+                        <span className="font-[600]">{productMaterial}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div>
+                    {powerSupply && (
+                      <div className="text-[17px] font-[500] text-gray-700 py-2">
+                        Power supply :{" "}
+                        <span className="font-[600]">{powerSupply}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="pb-1">
+                    {powerConsumed && (
+                      <div className="text-[17px] font-[500] text-gray-700">
+                        Power consumed :{" "}
+                        <span className="font-[600]">{powerConsumed}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div>
+                    {capacity && (
+                      <div className="ttext-[17px] font-[500] text-gray-700 py-2">
+                        Capacity :{" "}
+                        <span className="font-[600]">{capacity}</span>
+                      </div>
+                    )}
                   </div>
                   <div className="py-2 flex items-center">
                     <h1 className="font-medium text-sm md:text-[17px]">
@@ -330,7 +375,10 @@ const ProductDetails = ({ data }) => {
                   {/* -----------------------------------shop name------ */}
                 </div>
                 {/* ------------------------------------------- shop adress part------------------------           */}
-                <ProductSideInfo seller={data?.sellerinfo} />
+                <ProductSideInfo
+                  seller={data?.sellerinfo}
+                  warranty={warranty}
+                />
               </div>
               {/* ----------------------------------- shop name---------------------- */}
             </div>
@@ -340,7 +388,11 @@ const ProductDetails = ({ data }) => {
             <br />
           </div>
         ) : null}
-        <ProductDescription data={data?.product} seller={data.sellerinfo} />
+        <ProductDescription
+          data={data?.product}
+          seller={data.sellerinfo}
+          products={data?.sellerProducts}
+        />
       </div>
 
       {/* small sceen product details page */}

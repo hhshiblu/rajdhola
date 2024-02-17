@@ -83,11 +83,12 @@ export const getChildrensChildren = async (mainCategory, childName) => {
     const collection = db.collection("categories");
 
     const category = await collection.find({}).toArray();
-    const categoryList = createCategories(category);
+    const categoryList = createCategoriesWithChildren(category);
 
     const mainCategorries = categoryList.find(
       (cat) => cat.slug === mainCategory
     );
+
     const childCategory = mainCategorries.children.find(
       (child) => child.slug === childName
     );

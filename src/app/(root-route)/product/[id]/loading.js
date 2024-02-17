@@ -1,5 +1,4 @@
 import ProductDetailLoader from "@/componants/loader/productDetailsLoader";
-import React from "react";
 
 function loading() {
   return (

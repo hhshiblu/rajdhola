@@ -211,48 +211,51 @@ const Search = ({ user, categories }) => {
           size={30}
           onClick={ToggleMenu}
         />
-        <div className={activemenu}>
-          {/* <div className="relative"> */}
-          <div className=" text-left border-b-2 bg-[#00453e] border-b-[#003c36]  py-2 pl-8 flex items-center">
-            <h1 className="font-semibold pr-2 text-[15px] text-white">
-              Hello ,{" "}
-            </h1>
-            {user ? (
-              <div className="flex ">
-                <h1 className=" font-semibold text-lg text-white mt-1">
-                  {user.name}
-                </h1>
-              </div>
-            ) : (
-              <h1 className="text-semibold text-sm pl-2">Sign in</h1>
-            )}
-          </div>
-          {/* </div> */}
-          <div className="bg-[#195851] text-white text-sm py-[2px] m-auto">
-            <h2>Best wishes for you</h2>
-          </div>
-          <div className="pt-3">
-            {categories?.map((i, index) => {
-              return (
-                <div
-                  key={index}
-                  className={`${styles.normalFlex}  justify-between px-4 hover:bg-[#EAEDED] mx-2 text-[16px]  rounded-md cursor-pointer  leading-[26px] forHover `}
-                  onClick={(e) => handleMenuItemClick(e, i)} // Pass the 'i' data as an argument
-                >
-                  <h3 className=" cursor-pointer select-none m-2  font-[510]    text-gray-600">
-                    {i.name}
-                  </h3>
-                  <h2>
-                    <IoIosArrowForward className="text-gray-300" />
-                  </h2>
+        <div className="relative  w-[300px] !overflow-x-hidden">
+          {" "}
+          <div className={activemenu}>
+            {/* <div className="relative"> */}
+            <div className=" text-left border-b-2 bg-[#00453e] border-b-[#003c36]  py-2 pl-8 flex items-center">
+              <h1 className="font-semibold pr-2 text-[15px] text-white">
+                Hello ,{" "}
+              </h1>
+              {user ? (
+                <div className="flex ">
+                  <h1 className=" font-semibold text-lg text-white mt-1">
+                    {user.name}
+                  </h1>
                 </div>
-              );
-            })}
+              ) : (
+                <h1 className="text-semibold text-sm pl-2">Sign in</h1>
+              )}
+            </div>
+            {/* </div> */}
+            <div className="bg-[#195851] text-white text-sm py-[2px] m-auto">
+              <h2>Best wishes for you</h2>
+            </div>
+            <div className="pt-3">
+              {categories?.map((i, index) => {
+                return (
+                  <div
+                    key={index}
+                    className={`${styles.normalFlex}  justify-between px-4 hover:bg-[#EAEDED] mx-2 text-[16px]  rounded-md cursor-pointer  leading-[26px] forHover `}
+                    onClick={(e) => handleMenuItemClick(e, i)} // Pass the 'i' data as an argument
+                  >
+                    <h3 className=" cursor-pointer select-none m-2  font-[510]    text-gray-600">
+                      {i.name}
+                    </h3>
+                    <h2>
+                      <IoIosArrowForward className="text-gray-300" />
+                    </h2>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-
           <div
-          // className={activeMenu2}
-          // className=" absolute h-sceen top-0 bg-black "
+            // className={activeMenu2}
+            // className=" absolute h-sceen top-0 bg-black "
+            className="bg-black h-screen overflow-hidden v absolute top-0 w-[400px]  transition-transform duration-400 ease-in-out transform translate-x-full"
           >
             <div
               className="text-left border-b-2 border-black py-2 pl-6 flex  text-lg font-semibold"

@@ -12,8 +12,7 @@ function Page({ searchParams }) {
   const passwords = useRef();
 
   const [showPassword1, setShowPassword1] = useState(false);
-  const HandelSubmit = async (e) => {
-    e.preventDefault();
+  const HandelSubmit = async () => {
     try {
       const phoneNumber = number.current.value;
       const password = passwords.current.value;

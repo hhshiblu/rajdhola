@@ -3,6 +3,10 @@ import React from "react";
 import connectToDB from "@/libs/connect";
 import { ObjectId } from "mongodb";
 import Footer from "@/componants/layout/footer";
+import Search from "@/componants/layout/search";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import { getCategory } from "@/allActions/category/category";
+import { getServerSession } from "next-auth";
 
 export async function generateMetadata({ params }) {
   const db = await connectToDB();
@@ -21,13 +25,16 @@ export async function generateMetadata({ params }) {
   };
 }
 
-function layout({ children }) {
+async function layout({ children }) {
+  const categories = await getCategory();
+
+  const session = await getServerSession(authOptions);
   return (
-    <div>
-      <Header />
+    <>
+      <Search user={session && session?.user} categories={categories} />
       {children}
       <Footer />
-    </div>
+    </>
   );
 }
 
