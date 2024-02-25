@@ -18,10 +18,10 @@ function ProductCardAMin({ p }) {
       </Link>
 
       <div className="flex items-center  gap-3">
-        {p.discountPrice ? (
+        {p.previousPrice ? (
           <div className="bg-[#00453e] rounded-sm pt-[3px] px-[5px] py-[2px]  font-semibold  text-white text-[10px]">
-            {(p.discountPrice
-              ? ((p.originalPrice - p.discountPrice) / p.originalPrice) * 100
+            {(p.previousPrice
+              ? ((p.previousPrice - p.presentPrice) / p.previousPrice) * 100
               : 0
             ).toFixed(0)}
             % off
@@ -35,14 +35,14 @@ function ProductCardAMin({ p }) {
         <h5
           className={`text-[17px] text-[#0F1111] text-sm py-1 font-semibold `}
         >
-          {p.discountPrice ? p?.discountPrice : p?.originalPrice}
+          {p.presentPrice}
           <span className="  font-medium"> ৳</span>
         </h5>
         {p?.discountPrice && (
           <h4
             className={`pl-4 text-[12px] leading-[18px] text-[#565959] line-through`}
           >
-            {p?.originalPrice ? p?.originalPrice + " ৳" : null}
+            {p?.previousPrice ? p?.previousPrice + " ৳" : null}
           </h4>
         )}
       </div>

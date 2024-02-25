@@ -29,17 +29,39 @@ export const getqueryProduct = async () => {
     const Less500Product = await db
       .collection("products")
       .find({
-        $or: [{ discountPrice: { $lt: 500 } }, { originalPrice: { $lt: 500 } }],
+        presentPrice: { $lt: 800 }, // Correct syntax for $lt
       })
       .sort({ sold_out: -1 })
       .limit(25)
       .toArray();
+
     const product = JSON.parse(JSON.stringify(Less500Product));
     return product;
   } catch (error) {
     console.log(error);
   }
 };
+
+export const bestSelling = async () => {
+  try {
+    const db = await connectToDB();
+
+    const Less500Product = await db
+      .collection("products")
+      .find({})
+      .sort({ sold_out: -1 })
+      .limit(9)
+      .toArray();
+    const products = JSON.parse(JSON.stringify(Less500Product));
+    const product = formateProduct(products);
+    return product;
+  } catch (error) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
 export const topSelling = async () => {
   try {
     const db = await connectToDB();
@@ -71,6 +93,7 @@ export const getproduct = async (id) => {
       .findOne({ _id: new ObjectId(productobject.sellerId) });
 
     const product = JSON.parse(JSON.stringify(productobject));
+
     const sellerinfo = JSON.parse(JSON.stringify(seller));
     // Retrieve 10 products from the same seller
     const sellerProducts = await db
@@ -136,74 +159,6 @@ export const getMoreProduct = async (id) => {
   }
 };
 
-// export const getAllProducts = async (query) => {
-//   try {
-//     const query = {};
-//     // for (const [key, value] of searchParams.entries()) {
-//     //   query[key] = value;
-//     // }
-
-//     const pageNumber = parseInt(query.pageNumber) || 1;
-//     const parPage = parseInt(query.parPage) || 25;
-
-//     const products = await prisma.products.findMany({
-//       take: parPage,
-//       skip: (pageNumber - 1) * parPage,
-//       orderBy: {
-//         createdAt: "desc",
-//       },
-//     });
-
-//     const result = new queryProducts(products, query)
-//       .categoryQuery()
-//       .subCategoryQuery()
-//       .ratingQuery()
-//       .priceQuery()
-//       .highPriceQuery()
-//       .searchQuery()
-//       // .sortByPrice()
-//       .skip()
-//       .limit()
-//       .getProducts();
-//     const totalproduct = new queryProducts(products, query)
-//       .categoryQuery()
-//       .subCategoryQuery()
-//       .ratingQuery()
-//       .priceQuery()
-//       .highPriceQuery()
-//       .searchQuery()
-//       // .sortByPrice()
-//       .countProducts();
-
-//     return {
-//       result,
-//       totalproduct,
-//     };
-//   } catch (e) {
-//     return e.message;
-//   }
-// };
-
-// export const getAllproductsFeature = async (page) => {
-//   try {
-//     const db = await connectToDB();
-//     const products = await db
-//       .collection("products")
-//       .find()
-//       .sort({ createdAt: -1 })
-//       .skip((page - 1) * 3)
-//       .limit(3)
-//       .toArray();
-
-//     return products.map((product, index) => (
-//       <Fragment key={product._id}>
-//         <ProductCard data={product} i={index} />
-//       </Fragment>
-//     ));
-//   } catch (e) {
-//     return e.message;
-//   }
-// };
 // product.js
 export const getAllproductsFeature = async (page, pageSize = 3) => {
   try {
@@ -219,26 +174,30 @@ export const getAllproductsFeature = async (page, pageSize = 3) => {
     return product;
   } catch (e) {
     console.error("Error fetching products:", e.message);
-    throw e; // Rethrow the error to handle it in the calling code
+    throw e;
   }
 };
 
 export const getbestElectronic = async () => {
   try {
     const db = await connectToDB();
-    const underProducts = await db
+    const under500ElectronicProducts = await db
       .collection("products")
       .find({
-        $or: [
-          { discountPrice: { $lt: 500 } },
-          { originalPrice: { $lt: 500 } },
-          { category: "electronics" },
+        $and: [
+          // { presentPrice: { $lt: 500 } },
+          {
+            category: {
+              $in: ["Kitchen", "Electronics Device", "Electronics Accessories"],
+            },
+          },
         ],
       })
       .sort({ sold_out: -1 })
       .limit(25)
       .toArray();
-    const products = JSON.parse(JSON.stringify(underProducts));
+
+    const products = JSON.parse(JSON.stringify(under500ElectronicProducts));
     return products;
   } catch (error) {
     console.log(error);
@@ -251,10 +210,13 @@ export const getToyProducts = async () => {
     const underProducts = await db
       .collection("products")
       .find({
-        $or: [
-          { discountPrice: { $lt: 800 } },
-          { originalPrice: { $lt: 800 } },
-          { category: "Toys" },
+        $and: [
+          { presentPrice: { $lt: 800 } },
+          {
+            category: {
+              $in: ["Kids & Toys"],
+            },
+          },
         ],
       })
       .sort({ sold_out: -1 })
@@ -267,6 +229,55 @@ export const getToyProducts = async () => {
   }
 };
 
-export const postProduct = async (data) => {
-  console.log(data);
+export const ProductByQuery = async (query) => {
+  try {
+    const db = await connectToDB();
+
+    const { query: mongodbQuery, sortOptions } = buildMongoDBQuery(query);
+
+    const { page = 1, limit = 30 } = query;
+
+    const totalProducts = await db
+      .collection("products")
+      .countDocuments(mongodbQuery);
+
+    const products = await db
+      .collection("products")
+      .find(mongodbQuery)
+      .sort(sortOptions) // Apply sorting options here
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .toArray();
+
+    const totalPages = Math.ceil(totalProducts / limit);
+
+    return { products, totalProducts, totalPages, currentPage: page };
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const buildMongoDBQuery = (query) => {
+  const mongodbQuery = {};
+  const sortOptions = {}; // Separate object for sorting
+
+  if (query._c) mongodbQuery.category = query._c;
+  if (query._subc) mongodbQuery.subCategory = query._subc;
+  if (query._ch) mongodbQuery.childCategory = query._ch;
+  if (query._lessThan)
+    mongodbQuery.presentPrice = { $gt: parseInt(query._lessThan) };
+  if (query._greaterThan)
+    mongodbQuery.presentPrice = { $lt: parseInt(query._greaterThan) };
+  if (query.rating) mongodbQuery.ratings = { $gt: parseInt(query.rating) };
+  if (query.bestcold) mongodbQuery.bestcold = { $lt: parseInt(query.bestcold) };
+  if (query._name) mongodbQuery.name = { $regex: query._name, $options: "i" };
+  if (query._sortby) {
+    if (query._sortby === "highToLow") {
+      sortOptions.presentPrice = -1; // for descending order
+    } else if (query._sortby === "lowToHigh") {
+      sortOptions.presentPrice = 1; // for ascending order
+    }
+  }
+
+  return { query: mongodbQuery, sortOptions };
 };

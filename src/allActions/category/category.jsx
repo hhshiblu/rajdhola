@@ -86,11 +86,11 @@ export const getChildrensChildren = async (mainCategory, childName) => {
     const categoryList = createCategoriesWithChildren(category);
 
     const mainCategorries = categoryList.find(
-      (cat) => cat.slug === mainCategory
+      (cat) => cat.name === mainCategory
     );
 
     const childCategory = mainCategorries.children.find(
-      (child) => child.slug === childName
+      (child) => child.name === childName
     );
 
     const childrensChildren = childCategory.children;

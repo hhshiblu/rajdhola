@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import Link from "next/link";
 
@@ -8,7 +8,7 @@ import { CgProfile } from "react-icons/cg";
 
 import Image from "next/image";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useSelector } from "react-redux";
 import { AiFillDashboard } from "react-icons/ai";
 import { BiCategoryAlt, BiMenuAltLeft } from "react-icons/bi";
@@ -19,57 +19,50 @@ import { BsArrowLeftShort } from "react-icons/bs";
 import styles from "@/libs/styles";
 
 const Search = ({ user, categories }) => {
+  const searchParams = useSearchParams();
   const ref = useRef();
   const path = usePathname();
   const router = useRouter();
+  const [submenu, setSubMenu] = useState(false);
   const { cart } = useSelector((state) => state.cart);
-  const [activemenu, setActiveMenu] = useState("nav_menu");
-  const [activeMenu2, setactiveMenu2] = useState("nav_menu2");
+
   const [SubMenuDetails, setSubMenuDetails] = useState("");
   const [isSticky, setIsSticky] = useState(false);
-
+  const [maincate, setMaincate] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
-  // animate categories
   const withoutSideDiv = (e) => {
     if (e.target.contains(ref.current)) {
-      setActiveMenu("nav_menu");
+      setMaincate(false);
     }
   };
   const ToggleMenu = () => {
-    if (activemenu === "nav_menu") {
-      setActiveMenu("nav_menu nav_phone");
-    } else {
-      setActiveMenu("nav_menu");
-      setactiveMenu2("nav_menu2");
-    }
+    setMaincate(false);
+    setSubMenuDetails("");
+
+    setSubMenu(false);
   };
 
-  const ToggleMenu2 = (item) => {
-    setSubMenuDetails(item);
-    if (activeMenu2 === "nav_menu2") {
-      setactiveMenu2("nav_menu2 nav_phone2");
-    } else {
-      setactiveMenu2("nav_menu2");
-    }
+  const ToggleMenu2 = () => {
+    setSubMenu(false);
+    setSubMenuDetails("");
   };
 
   const handleMenuItemClick = (e, itemData) => {
-    ToggleMenu2(itemData);
-  };
+    setSubMenuDetails(itemData);
 
-  const subCateHandel = (i, id) => {
-    const category = categories.filter((c) => c.id === id);
-
-    const queryParams = new URLSearchParams({
-      category: category[0].name,
-      subCategory: i,
-    });
-    const url = `/products?${queryParams}`;
-    router.push(url);
-    // window.location.reload();
-    ToggleMenu();
+    setSubMenu(true);
   };
+  const createQueryString = useCallback(
+    (name, value) => {
+      const params = new URLSearchParams(searchParams);
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
+
   // --------------------------------------sticky navbar---------------
 
   const handleScroll = () => {
@@ -87,13 +80,9 @@ const Search = ({ user, categories }) => {
     };
   }, []);
 
-  const handelSubmit = (e) => {
-    e.preventDefault();
-    const queryParams = new URLSearchParams({
-      searchValue: searchValue,
-    });
-    const url = `/products?${queryParams}`;
-    router.push(url);
+  const handelSubmit = () => {
+    router.push("/products" + "?" + createQueryString("_name", searchValue));
+    setSearchValue("");
   };
 
   return (
@@ -113,7 +102,7 @@ const Search = ({ user, categories }) => {
               </Link>
             </div>
             <div className=" md:col-span-2 !m-auto w-[90%] py-[10px] relative">
-              <form action="">
+              <form action={handelSubmit}>
                 <input
                   type="text"
                   placeholder="search any item.."
@@ -124,7 +113,7 @@ const Search = ({ user, categories }) => {
 
                 <button
                   type="submit"
-                  onClick={handelSubmit}
+                  // onClick={handelSubmit}
                   className="text-white bg-[#050320] absolute right-0 h-[40px] w-[100px] rounded-r-md font-[600]   "
                 >
                   Search
@@ -169,7 +158,7 @@ const Search = ({ user, categories }) => {
           <div className="hidden  bg-[#195851] h-[39px] md:flex items-center ">
             <div
               className="pl-10 my-auto  relative  text-white text-sm md:text-base duration-300 cursor-pointer catagoris"
-              onClick={ToggleMenu}
+              onClick={() => setMaincate(true)}
             >
               <BiMenuAltLeft size={25} className="absolute left-2" />
               <h3 className="  font-[600]"> All Catagogies </h3>
@@ -196,7 +185,7 @@ const Search = ({ user, categories }) => {
       <div
         ref={ref}
         className={
-          activemenu === "nav_menu nav_phone"
+          maincate
             ? "fixed top-0 left-0 w-full h-screen bg-[#00000082]  z-[20000] "
             : null
         }
@@ -204,89 +193,101 @@ const Search = ({ user, categories }) => {
       >
         <ImCancelCircle
           className={
-            activemenu === "nav_menu nav_phone"
-              ? "fixed top-3 left-[310px]  z-[20000]  border-[3px] border-black cursor-pointer rounded-[100%] text-white"
+            maincate
+              ? " fixed top-2 left-[315px]   border-[3px] border-black cursor-pointer rounded-[100%] text-white z-[299999999999999999]"
               : "hidden"
           }
           size={30}
           onClick={ToggleMenu}
         />
-        <div className="relative  w-[300px] !overflow-x-hidden">
-          {" "}
-          <div className={activemenu}>
-            {/* <div className="relative"> */}
-            <div className=" text-left border-b-2 bg-[#00453e] border-b-[#003c36]  py-2 pl-8 flex items-center">
-              <h1 className="font-semibold pr-2 text-[15px] text-white">
-                Hello ,{" "}
-              </h1>
-              {user ? (
-                <div className="flex ">
-                  <h1 className=" font-semibold text-lg text-white mt-1">
-                    {user.name}
+        <div
+          className="fixed top-0 left-0 w-[300px] bg-white shadow-lg h-screen z-[29999]  transition-transform duration-500 ease-in-out"
+          style={{
+            transform: maincate ? "translateX(0px)" : "translateX(-100%)",
+          }}
+        >
+          <div className="relative overflow-hidden">
+            <>
+              <div className=" text-left border-b-2 bg-[#00453e] border-b-[#003c36]  py-2 pl-8 flex items-center">
+                <h1 className="font-semibold pr-2 text-[15px] text-white">
+                  Hello ,{" "}
+                </h1>
+                {user ? (
+                  <div className="flex ">
+                    <h1 className=" font-semibold text-lg text-white pt-[2px]">
+                      {user.name}
+                    </h1>
+                  </div>
+                ) : (
+                  <h1 className="text-semibold text-sm pl-2 text-white">
+                    Sign in
                   </h1>
-                </div>
-              ) : (
-                <h1 className="text-semibold text-sm pl-2">Sign in</h1>
-              )}
-            </div>
-            {/* </div> */}
-            <div className="bg-[#195851] text-white text-sm py-[2px] m-auto">
-              <h2>Best wishes for you</h2>
-            </div>
-            <div className="pt-3">
-              {categories?.map((i, index) => {
-                return (
-                  <div
-                    key={index}
-                    className={`${styles.normalFlex}  justify-between px-4 hover:bg-[#EAEDED] mx-2 text-[16px]  rounded-md cursor-pointer  leading-[26px] forHover `}
-                    onClick={(e) => handleMenuItemClick(e, i)} // Pass the 'i' data as an argument
-                  >
-                    <h3 className=" cursor-pointer select-none m-2  font-[510]    text-gray-600">
-                      {i.name}
-                    </h3>
-                    <h2>
-                      <IoIosArrowForward className="text-gray-300" />
-                    </h2>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <div
-            // className={activeMenu2}
-            // className=" absolute h-sceen top-0 bg-black "
-            className="bg-black h-screen overflow-hidden v absolute top-0 w-[400px]  transition-transform duration-400 ease-in-out transform translate-x-full"
-          >
+                )}
+              </div>{" "}
+              <div className="bg-[#195851] text-white text-sm  m-auto text-center py-[1px]">
+                <h2>Best wishes for you</h2>
+              </div>
+              <div className="pt-1">
+                {categories?.map((i, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className={`${styles.normalFlex}  justify-between px-4 hover:bg-[#EAEDED] mx-2 text-[15px]  rounded-md cursor-pointer  leading-[26px]  `}
+                      onClick={(e) => handleMenuItemClick(e, i)}
+                    >
+                      <h3 className=" cursor-pointer select-none p-[7px]  font-[510]    text-gray-600">
+                        {i.name}
+                      </h3>
+                      <h2>
+                        <IoIosArrowForward className="text-gray-500" />
+                      </h2>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
             <div
-              className="text-left border-b-2 border-black py-2 pl-6 flex  text-lg font-semibold"
-              onClick={ToggleMenu2}
+              className=" bg-white w-[300px]  h-full overflow-hidden  absolute top-10 left-0  transition-transform duration-500 ease-in-out transform "
+              style={{
+                transform: submenu ? "translateX(0px)" : "translateX(100%)",
+              }}
             >
-              <BsArrowLeftShort size={30} className="cursor-pointer" />
-              <h1 className="pl-4 cursor-pointer"> Main Categories</h1>
-            </div>
-            <div className="pt-3 pb-1">
-              <h1 className="text-left pl-8 font-semibold text-lg text-gray-900 mx-2 ">
-                {SubMenuDetails.name}
-              </h1>
-            </div>
+              <div
+                className="text-left border-b-2 border-black py-2 pl-6 flex z-[399999999]  text-lg font-semibold "
+                onClick={ToggleMenu2}
+              >
+                <BsArrowLeftShort size={30} className="cursor-pointer" />
+                <h1 className="pl-4 cursor-pointer "> Main Categories</h1>
+              </div>
+              <div className="pt-3 pb-1">
+                <h1 className="text-left pl-8 font-semibold text-lg text-gray-900 mx-2 ">
+                  {SubMenuDetails.name}
+                </h1>
+              </div>
 
-            <hr />
-            <hr />
+              <hr />
+              <hr />
 
-            <div className="pt-1">
-              {SubMenuDetails?.children?.map((item, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="hover:bg-gray-300 mx-2 text-gray-700 hover:text-gray-950  rounded-md leading-[24px] py-[6px]  "
-                    onClick={() => subCateHandel(item.name, item.parentId)}
-                  >
-                    <h2 className="text-left pl-7 cursor-pointer text-[16px] ">
-                      {item.name}
-                    </h2>
-                  </div>
-                );
-              })}
+              <div className="pt-1">
+                {SubMenuDetails?.children?.map((item, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="hover:bg-gray-300 mx-2 text-gray-700 hover:text-gray-950  rounded-md leading-[24px] py-[6px]  "
+                      onClick={() => {
+                        router.push(
+                          `/products?_c=${SubMenuDetails.name}&_subc=${item.name}`
+                        );
+                        setMaincate(false);
+                      }}
+                    >
+                      <h2 className="text-left pl-7 cursor-pointer text-[16px] ">
+                        {item.name}
+                      </h2>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -301,7 +302,7 @@ const Search = ({ user, categories }) => {
                 <button
                   type="button"
                   className="text-center px-3 py-4  flex flex-col justify-center items-center mt-[-5px]"
-                  onClick={ToggleMenu}
+                  onClick={() => setMaincate(true)}
                 >
                   <BiCategoryAlt className="text-white " size={18} />
                   <p className="mt-[1px] text-xs text-white font-[700] ">

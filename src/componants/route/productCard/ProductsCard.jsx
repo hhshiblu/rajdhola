@@ -27,11 +27,11 @@ function ProductsCard({ data, i }) {
         </Link>
         <div className=" flex">
           <h5 className={`${styles.productDiscountPrice}`}>
-            {data.discountPrice ? data.discountPrice : data.originalPrice}
+            {data.presentPrice}
             <span className=" font-semibold"> ৳</span>
           </h5>
           <h4 className={`${styles.price} text-gray-600`}>
-            {data.discountPrice ? data.originalPrice + "৳" : null}
+            {data.previousPrice ? data.previousPrice + "৳" : null}
           </h4>
         </div>
 

@@ -32,9 +32,9 @@ const ProductDetails = ({ data }) => {
     powerSupply,
     productMaterial,
     stock,
-    discountPrice,
+    presentPrice,
     ratings,
-    originalPrice,
+    previousPrice,
     brandName,
   } = data?.product;
   const dispatch = useDispatch();
@@ -198,10 +198,10 @@ const ProductDetails = ({ data }) => {
                     <h5
                       className={`font-bold  text-[18px] text-[#333] font-Roboto `}
                     >
-                      {discountPrice ? discountPrice : originalPrice}
+                      {presentPrice}
                       <span className="  font-medium"> ৳</span>
                     </h5>
-                    {discountPrice && (
+                    {previousPrice && (
                       <div className=" flex  ">
                         <h5 className="pl-4 text-[12px] leading-[18px] text-[#565959] font-semibold ">
                           {" "}
@@ -210,7 +210,7 @@ const ProductDetails = ({ data }) => {
                         <h4
                           className={`pl-3  text-[16px] leading-[18px] font-medium text-[#303030] line-through`}
                         >
-                          {originalPrice ? originalPrice + " ৳" : null}
+                          {previousPrice ? previousPrice + " ৳" : null}
                         </h4>
                       </div>
                     )}

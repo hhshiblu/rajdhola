@@ -37,54 +37,46 @@
 // }
 
 // export default LoadMore;
-
-// LoadMore.js// LoadMore.js// LoadMore.js
-import React, { useEffect, useRef } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import Image from "next/image";
+import ProductCard from "../productCard/productCard";
+import { getAllproductsFeature } from "@/allActions/product/product";
 
-function LoadMore({ onLoadMore, hasMore }) {
+function LoadMore() {
+  const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(2); // Maintain page state
   const { ref, inView } = useInView({
-    triggerOnce: true, // Only trigger once until the component is unmounted
+    // Optional: Adjust the trigger point
+    threshold: 0, // This means the alert will trigger as soon as even one pixel is visible.
   });
-  const shouldLoadMore = useRef(true);
 
   useEffect(() => {
-    console.log("LoadMore - hasMore:", hasMore);
+    const fetchData = async () => {
+      try {
+        const newProducts = await getAllproductsFeature(page);
+        setProducts((prevProducts) => [...prevProducts, ...newProducts]);
+        setPage((currentPage) => currentPage + 1); // Increment page state
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
 
-    if (inView && shouldLoadMore.current) {
-      shouldLoadMore.current = false;
-      onLoadMore();
+    if (inView) {
+      fetchData();
+      // Optionally, ensure this alert happens only once or under specific conditions
+      alert("You've scrolled to the next set of products!"); // Be cautious with using alert for UX reasons
     }
-  }, [inView, onLoadMore, hasMore]);
-
-  useEffect(() => {
-    shouldLoadMore.current = true;
-  }, [onLoadMore, hasMore]);
+  }, [inView]); // Removed page from the dependency array
 
   return (
-    <div ref={ref}>
-      {inView && (
-        <>
-          {" "}
-          {hasMore ? (
-            <section className="flex justify-center items-center w-full pt-6">
-              <Image
-                src="/spiner.svg" // Assuming the spinner image path is correct
-                alt="spinner"
-                width={80}
-                height={80}
-                className="object-contain"
-              />
-            </section>
-          ) : (
-            <div className="text-center pt-4">
-              <p>No more products available.</p>
-            </div>
-          )}{" "}
-        </>
-      )}
-    </div>
+    <>
+      {products &&
+        products.map((product, index) => (
+          <div ref={ref} key={index}>
+            <ProductCard data={product} i={index} />
+          </div>
+        ))}
+    </>
   );
 }
 

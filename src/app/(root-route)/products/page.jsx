@@ -1,86 +1,71 @@
-import { getChildrensChildren } from "@/allActions/category/category";
-import Header from "@/componants/layout/header";
-import React, { useCallback } from "react";
+import {
+  getCategory,
+  getChildrensChildren,
+} from "@/allActions/category/category";
+import { ProductByQuery } from "@/allActions/product/product";
+import Queryloader from "@/componants/loader/queryloader";
+import Pagination from "@/components/pagination/pagination";
+import Department from "@/components/products/department";
+import PhoneFilter from "@/components/products/phoneFilter";
+import QueryProduct from "@/components/products/queryProduct";
+import Sort from "@/components/products/sort";
 
-function Page(searchParams) {
-  // const children = await getChildrensChildren(
-  //   "Men's-Fashion-qUvg3Jkum",
-  //   "Clothing-S3VWpK6yX"
-  // );
-  const createQueryString = useCallback(
-    (name, value) => {
-      const params = new URLSearchParams(searchParams);
-      params.set(name, value);
-
-      return params.toString();
-    },
-    [searchParams]
+import React, { Suspense } from "react";
+export const dynamic = "force-dynamic";
+async function Page({ searchParams }) {
+  const childCate = await getChildrensChildren(
+    searchParams._c,
+    searchParams._subc
   );
+  const category = await getCategory();
+  const { currentPage, totalProducts, totalPages, products } =
+    await ProductByQuery(searchParams);
   return (
     <div>
-      {/* <Header /> */}
-      <div className="px-2">
-        <div className="w-[267px]">
-          Department
+      <div className="bg-white shadow-lg border-b  justify-between px-4 py-2 text-[14px] hidden 600px:flex">
+        <h1>
+          {" "}
+          1 - {totalPages} of over {totalProducts} results
+        </h1>
+        <Sort />
+      </div>
+      <div className=" flex flex-col 600px:flex-row gap-2 bg-white p-0 600px:py-3 600px:pl-2">
+        <div className="w-[267px] hidden 600px:block">
+          <h2 className="text-[14px] font-[500] pb-1"> Department</h2>
           <hr />
-          <h2 className="text-[12px]"> Men&apos;s Fasion</h2>
-          <p className="text-[12px] pb-1 font-[700]">Men&apos;s clothing</p>
           <div className="pl-[6px] flex flex-col ">
-            {/* {children?.map((cate, i) => (
-              <h2 className="text-[12px]" key={i}>
-                {cate.name}
-              </h2>
-            ))} */}
+            <Department
+              childcate={childCate}
+              searchParam={searchParams}
+              category={category}
+            />
           </div>
         </div>
-        <div></div>
+        <div className="600px:hidden block">
+          <PhoneFilter
+            childcate={childCate}
+            searchParam={searchParams}
+            totalProducts={totalProducts}
+            totalPages={totalPages}
+            category={category}
+          />
+        </div>
+        <div className="w-full min-h-[95vh] px-2">
+          <h2 className=" font-[400] pb-1 text-[15px]">All Result</h2>
+
+          <Suspense
+            fallback={<Queryloader />}
+            key={JSON.stringify(searchParams)}
+          >
+            <QueryProduct searchParams={searchParams} />
+          </Suspense>
+          <div className="flex justify-center pt-8">
+            <Pagination pageNumber={1} showItem={0} totalPage={totalPages} />
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
 export default Page;
-
-// export default function ExampleClientComponent() {
-//   const router = useRouter()
-//   const pathname = usePathname()
-//   const searchParams = useSearchParams()
-
-//   // Get a new searchParams string by merging the current
-//   // searchParams with a provided key/value pair
-//   const createQueryString = useCallback(
-//     (name, value) => {
-//       const params = new URLSearchParams(searchParams)
-//       params.set(name, value)
-
-//       return params.toString()
-//     },
-//     [searchParams]
-//   )
-
-//   return (
-//     <>
-//       <p>Sort By</p>
-
-//       {/* using useRouter */}
-//       <button
-//         onClick={() => {
-//           // <pathname>?sort=asc
-//           router.push(pathname + '?' + createQueryString('sort', 'asc'))
-//         }}
-//       >
-//         ASC
-//       </button>
-
-//       {/* using <Link> */}
-//       <Link
-//         href={
-//           // <pathname>?sort=desc
-//           pathname + '?' + createQueryString('sort', 'desc')
-//         }
-//       >
-//         DESC
-//       </Link>
-//     </>
-//   )
-// }

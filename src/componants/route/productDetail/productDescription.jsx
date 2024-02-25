@@ -126,9 +126,9 @@ function ProductDescription({ data, seller, products }) {
             <hr />
             <div className="flex flex-col pt-3 gap-4">
               {products?.slice(0, 4).map((p, i) => {
-                const discountPercentage = p.discountPrice
+                const discountPercentage = p.previousPrice
                   ? (
-                      ((p.originalPrice - p.discountPrice) / p.originalPrice) *
+                      ((p.previousPrice - p.presentPrice) / p.previousPrice) *
                       100
                     ).toFixed(0)
                   : null;
@@ -144,7 +144,7 @@ function ProductDescription({ data, seller, products }) {
                           height={500}
                           className="w-[175px] h-[175px] mx-auto"
                         />
-                        {p?.discountPrice && (
+                        {p?.previousPrice && (
                           <div className="flex justify-center items-center absolute text-white w-[38px] h-[38px] rounded-full bg-[#00453e] font-semibold text-xs left-2 top-2">
                             <span>{`-${discountPercentage}%`}</span>
                           </div>

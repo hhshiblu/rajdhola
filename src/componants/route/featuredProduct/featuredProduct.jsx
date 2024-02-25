@@ -25,8 +25,6 @@
 
 // export default FeaturedProduct;
 
-"use client";
-
 // import React, { useEffect, useState } from "react";
 // import LoadMore from "./loadMore";
 // import { getAllproductsFeature } from "@/allActions/product/product";
@@ -72,50 +70,14 @@
 
 // export default FeaturedProduct;
 // FeaturedProduct.js
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment } from "react";
 import LoadMore from "./loadMore";
 import { getAllproductsFeature } from "@/allActions/product/product";
 import ProductCard from "../productCard/productCard";
+import { useInView } from "react-intersection-observer";
 
-function FeaturedProduct() {
-  const [products, setProducts] = useState([]);
-  const [page, setPage] = useState(2);
-  const [hasMore, setHasMore] = useState(true);
-
-  const loadMoreProducts = async () => {
-    try {
-      const pageSize = 3; // Adjust the page size as needed
-      const newProducts = await getAllproductsFeature(page, pageSize);
-
-      if (newProducts.length > 0) {
-        setProducts([...products, ...newProducts]);
-        setPage(page + 1);
-      } else {
-        setHasMore(false); // No more products available
-      }
-    } catch (error) {
-      console.error("Error loading more products:", error);
-    }
-  };
-
-  useEffect(() => {
-    const loadInitialProducts = async () => {
-      try {
-        const pageSize = 3; // Adjust the page size as needed
-        const initialProducts = await getAllproductsFeature(1, pageSize);
-        setProducts(initialProducts);
-
-        // If the initial products are less than the page size, there are no more products
-        if (initialProducts.length < pageSize) {
-          setHasMore(false);
-        }
-      } catch (error) {
-        console.error("Error loading initial products:", error);
-      }
-    };
-
-    loadInitialProducts();
-  }, []);
+async function FeaturedProduct() {
+  const newProducts = await getAllproductsFeature(1);
 
   return (
     <>
@@ -127,13 +89,14 @@ function FeaturedProduct() {
         </div>
 
         <div className="grid grid-cols-2 gap-[10px] 600px:grid-cols-3 800px:grid-cols-4 md:gap-[8px] lg:grid-cols-5 lg:gap-[10px] xl:grid-cols-6 2xl:grid-cols-7 xl:gap-[10px]">
-          {products.map((product, index) => (
+          {newProducts.map((product, index) => (
             <Fragment key={product._id}>
               <ProductCard data={product} i={index} />
             </Fragment>
           ))}
+
+          <LoadMore />
         </div>
-        <LoadMore onLoadMore={loadMoreProducts} hasMore={hasMore} />
       </section>
     </>
   );

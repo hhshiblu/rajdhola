@@ -8,7 +8,7 @@ const variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
 };
-function ProductCard({ data, i }) {
+function ProductCard({ data, i, ref }) {
   return (
     <MotionDiv
       variants={variants}
@@ -21,6 +21,7 @@ function ProductCard({ data, i }) {
       }}
       viewport={{ amount: 0 }}
       className="bg-white hover:shadow-lg rounded-md "
+      ref={ref}
     >
       <div className="w-full h-auto  p-[1px] 600px:p-3 overflow-hidden relative rounded-md  cursor-pointer ">
         <Link href={`/product/${data._id}`}>
@@ -42,11 +43,11 @@ function ProductCard({ data, i }) {
         </Link>
         <div className="px-[4px] 600px:px-0 flex">
           <h5 className={`${styles.productDiscountPrice}`}>
-            {data.discountPrice ? data.discountPrice : data.originalPrice}
+            {data.presentPrice}
             <span className=" font-semibold"> ৳</span>
           </h5>
           <h4 className={`${styles.price} text-gray-600`}>
-            {data.discountPrice ? data.originalPrice + "৳" : null}
+            {data?.previousPrice ? data.previousPrice : ""}
           </h4>
         </div>
 

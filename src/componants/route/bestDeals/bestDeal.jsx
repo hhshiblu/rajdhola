@@ -38,7 +38,7 @@ function BestDeals({ children }) {
         <div>
           <div className="flex pb-2">
             <h2 className="text-[16px]  sm:text-[18px] md:text-[20px] font-semibold text-slate-600 px-[20px] ">
-              Deals Under 500 <span className=" font-medium">৳</span>
+              Deals Under 800 <span className=" font-medium">৳</span>
             </h2>
             <div
               className="hidden 600px:block text-[15px] pl-6 hover:underline hover:text-red-500 cursor-pointer text-[#007185]"
