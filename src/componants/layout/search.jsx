@@ -194,14 +194,14 @@ const Search = ({ user, categories }) => {
         <ImCancelCircle
           className={
             maincate
-              ? " fixed top-2 left-[315px]   border-[3px] border-black cursor-pointer rounded-[100%] text-white z-[299999999999999999]"
+              ? " fixed top-2 600px:left-[315px] left-[255px]   border-[3px] border-black cursor-pointer rounded-[100%] text-white z-[299999999999999999]"
               : "hidden"
           }
           size={30}
           onClick={ToggleMenu}
         />
         <div
-          className="fixed top-0 left-0 w-[300px] bg-white shadow-lg h-screen z-[29999]  transition-transform duration-500 ease-in-out"
+          className="fixed top-0 left-0 w-[240px] 600px:w-[300px] bg-white shadow-lg h-screen z-[29999]  transition-transform duration-500 ease-in-out"
           style={{
             transform: maincate ? "translateX(0px)" : "translateX(-100%)",
           }}
@@ -253,14 +253,14 @@ const Search = ({ user, categories }) => {
               }}
             >
               <div
-                className="text-left border-b-2 border-black py-2 pl-6 flex z-[399999999]  text-lg font-semibold "
+                className="text-left border-b-2 border-black py-2 pl-6 flex z-[399999999]  text-[18px] font-medium "
                 onClick={ToggleMenu2}
               >
                 <BsArrowLeftShort size={30} className="cursor-pointer" />
                 <h1 className="pl-4 cursor-pointer "> Main Categories</h1>
               </div>
               <div className="pt-3 pb-1">
-                <h1 className="text-left pl-8 font-semibold text-lg text-gray-900 mx-2 ">
+                <h1 className="text-left pl-8 font-medium text-[17px] text-gray-900 mx-2 ">
                   {SubMenuDetails.name}
                 </h1>
               </div>
@@ -292,7 +292,6 @@ const Search = ({ user, categories }) => {
           </div>
         </div>
       </div>
-      <div className=""></div>
 
       {!path.includes("/product/") && (
         <div className="fixed bottom-0 left-0 w-full md:hidden bg-[#00453e] h-[50px] mx-auto z-50">

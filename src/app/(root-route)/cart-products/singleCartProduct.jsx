@@ -15,7 +15,7 @@ function CartProduct({
   size,
 }) {
   const [value, setValue] = useState(quantity);
-  const totalPrice = (data?.discountPrice || data?.originalPrice) * value;
+  const totalPrice = data?.presentPrice * value;
 
   const increment = () => {
     if (data.stock < value + 1) {

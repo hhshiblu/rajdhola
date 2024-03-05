@@ -129,8 +129,8 @@ function CreateSellerFrom() {
     }
   };
   return (
-    <form className="space-y-3" action={handleSubmit}>
-      <div className="flex flex-wrap gap-5">
+    <form className="space-y-1" action={handleSubmit}>
+      <div className="flex flex-wrap gap-1 md:gap-5">
         <div className="w-[98%]  md:w-[45%]  ">
           <label
             htmlFor="userName"
@@ -145,7 +145,7 @@ function CreateSellerFrom() {
               required
               value={user.userName}
               onChange={handelChange}
-              className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="appearance-none block w-full px-3 py-[6px] border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
         </div>
@@ -163,7 +163,7 @@ function CreateSellerFrom() {
               required
               value={user.name}
               onChange={handelChange}
-              className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="appearance-none block w-full px-3 py-[6px] border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
         </div>
@@ -182,7 +182,7 @@ function CreateSellerFrom() {
               required
               value={user.phoneNumber}
               onChange={handelChange}
-              className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="appearance-none block w-full px-3 py-[6px] border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
         </div>
@@ -202,14 +202,14 @@ function CreateSellerFrom() {
               required
               value={user.email}
               onChange={handelChange}
-              className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="appearance-none block w-full px-3 py-[6px] border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
         </div>
       </div>
       {/* -------------------------------------------------------------------------------
        */}
-      <div className="gap-[2px]  flex flex-wrap">
+      <div className="gap-[6px] md:gap-[10px] flex flex-wrap items-center">
         <DivisionSelector
           divisions={Division}
           onSelectDivision={handleDivisionChange}
@@ -225,7 +225,7 @@ function CreateSellerFrom() {
           upazilas={selectedDistrictData.upazilas}
           onSelectUpazila={handleUpazilaChange}
         />
-        <div className=" w-[98%] md:w-[46%] md:pl-4">
+        <div className=" w-[98%] md:w-[45%] md:pl-2">
           <label
             htmlFor="address"
             className=" text-sm font-medium text-gray-700"
@@ -239,12 +239,12 @@ function CreateSellerFrom() {
               required
               value={user.address}
               onChange={handelChange}
-              className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="appearance-none block w-full px-3 py-[6px] border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap gap-5">
+      <div className="flex flex-wrap gap-2 md:gap-5">
         <div className="w-[98%]  md:w-[45%]  ">
           <label
             htmlFor="category"
@@ -259,7 +259,7 @@ function CreateSellerFrom() {
               required
               value={user.category}
               onChange={handelChange}
-              className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="appearance-none block w-full px-3 py-[6px] border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
         </div>
@@ -278,7 +278,7 @@ function CreateSellerFrom() {
               required
               value={user.zipCode}
               onChange={handelChange}
-              className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="appearance-none block w-full px-3 py-[6px] border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
         </div>
@@ -299,7 +299,7 @@ function CreateSellerFrom() {
               required
               value={user.password}
               onChange={handelChange}
-              className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="appearance-none block w-full px-3 py-[6px] border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
         </div>
@@ -318,7 +318,7 @@ function CreateSellerFrom() {
               required
               value={user.cpassword}
               onChange={handelChange}
-              className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="appearance-none block w-full px-3 py-[6px] border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
         </div>

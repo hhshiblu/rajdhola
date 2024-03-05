@@ -21,16 +21,13 @@ const Checkout = ({ user }) => {
   const [upazila, setUpazilla] = useState("");
   const [district, setdistrict] = useState("");
   const [userInfo, setUserInfo] = useState(true);
-  const [address, setAddress] = useState("");
+  // const [address, setAddress] = useState("");
   const [zipCode, setZipCode] = useState(null);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(0);
   const [isLoading, setLoading] = useState(false);
   const [popup, setPopup] = useState(false);
 
   useEffect(() => {
-    // if (!popup) {
-    //   window.location.href = "/";
-    // }
     if (popup) {
       const timeoutId = setTimeout(() => {
         window.location.href = "/";
@@ -57,10 +54,11 @@ const Checkout = ({ user }) => {
         const shippingAddress = {
           name: name,
           number: number,
-          address: address,
-          district: district,
+          upazila,
+          area,
+          district,
           zipCode: zipCode,
-          division: Division[division]?.name,
+          division,
         };
         let userId = user?._id;
         const paymentInfo = {
@@ -102,7 +100,6 @@ const Checkout = ({ user }) => {
     }
   };
   const handleAddressSelection = (selectedAddress, index) => {
-    setAddress(selectedAddress.address);
     setZipCode(selectedAddress.zipCode);
     setdivision(selectedAddress.division);
     setdistrict(selectedAddress.district);

@@ -22,7 +22,7 @@ export const createOrder = async (data) => {
         return {
           Products,
           quantity,
-          sellerId: Products.sellerId, // Assuming your product model has a "seller" field
+          sellerId: Products.sellerId,
           color: item.color,
           size: item.size,
         };
@@ -32,8 +32,7 @@ export const createOrder = async (data) => {
     const Price = productInfo.reduce((acc, item) => {
       const { Products, quantity } = item;
 
-      const productPrice =
-        (Products.discountPrice || Products.originalPrice) * quantity;
+      const productPrice = Products.presentPrice * quantity;
       return acc + productPrice;
     }, 0);
 
@@ -56,14 +55,15 @@ export const createOrder = async (data) => {
 
     for (let i = 0; i < unique.length; i++) {
       let price = 0;
+      let commition = 0;
       const productsForSeller = [];
 
       for (let j = 0; j < productInfo.length; j++) {
         const { Products, quantity, sellerId } = productInfo[j];
 
         if (unique[i] == sellerId.toString()) {
-          const productPrice = Products.discountPrice || Products.originalPrice;
-          price += productPrice * quantity;
+          commition += Products.commition * quantity;
+          price += Products.presentPrice * quantity;
           productsForSeller.push({
             quantity: quantity,
             Products,
@@ -75,6 +75,7 @@ export const createOrder = async (data) => {
           orderId: result.insertedId,
           sellerId: unique[i],
           price,
+          commition,
           delivery_status: "pending",
           shippingAddress,
           paymentInfo,

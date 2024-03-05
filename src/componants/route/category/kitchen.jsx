@@ -30,7 +30,7 @@ function Kitchen() {
           }
         >
           <Image
-            src="/man'fasion.gif"
+            src="/mixer.gif"
             alt="rajdhola_toy_product"
             width={500}
             height={500}
@@ -50,7 +50,7 @@ function Kitchen() {
           }
         >
           <Image
-            src="/woman_fasion.gif"
+            src="/gesh_cula.gif"
             alt="rajdhola_toy_product"
             width={500}
             height={500}
@@ -70,7 +70,7 @@ function Kitchen() {
           }
         >
           <Image
-            src="/kids_fasion.jpg"
+            src="/ricecooker.gif"
             alt="rajdhola_toy_product"
             width={500}
             height={500}
@@ -90,7 +90,7 @@ function Kitchen() {
           }
         >
           <Image
-            src="/jualary_fasion.jpg"
+            src="/catle.gif"
             alt="rajdhola_toy_product"
             width={500}
             height={500}

@@ -1,18 +1,24 @@
-import { getCategory } from "@/allActions/category/category";
-import styles from "@/libs/styles";
-import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 import BestSelling from "./bestSelling";
 import { bestSelling } from "@/allActions/product/product";
 import Kitchen from "./kitchen";
 import CateGroup from "./cateGroup";
-
+import CateGroupPhone from "./cateGroupPhone";
 async function Cetagory() {
   const products = await bestSelling();
   return (
     <div>
-      <div className="mb-8">
+      <div className="bg-white w-[98%] block  600px:hidden p-2 mx-auto ">
+        <h2 className="text-[20px]  font-[650] leading-[25px] pb-3">
+          Explore Category
+        </h2>
+        <CateGroupPhone />
+      </div>
+      <div className="bg-white w-[98%] block  600px:hidden p-2 mx-auto my-8">
+        <h2 className="text-[20px]  font-[650] leading-[25px] pb-3">Kitchen</h2>
+        <Kitchen />
+      </div>
+      <div className="my-8">
         <div className="w-[98%]  600px:w-11/12  mx-auto ">
           <div className="flex gap-4">
             <div className="bg-white w-full md:w-[48%] lg:w-[33%]    mx-auto p-4">

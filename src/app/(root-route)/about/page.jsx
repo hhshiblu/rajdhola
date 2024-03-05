@@ -9,7 +9,7 @@ const YourComponent = () => {
       <div className="h-96 relative">
         <Image
           className="w-full h-full"
-          src="https://www.shannonspringshotel.com/wp-content/uploads/2020/06/shopping-shannon-springs-2.jpg"
+          src=""
           alt=""
           width={100}
           height={100}
@@ -46,12 +46,7 @@ const YourComponent = () => {
         </div>
         <div className="mb-10 pt-10">
           <h2 className="text-4xl font-bold text-center mb-10">Our Values</h2>
-          <Image
-            src="https://icms-image.slatic.net/images/ims-web/0d3d43e8-d6de-4424-bab6-88bac82cd11d.png"
-            alt="jhshj"
-            width={100}
-            height={100}
-          />
+          <Image src="" alt="jhshj" width={100} height={100} />
         </div>
         <div className="mb-10 pt-10">
           <h2 className="text-4xl font-bold text-center mb-10">Our Promise</h2>
@@ -59,7 +54,7 @@ const YourComponent = () => {
             <div className="md:w-2/4 w-full">
               <Image
                 className="w-full h-full"
-                src="https://s40424.pcdn.co/in/wp-content/uploads/2023/04/what-does-a-business-analyst-do.png"
+                src=""
                 alt=""
                 width={100}
                 height={100}
@@ -69,7 +64,7 @@ const YourComponent = () => {
               <div className="flex px-5 py-3 items-center">
                 <Image
                   className="h-10 w-10"
-                  src="https://cdn-icons-png.flaticon.com/512/1/1437.png"
+                  src=""
                   alt="fdsfs"
                   height={100}
                   width={100}
@@ -84,7 +79,7 @@ const YourComponent = () => {
               <div className="flex px-5 py-3 items-center">
                 <Image
                   className="h-10 w-10"
-                  src="https://cdn-icons-png.flaticon.com/512/1/1437.png"
+                  src=""
                   alt="sf"
                   height={100}
                   width={100}
@@ -99,7 +94,7 @@ const YourComponent = () => {
               <div className="flex px-5 py-3 items-center">
                 <Image
                   className="h-10 w-10"
-                  src="https://cdn-icons-png.flaticon.com/512/1/1437.png"
+                  src=""
                   alt="ah"
                   height={100}
                   width={100}
@@ -114,7 +109,7 @@ const YourComponent = () => {
               <div className="flex px-5 py-3 items-center">
                 <Image
                   className="h-10 w-10"
-                  src="https://cdn-icons-png.flaticon.com/512/1/1437.png"
+                  src=""
                   alt="sdff"
                   height={100}
                   width={100}

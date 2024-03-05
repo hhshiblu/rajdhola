@@ -10,7 +10,7 @@ const formateProduct = (products) => {
   while (i < products.length) {
     let temp = [];
     let j = i;
-    while (j < i + 3) {
+    while (j < i + 4) {
       if (products[j]) {
         temp.push(products[j]);
       }
@@ -46,13 +46,13 @@ export const bestSelling = async () => {
   try {
     const db = await connectToDB();
 
-    const Less500Product = await db
+    const LProduct = await db
       .collection("products")
       .find({})
       .sort({ sold_out: -1 })
       .limit(9)
       .toArray();
-    const products = JSON.parse(JSON.stringify(Less500Product));
+    const products = JSON.parse(JSON.stringify(LProduct));
     const product = formateProduct(products);
     return product;
   } catch (error) {
@@ -70,7 +70,7 @@ export const topSelling = async () => {
       .collection("products")
       .find({})
       .sort({ sold_out: -1 })
-      .limit(25)
+      .limit(24)
       .toArray();
     const product = JSON.parse(JSON.stringify(Less500Product));
     return product;
@@ -160,7 +160,7 @@ export const getMoreProduct = async (id) => {
 };
 
 // product.js
-export const getAllproductsFeature = async (page, pageSize = 3) => {
+export const getAllproductsFeature = async (page, pageSize = 35) => {
   try {
     const db = await connectToDB();
     const products = await db
@@ -173,7 +173,6 @@ export const getAllproductsFeature = async (page, pageSize = 3) => {
     const product = JSON.parse(JSON.stringify(products));
     return product;
   } catch (e) {
-    console.error("Error fetching products:", e.message);
     throw e;
   }
 };

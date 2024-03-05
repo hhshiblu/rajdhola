@@ -20,7 +20,7 @@ function BestFasion() {
   return (
     <div className="flex gap-2 flex-wrap h-full ">
       <div
-        className="w-[45%] mx-auto"
+        className="w-[45%] mx-auto cursor-pointer"
         onClick={() => {
           router.push(
             "/products" + "?" + createQueryString("_c", "Men's Fashion")
@@ -34,13 +34,10 @@ function BestFasion() {
           height={500}
           className=" md:h-[90px] lg:h-[105px] w-full"
         />
-        <p className="text-[12px] cursor-pointer hover:text-red-600">
-          {" "}
-          Men&lsquo;s
-        </p>
+        <p className="text-[12px]  hover:text-red-600"> Men&lsquo;s</p>
       </div>
       <div
-        className="w-[45%] mx-auto"
+        className="w-[45%] mx-auto cursor-pointer"
         onClick={() =>
           router.push(
             "/products" + "?" + createQueryString("_c", "Women's Fashion")
@@ -57,7 +54,7 @@ function BestFasion() {
         <p className="text-[12px] "> Women&lsquo;s</p>
       </div>
       <div
-        className="w-[45%] mx-auto"
+        className="w-[45%] mx-auto cursor-pointer"
         onClick={() =>
           router.push(
             "/products" + "?" + createQueryString("_c", "Kids & Toys")
@@ -74,7 +71,7 @@ function BestFasion() {
         <p className="text-[12px] "> Kid&lsquo;s</p>
       </div>
       <div
-        className="w-[45%] mx-auto"
+        className="w-[45%] mx-auto cursor-pointer"
         onClick={() =>
           router.push(
             "/products" + "?" + createQueryString("_c", "Bag & Jewellery")

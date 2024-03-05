@@ -14,7 +14,26 @@ export const navItems = [
     url: "/about",
   },
 ];
-
+export const topCategory = [
+  {
+    name: "Men's Fashion",
+  },
+  {
+    name: "Women's Fashions",
+  },
+  {
+    name: "Boy's Fashions",
+  },
+  {
+    name: "Kids & Toys",
+  },
+  {
+    name: "Kitchen",
+  },
+  {
+    name: "Bag & Jewellery",
+  },
+];
 // branding data
 export const brandingData = [
   {

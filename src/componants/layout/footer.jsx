@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import React, { useCallback } from "react";
 import {
   AiFillFacebook,
   AiFillInstagram,
@@ -9,9 +11,22 @@ import {
 
 import Image from "next/image";
 import Link from "next/link";
-import { footerProductLinks, footercompanyLinks } from "@/libs/data";
+import { topCategory, footercompanyLinks } from "@/libs/data";
+import { MdOutgoingMail } from "react-icons/md";
 
 function Footer() {
+  const searchParams = useSearchParams();
+
+  const router = useRouter();
+  const createQueryString = useCallback(
+    (name, value) => {
+      const params = new URLSearchParams(searchParams);
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
   return (
     <div className="bg-[#195851]  text-white pb-16 md:pb-0">
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:px-8 px-4 pt-8 pb-6 md sm:text-center  items-center mx-auto">
@@ -59,16 +74,19 @@ function Footer() {
         </ul>
 
         <ul className="justify-center sm:text-start  pl-8  md:pl-0 mx-auto">
-          <h1 className="md-1 font-semibold text-[15px] "> Become Seller </h1>
-          {footercompanyLinks.map((link) => {
+          <h1 className="md-1 font-semibold text-[15px] "> Top Category </h1>
+          {topCategory.map((cate) => {
             return (
-              <li key={link.name} className="pl-1  ">
-                <Link
-                  href={link.link}
-                  className="text-gray-400 hover:text-teal-400 duration-300 text-sm cursor-pointer leading-6 text-[14px]"
-                >
-                  {link.name}
-                </Link>
+              <li
+                key={cate.name}
+                className="pl-1  text-[12px] cursor-pointer hover:text-red-400"
+                onClick={() =>
+                  router.push(
+                    "/products" + "?" + createQueryString("_c", cate.name)
+                  )
+                }
+              >
+                {cate.name}
               </li>
             );
           })}
@@ -76,7 +94,7 @@ function Footer() {
 
         <ul className="text-center sm:text-start  pl-8  md:pl-0 mx-auto">
           <h1 className="md-1 font-semibold text-[15px] "> Support </h1>
-          {footercompanyLinks.map((link) => {
+          {/* {footercompanyLinks.map((link) => {
             return (
               <li key={link.name} className="pl-1  ">
                 <Link
@@ -87,7 +105,11 @@ function Footer() {
                 </Link>
               </li>
             );
-          })}
+          })} */}
+          <div className="flex gap-1">
+            <MdOutgoingMail />
+            <li className="text-[12px]">support.rajdhola.com</li>
+          </div>
         </ul>
       </div>
 

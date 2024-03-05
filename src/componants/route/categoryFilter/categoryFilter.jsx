@@ -1,14 +1,28 @@
+"use client";
 import Image from "next/image";
-import React from "react";
+import React, { useCallback } from "react";
 import BestFasion from "./bestFasion";
 import "./styles.css";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 function CategoryFilter() {
+  const searchParams = useSearchParams();
+
+  const router = useRouter();
+  const createQueryString = useCallback(
+    (name, value) => {
+      const params = new URLSearchParams(searchParams);
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
   return (
     <div className="mb-8">
       <div className=" hidden md:block w-11/12  mx-auto  z-50">
-        <div className="flex gap-4">
-          <div className="bg-white  md:w-[32%]  xl:w-[24%] z-50 mx-auto p-4">
+        <div className="flex gap-4 ">
+          <div className="bg-white cursor-pointer  md:w-[32%]  xl:w-[24%] z-50 mx-auto p-4">
             <h2 className="text-[20px] font-[650] leading-[25px] pb-3">
               Best Toy for kids
             </h2>
@@ -18,8 +32,20 @@ function CategoryFilter() {
               width={500}
               height={500}
               className="h-[250px] w-full"
+              onClick={() => {
+                router.push(
+                  "/products" + "?" + createQueryString("_c", "Kids & Toys")
+                );
+              }}
             />
-            <p className="text-[15px] pl-2 pt-3 hover:underline hover:text-red-500 cursor-pointer text-[#007185]">
+            <p
+              className="text-[15px] pl-2 pt-3 hover:underline hover:text-red-500 cursor-pointer text-[#007185]"
+              onClick={() => {
+                router.push(
+                  "/products" + "?" + createQueryString("_c", "Kids & Toys")
+                );
+              }}
+            >
               Shop now
             </p>
           </div>
@@ -43,9 +69,25 @@ function CategoryFilter() {
               alt="rajdhola_watch_product"
               width={500}
               height={500}
-              className="h-[250px] w-full"
+              className="h-[250px] w-full cursor-pointer"
+              onClick={() => {
+                router.push(
+                  "/products" +
+                    "?" +
+                    createQueryString("_c", "Electronics Device")
+                );
+              }}
             />
-            <p className="text-[15px] pl-2 pt-3 hover:underline hover:text-red-500 cursor-pointer text-[#007185]">
+            <p
+              className="text-[15px] pl-2 pt-3 hover:underline hover:text-red-500 cursor-pointer text-[#007185]"
+              onClick={() => {
+                router.push(
+                  "/products" +
+                    "?" +
+                    createQueryString("_c", "Electronics Device")
+                );
+              }}
+            >
               Shop now
             </p>
           </div>
@@ -100,7 +142,14 @@ function CategoryFilter() {
       </div>
       <div className="600px:w-11/12 w-[98%]  md:hidden mx-auto ">
         <div className="flex gap-2 home_cate_slide overflow-x-auto">
-          <div className="  min-w-[160px] hover:shadow-md z-10">
+          <div
+            className="  min-w-[160px] hover:shadow-md z-10 cursor-pointer"
+            onClick={() => {
+              router.push(
+                "/products" + "?" + createQueryString("_c", "Kids & Toys")
+              );
+            }}
+          >
             <p className="text-[15px] bg-gray-200 font-[500] p-[4px] text-gray-800">
               Best Toy for kids
             </p>
@@ -112,7 +161,16 @@ function CategoryFilter() {
               className=" w-full"
             />
           </div>
-          <div className="  min-w-[160px] hover:shadow-md z-10">
+          <div
+            className="  min-w-[160px] hover:shadow-md z-10 cursor-pointer"
+            onClick={() => {
+              router.push(
+                "/products" +
+                  "?" +
+                  createQueryString("_c", "Electronics Device")
+              );
+            }}
+          >
             <p className="text-[15px] bg-gray-200 font-[500] p-[4px] text-gray-800">
               Popular electronic
             </p>
@@ -124,7 +182,14 @@ function CategoryFilter() {
               className=" w-full"
             />
           </div>
-          <div className="  min-w-[160px] hover:shadow-md z-10">
+          <div
+            className="  min-w-[160px] hover:shadow-md z-10 cursor-pointer"
+            onClick={() => {
+              router.push(
+                "/products" + "?" + createQueryString("_c", "Women's Fashions")
+              );
+            }}
+          >
             <p className="text-[15px] bg-gray-200 font-[500] p-[4px] text-gray-800">
               Elevate your fashion.
             </p>
@@ -136,7 +201,14 @@ function CategoryFilter() {
               className=" w-full"
             />
           </div>
-          <div className="  min-w-[160px] hover:shadow-md  z-10">
+          <div
+            className="  min-w-[160px] hover:shadow-md  z-10 cursor-pointer"
+            onClick={() => {
+              router.push(
+                "/products" + "?" + createQueryString("_c", "Bag & Jewellery")
+              );
+            }}
+          >
             <p className="text-[15px] bg-gray-200 font-[500] p-[4px] text-gray-800">
               Popular juyalari
             </p>

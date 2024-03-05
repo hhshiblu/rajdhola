@@ -407,21 +407,24 @@ const ProductDetails = ({ data }) => {
                   className="text-center px-3 py-4  flex flex-col justify-center items-center "
                 >
                   <p className="pt-[-2px] text-[15px] text-white font-[500] ">
-                    Profile
+                    <Link href="">Profile</Link>
                   </p>
                 </button>
                 <button
                   type="button"
                   className="text-center px-3 py-4  flex flex-col justify-center items-center "
                 >
-                  <p className="pt-[-2px] text-[15px] text-white font-[500] ">
+                  <Link
+                    href="/"
+                    className="pt-[-2px] text-[15px] text-white font-[500]"
+                  >
                     <Image
                       src="/apple_favicon.png"
                       alt="rajdhola logo"
                       width={25}
                       height={25}
                     />
-                  </p>
+                  </Link>
                 </button>
               </div>
 

@@ -6,7 +6,6 @@ import React, { useCallback } from "react";
 function CateGroup() {
   const searchParams = useSearchParams();
 
-  const pathName = usePathname();
   const router = useRouter();
   const createQueryString = useCallback(
     (name, value) => {
@@ -26,7 +25,7 @@ function CateGroup() {
         }
       >
         <Image
-          src="/man'fasion.gif"
+          src="/book.gif"
           alt="rajdhola_toy_product"
           width={500}
           height={500}
@@ -43,7 +42,7 @@ function CateGroup() {
         }
       >
         <Image
-          src="/woman_fasion.gif"
+          src="/woman.gif"
           alt="rajdhola_toy_product"
           width={500}
           height={500}
@@ -63,7 +62,7 @@ function CateGroup() {
         }
       >
         <Image
-          src="/kids_fasion.jpg"
+          src="/toys.gif"
           alt="rajdhola_toy_product"
           width={500}
           height={500}
@@ -83,7 +82,7 @@ function CateGroup() {
         }
       >
         <Image
-          src="/jualary_fasion.jpg"
+          src="/boys-fashion.gif"
           alt="rajdhola_toy_product"
           width={500}
           height={500}

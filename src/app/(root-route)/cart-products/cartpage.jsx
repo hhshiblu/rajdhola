@@ -69,11 +69,8 @@ function Cartpage({ searchParams }) {
       );
 
       if (productData) {
-        const priceToUse =
-          productData.product.product?.discountPrice ||
-          productData.product.product?.originalPrice;
-
-        newTotalPrice += priceToUse * item.quantity;
+        newTotalPrice +=
+          productData.product.product?.presentPrice * item.quantity;
       }
     }
 

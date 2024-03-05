@@ -1,6 +1,8 @@
+import { getUser } from "@/allActions/auth/auth";
 import React from "react";
 
-function page() {
+async function Page() {
+  const user = await getUser();
   return (
     <div className="w-[100%]">
       <h2 className="text-[#195851] font-semibold pb-3">My Details</h2>
@@ -13,18 +15,9 @@ function page() {
             </h2>
             <hr />
             <div className=" text-[13px] text-gray-500 ">
-              <p className="py-1">
-                {/* {name} */}
-                hasanul haque shiblu
-              </p>
-              <p>
-                {/* {number} */}
-                01782572426
-              </p>
-              <p className="py-1">
-                {/* {name} */}
-                hasanul haque shiblu
-              </p>
+              <p className="py-1">{user?.name}</p>
+              <p>{user.phoneNumber}</p>
+              <p className="py-1">{user?.email}</p>
             </div>
           </div>
 
@@ -33,10 +26,7 @@ function page() {
             <hr />
             <div className=" text-[13px] text-gray-500 ">
               <p className="pb-2 pt-1">Default shipping address </p>
-              <p className="text-gray-900 text-[14px]">
-                {/* {number} */}
-                Hasanul haque
-              </p>
+              <p className="text-gray-900 text-[14px]"></p>
               <p className="pt-1">15, kalibari road</p>
               <p className="py-[1px]">Netrakona , Mymenshing</p>
             </div>
@@ -47,4 +37,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

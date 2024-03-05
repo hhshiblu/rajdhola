@@ -55,7 +55,7 @@ const BestSelling = ({ title, products }) => {
     );
   };
   return (
-    <div className="flex gap-8 flex-col-reverse ">
+    <div className="flex gap-6 flex-col-reverse ">
       <Carousel
         autoPlay={false}
         infinite={false}
@@ -69,7 +69,7 @@ const BestSelling = ({ title, products }) => {
           return (
             <div
               key={i}
-              className="flex flex-col justify-start gap-2 py-3 w-full "
+              className="flex flex-col justify-start gap-2 py-3 w-full px-1"
             >
               {p.map((pl, j) => (
                 <div key={j} className="flex justify-start items-start pb-2">

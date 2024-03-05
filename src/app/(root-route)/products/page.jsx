@@ -50,7 +50,7 @@ async function Page({ searchParams }) {
             category={category}
           />
         </div>
-        <div className="w-full min-h-[95vh] px-2">
+        <div className="w-full min-h-[80vh] px-2">
           <h2 className=" font-[400] pb-1 text-[15px]">All Result</h2>
 
           <Suspense

@@ -1,10 +1,12 @@
+import { getUser } from "@/allActions/auth/auth";
 import Footer from "@/componants/layout/footer";
 import Header from "@/componants/layout/header";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
-function layout({ children }) {
+import LogOut from "@/components/logout.jsx/page";
+async function layout({ children }) {
+  const user = await getUser();
   return (
     <div>
       <Header />
@@ -14,7 +16,7 @@ function layout({ children }) {
             <div className=" text-gray-800  text-[12px] ">
               <p>
                 <span>Hello, </span>
-                <span id="lzd_current_logon_user_name"> jjssaahasan40</span>
+                <span id="lzd_current_logon_user_name"> {user.name}</span>
               </p>
             </div>
             <ul className="pt-4">
@@ -55,22 +57,29 @@ function layout({ children }) {
                   Sell on Rajdhola
                 </h2>
               </li>
+              <LogOut />
             </ul>
           </div>
           <div className=" w-[100%]">{children}</div>
         </div>
       </div>
-      <div className="p-8">
-        <div>
-          <Image
-            src="/watch.jpg"
-            alt=""
-            width={500}
-            height={500}
-            className="w-[80px] h-[80px] rounded-full"
-          />
-          <h2 className="text-[13px]"> md Hasanul Haque Shiblu</h2>
-          <h2 className="text-[13px]"> 01782572426</h2>
+      <div className="p-8 md:hidden block">
+        <div className="flex justify-between">
+          <div>
+            <Image
+              src=""
+              alt=""
+              width={500}
+              height={500}
+              className="w-[80px] h-[80px] rounded-full"
+            />
+            <h2 className="text-[13px]"> {user.name}</h2>
+            <h2 className="text-[13px]"> {user.phoneNumber}</h2>
+          </div>
+          <div>
+            {" "}
+            <h2 className="cursor-pointer font-bold text-2xl">...</h2>
+          </div>
         </div>
         <div className="border-b-[2px] py-1"></div>
         <div className="py-4 flex  overflow-x-auto gap-3">

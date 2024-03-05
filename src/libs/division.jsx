@@ -1,10 +1,8 @@
 export const DivisionSelector = ({ divisions, onSelectDivision }) => {
   return (
     <div className="flex flex-col w-[98%] md:w-[45%]">
-      {" "}
       <label className="block text-sm font-medium text-gray-700 py-">
-        {" "}
-        My divisions{" "}
+        My divisions
       </label>
       <select
         onChange={(e) => onSelectDivision(e.target.value)}
@@ -24,7 +22,7 @@ export const DivisionSelector = ({ divisions, onSelectDivision }) => {
 export const DistrictSelector = ({ districts, onSelectDistrict }) => {
   return (
     <div className="flex flex-col w-[98%] md:w-[45%]">
-      <label className="py-1 block text-sm font-medium text-gray-700">
+      <label className=" block text-sm font-medium text-gray-700">
         My district
       </label>
       <select
