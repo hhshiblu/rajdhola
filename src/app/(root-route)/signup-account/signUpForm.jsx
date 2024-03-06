@@ -106,7 +106,6 @@ function SignUpForm({ searchParams }) {
     }
   };
 
-  const handleResendClick = () => {};
   return (
     <>
       <div

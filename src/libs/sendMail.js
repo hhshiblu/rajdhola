@@ -18,5 +18,13 @@ export const sendMail = async (options) => {
     text: options.message,
     html: options.html,
   };
-  await trasporter.sendMail(mailOption);
+  // await trasporter.sendMail(mailOption);
+  try {
+    await trasporter.sendMail(mailOption);
+    return {
+      success: true,
+    };
+  } catch (error) {
+    return `Error sending email: ${error.message}`;
+  }
 };

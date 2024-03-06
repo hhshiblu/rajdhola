@@ -109,7 +109,9 @@ function CreateSellerFrom() {
         });
       }
       if (res.success == true) {
-        router.push(`/create-seller?email=${user.email}&success=true`);
+        router.push(
+          `/create-seller/account?email=${user.email}&message=An OTP has been %sent to your registered %%email`
+        );
         toast.success(res.message, {
           duration: 3000,
           cancel: {
@@ -128,6 +130,7 @@ function CreateSellerFrom() {
       }
     }
   };
+
   return (
     <form className="space-y-1" action={handleSubmit}>
       <div className="flex flex-wrap gap-1 md:gap-5">

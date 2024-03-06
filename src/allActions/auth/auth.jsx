@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import { sendMail } from "@/libs/sendMail";
 import { sentOtp } from "@/libs/sentOtp";
 import { v4 as uuidv4 } from "uuid";
-import { uploadFileToS3 } from "@/libs/uploadimage";
+import { deleteFiles, uploadFileToS3 } from "@/libs/uploadimage";
 import connectToDB from "@/libs/connect";
 import { ObjectId } from "mongodb";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
@@ -55,7 +55,7 @@ export const createSeller = async (fromData) => {
     !zipCode ||
     !password ||
     !cpassword ||
-    !image ||
+    // !image ||
     !category
   ) {
     return { error: "please fill all  fields" };
@@ -77,52 +77,32 @@ export const createSeller = async (fromData) => {
         error: "user already exists",
       };
     }
-    let images = null;
-    const name = uuidv4();
-    try {
-      const buffer = Buffer.from(await image.arrayBuffer());
-      const res = await uploadFileToS3(buffer, name + image.name);
-      images = res;
-    } catch (error) {
-      return { error: "Something  wrong! Try Later" };
-    }
 
-    const seller = {
-      userName,
-      shopName,
-      images,
-      email,
-      address,
-      category,
-      password,
-      cpassword,
-      phoneNumber: parseInt(phoneNumber, 10),
-      zipCode: parseInt(zipCode, 10),
-    };
-    const ActivationToken = createActivationToken(seller);
-    const activeUrl = `https://rajdhola.com/create-seller/activation/${ActivationToken}`;
-
+    const Password = await bcrypt.hash(password, 10);
+    const cPassword = await bcrypt.hash(cpassword, 10);
+    const otp = generateOTP();
     try {
-      await sendMail({
+      const res = await sendMail({
         email: email,
         subject: "Activate your shop",
         html: `
         <html lang="en">
 
       <head></head>
-      <div id="__react-email-preview" style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0">The sales intelligence platform that helps you uncover qualified leads.<div> ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿</div>
+      <div id="__react-email-preview" style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0">Begin your Rajdhola venture - start selling with us today!.<div> ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿</div>
       </div>
 
       <body style="background-color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen-Sans,Ubuntu,Cantarell,&quot;Helvetica Neue&quot;,sans-serif">
         <table align="center" role="presentation" cellSpacing="0" cellPadding="0" border="0" width="100%" style="max-width:37.5em;margin:0 auto;padding:20px 0 48px">
           <tr style="width:100%">
-            <td><img alt="rajdhola.com" src="https://firebasestorage.googleapis.com/v0/b/my-portfolio-d208f.appspot.com/o/rajdhola_white_logo.svg?alt=media&token=c72b4e45-54ea-410e-a9d1-167695190311" width="170" height="50" style="display:block;outline:none;border:none;text-decoration:none;margin:0 auto" />
+            <td><img alt="rajdhola.com" src="https://rajdhola.s3.ap-south-1.amazonaws.com/rajdhola.jpg" width="140" height="40" style="display:block;outline:none;border:none;text-decoration:none;margin:0 auto" />
               <p style="font-size:16px;line-height:26px;margin:16px 0">Hi ${shopName},</p>
               <p style="font-size:16px;line-height:26px;margin:16px 0">Welcome to Rajdhola, transform your sales journey! Discover leads, close deals, and become a vendor powerhouse. Click below to activate your account now..</p>
               <table style="text-align:center" align="center" border="0" cellPadding="0" cellSpacing="0" role="presentation" width="100%">
                 <tbody>
                   <tr>
-                    <td><a href="${activeUrl}" target="_blank" style="background-color:#5F51E8;border-radius:3px;color:#fff;font-size:16px;text-decoration:none;text-align:center;display:inline-block;p-x:12px;p-y:12px;line-height:100%;max-width:100%;padding:12px 12px"><span><!--[if mso]><i style="letter-spacing: 12px;mso-font-width:-100%;mso-text-raise:18" hidden>&nbsp;</i><![endif]--></span><span style="background-color:#5F51E8;border-radius:3px;color:#fff;font-size:16px;text-decoration:none;text-align:center;display:inline-block;p-x:12px;p-y:12px;max-width:100%;line-height:120%;text-transform:none;mso-padding-alt:0px;mso-text-raise:9px">Click Here</span><span><!--[if mso]><i style="letter-spacing: 12px;mso-font-width:-100%" hidden>&nbsp;</i><![endif]--></span></a></td>
+               <td style="font-weight: bold; font-size: 22px;">${otp}</td>
+
                   </tr>
                 </tbody>
               </table>
@@ -137,11 +117,67 @@ export const createSeller = async (fromData) => {
     </html>
       `,
       });
+      if (res.success == true) {
+        const unverified = await db.collection("unverifiedsellers").findOne({
+          email: email,
+        });
 
-      return {
-        success: true,
-        message: `please cheak your email : ${email} to activate your account`,
-      };
+        if (!unverified) {
+          let images = null;
+          const name = uuidv4();
+          try {
+            const buffer = Buffer.from(await image.arrayBuffer());
+            const res = await uploadFileToS3(buffer, name + image.name);
+            images = res;
+          } catch (error) {
+            return { error: "Something  wrong! Try Later" };
+          }
+          await db.collection("unverifiedsellers").insertOne({
+            userName,
+            shopName,
+            images,
+            email,
+            address,
+            category,
+            password: Password,
+            cpassword: cPassword,
+            phoneNumber: parseInt(phoneNumber, 10),
+            zipCode: parseInt(zipCode, 10),
+            otp: parseInt(otp, 10),
+          });
+        } else {
+          // console.log(unverified.images.objectkey);
+          // const res = await deleteFiles(unverified.images.objectkey);
+          // console.log(res);
+          const filter = { _id: new ObjectId(unverified._id) };
+          const update = {
+            $set: {
+              userName,
+              shopName,
+              images: unverified.images,
+              email,
+              address,
+              category,
+              password: Password,
+              cpassword: cPassword,
+              phoneNumber: parseInt(phoneNumber, 10),
+              zipCode: parseInt(zipCode, 10),
+              otp: parseInt(otp, 10),
+            },
+          };
+
+          await db.collection("unverifiedsellers").updateOne(filter, update);
+        }
+        return {
+          success: true,
+          message: `please cheak your email : ${email} to activate your account`,
+        };
+      } else {
+        return {
+          success: false,
+          message: `Something  error occurred`,
+        };
+      }
     } catch (error) {
       return { error: error.message, status: 500 };
     }
@@ -150,56 +186,53 @@ export const createSeller = async (fromData) => {
   }
 };
 
-export async function activationSeller(token) {
+export async function activationSeller(email, otp) {
   try {
     const db = await connectToDB();
-    const seller = jwt.verify(token, process.env.ACTIVATED_KEY);
-
-    if (!seller) {
+    if (!otp) {
       return {
-        success: false,
-        error: "Link timed out !",
+        error: "otp field required",
       };
     }
-
-    const sellerExit = await db.collection("sellers").findOne({
-      email: seller.email,
+    const Seller = await db.collection("unverifiedsellers").findOne({
+      email: email,
     });
-    if (sellerExit) {
+
+    const enteredOTP = parseInt(otp, 10);
+
+    if (enteredOTP !== Seller.otp) {
+      return { error: "Invalid OTP. Retry or get a new one." };
+    } else {
+      await db.collection("sellers").insertOne({
+        userName: Seller.userName,
+        shopName: Seller.shopName,
+        images: Seller.images,
+        email: Seller.email,
+        address: Seller.address,
+        category: Seller.category,
+        password: Seller.password,
+        cPassword: Seller.cpassword,
+        phoneNumber: Seller.phoneNumber,
+        zipCode: parseInt(Seller.zipCode, 10),
+        status: "pending",
+        v: parseInt(0, 10),
+        available_Banalace: parseInt(0, 10),
+        withdrawRequest: [],
+        createdAt: new Date(),
+      });
+      await db
+        .collection("unverifiedsellers")
+        .deleteOne({ _id: new ObjectId(Seller._id) });
+
       return {
-        success: false,
-        error: "user already activated",
+        success: true,
+        message: " Your Shop created successfully !",
       };
     }
-    const password = await bcrypt.hash(seller.password, 10);
-    const cPassword = await bcrypt.hash(seller.cpassword, 10);
-
-    db.collection("sellers").insertOne({
-      userName: seller.userName,
-      shopName: seller.shopName,
-      images: seller.images,
-      email: seller.email,
-      address: seller.address,
-      category: seller.category,
-      password,
-      cPassword,
-      phoneNumber: parseInt(seller.phoneNumber, 10),
-      zipCode: parseInt(seller.zipCode, 10),
-      status: "pending",
-      v: parseInt(0, 10),
-      available_Banalace: parseInt(0, 10),
-      withdrawRequest: [],
-      createdAt: new Date(),
-    });
-
-    return {
-      success: true,
-      message: "shop created successfully",
-    };
   } catch (error) {
     return {
       success: false,
-      error: "Too late link timed out !",
+      error: "Too late  timed out !",
       statusCode: 500,
     };
   }
@@ -413,7 +446,6 @@ export const addAddress = async (fromData) => {
 
 export const deleteAddress = async (addressType) => {
   try {
-    console.log(addressType);
     const session = await getServerSession(authOptions);
     const db = await connectToDB();
     const collection = db.collection("users");
@@ -443,4 +475,11 @@ export const deleteAddress = async (addressType) => {
       error: error.message,
     };
   }
+};
+
+export const autodelete = async () => {
+  const db = await connectToDB();
+  const unverifieduser = await db.collection("unverifiedusers").findOne({
+    phoneNumber: parseInt(phoneNumber, 10),
+  });
 };

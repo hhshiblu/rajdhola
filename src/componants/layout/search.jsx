@@ -294,77 +294,67 @@ const Search = ({ user, categories }) => {
       </div>
 
       {!path.includes("/product/") && (
-        <div className="fixed bottom-0 left-0 w-full md:hidden bg-[#00453e] h-[50px] mx-auto z-50">
-          <div className="flex">
-            <div className="grow rounded-tr-[30px] ">
-              <div className="flex justify-around">
-                <button
-                  type="button"
-                  className="text-center px-3 py-4  flex flex-col justify-center items-center mt-[-5px]"
-                  onClick={() => setMaincate(true)}
-                >
-                  <BiCategoryAlt className="text-white " size={18} />
-                  <p className="mt-[1px] text-xs text-white font-[700] ">
-                    Category
-                  </p>
-                </button>
-                <Link href={`${user && user ? "/user-account" : "/login"}`}>
-                  <button
-                    type="button"
-                    className="text-center px-3 py-4  flex flex-col justify-center items-center mt-[-5px]"
-                  >
-                    <CgProfile className="text-white " size={18} />
-                    <p className="mt-[1px] text-xs text-white font-[700] ">
-                      Account
-                    </p>
-                  </button>
-                </Link>
-                <button
-                  type="button"
-                  className="text-center px-3 py-4  flex flex-col justify-center items-center mt-[-10px]"
-                >
-                  <Link href="/" className=" cursor-pointer">
-                    <Image
-                      src="/rd_icon_white.svg"
-                      alt=""
-                      className="h-[32px] "
-                      width={30}
-                      height={40}
-                    />
-                  </Link>
-                </button>
-                <Link href={`/`}>
-                  <button
-                    type="button"
-                    className="text-center px-3 py-4  flex flex-col justify-center items-center mt-[-5px]"
-                  >
-                    <AiFillDashboard className="text-white " size={18} />
-                    <p className="mt-[1px] text-xs text-white font-[700] ">
-                      Shop
-                    </p>
-                  </button>
-                </Link>
-                <button
-                  type="button"
-                  className="text-center px-3 py-4  flex flex-col justify-center items-center mt-[-5px] "
-                >
-                  <Link href="/cart-products" className="relative">
-                    <FiShoppingCart
-                      className="text-white  relative"
-                      size={18}
-                    />
-                    <h2 className=" absolute  right-[-7px] top-[-4px] rounded-full bg-[#eb2828] w-5 h-5 top right p-0 m-0 text-white font-mono text-[13px] loading-tight text-center">
-                      {cart.length}
-                    </h2>
-                    <p className="mt-[1px] text-xs text-white font-[700] ">
-                      Cart
-                    </p>
-                  </Link>
-                </button>
-              </div>
-            </div>
-          </div>
+        <div className="fixed bottom-0 left-0 w-full md:hidden bg-[#00453e] h-[50px] mx-auto z-50 flex justify-around items-center">
+          {/* <div className=""> */}
+          <button
+            type="button"
+            className="text-center   flex flex-col justify-center items-center "
+            onClick={() => setMaincate(true)}
+          >
+            <BiCategoryAlt className="text-white " size={18} />
+            <p className="mt-[1px] text-xs text-white font-[700] ">Category</p>
+          </button>
+          <Link href={`${user && user ? "/user-account" : "/login"}`}>
+            <button
+              type="button"
+              className="text-center   flex flex-col justify-center items-center "
+            >
+              <CgProfile className="text-white " size={18} />
+              <p className="mt-[1px] text-xs text-white font-[700] ">Account</p>
+            </button>
+          </Link>
+          <button
+            type="button"
+            className="text-center   flex flex-col justify-center items-center "
+          >
+            <Link href="/" className=" cursor-pointer">
+              <Image
+                src="/rd_icon_white.svg"
+                alt=""
+                className="h-[32px] "
+                width={30}
+                height={40}
+              />
+            </Link>
+          </button>
+          <Link href={`/create-seller`}>
+            <button
+              type="button"
+              className="text-center   flex flex-col justify-center items-center "
+            >
+              <AiFillDashboard className="text-white " size={18} />
+              <Link
+                href="/create-seller"
+                className="mt-[1px] text-xs text-white font-[700]"
+              >
+                Shop
+              </Link>
+            </button>
+          </Link>
+          <button
+            type="button"
+            className="text-center  flex flex-col justify-center items-center "
+          >
+            <Link href="/cart-products" className="relative">
+              <FiShoppingCart className="text-white  relative" size={18} />
+              <h2 className=" absolute  right-[-7px] top-[-4px] rounded-full bg-[#eb2828] w-5 h-5 top right p-0 m-0 text-white font-mono text-[13px] loading-tight text-center">
+                {cart.length}
+              </h2>
+              <p className="mt-[1px] text-xs text-white font-[700] ">Cart</p>
+            </Link>
+          </button>
         </div>
+        // </div>
       )}
     </>
   );
