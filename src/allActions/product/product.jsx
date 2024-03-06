@@ -280,3 +280,5 @@ const buildMongoDBQuery = (query) => {
 
   return { query: mongodbQuery, sortOptions };
 };
+
+export const hello = () => {};
