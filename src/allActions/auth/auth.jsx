@@ -55,7 +55,7 @@ export const createSeller = async (fromData) => {
     !zipCode ||
     !password ||
     !cpassword ||
-    // !image ||
+    !image ||
     !category
   ) {
     return { error: "please fill all  fields" };
@@ -64,6 +64,15 @@ export const createSeller = async (fromData) => {
     return {
       error: "passwords do not match",
     };
+  }
+  let images = null;
+  const name = uuidv4();
+  try {
+    const buffer = Buffer.from(await image.arrayBuffer());
+    const res = await uploadFileToS3(buffer, name + image.name);
+    images = res;
+  } catch (error) {
+    return { error: "Something  wrong! Try Later" };
   }
 
   try {
@@ -123,15 +132,6 @@ export const createSeller = async (fromData) => {
         });
 
         if (!unverified) {
-          let images = null;
-          const name = uuidv4();
-          try {
-            const buffer = Buffer.from(await image.arrayBuffer());
-            const res = await uploadFileToS3(buffer, name + image.name);
-            images = res;
-          } catch (error) {
-            return { error: "Something  wrong! Try Later" };
-          }
           await db.collection("unverifiedsellers").insertOne({
             userName,
             shopName,
@@ -154,7 +154,7 @@ export const createSeller = async (fromData) => {
             $set: {
               userName,
               shopName,
-              images: unverified.images,
+              images,
               email,
               address,
               category,
