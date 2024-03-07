@@ -7,9 +7,8 @@ import {
 } from "@aws-sdk/client-s3";
 
 function removeDuplicateNumber(url) {
-  const regex = /(\(\d+\))/; // Regular expression to match (1), (2), etc.
+  const regex = /(\(\d+\))/;
 
-  // Remove any spaces before the file extension
   const updatedUrl = url.replace(/\s+/g, "");
   if (regex.test(updatedUrl)) {
     const finalUrl = updatedUrl.replace(regex, "");
@@ -22,7 +21,7 @@ function removeDuplicateNumber(url) {
 function getObjectKeyFromS3Url(url) {
   try {
     const urlObject = new URL(url);
-    const objectKey = urlObject.pathname.substring(1); // Remove leading '/'
+    const objectKey = urlObject.pathname.substring(1);
     return objectKey;
   } catch (error) {
     console.error("Error extracting object key:", error.message);
@@ -74,7 +73,6 @@ export async function deleteFiles(filesToDelete) {
 
   try {
     const res = await s3Client.send(new DeleteObjectCommand(params));
-    console.log(`File ${filesToDelete} deleted successfully.`);
     return res;
   } catch (err) {
     console.error(`Error deleting file ${filesToDelete}:`, err);

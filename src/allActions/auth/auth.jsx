@@ -65,18 +65,17 @@ export const createSeller = async (fromData) => {
       error: "passwords do not match",
     };
   }
-  let images = null;
-  const name = uuidv4();
-  try {
-    const buffer = Buffer.from(await image.arrayBuffer());
-    const res = await uploadFileToS3(buffer, name + image.name);
-    images = res;
-  } catch (error) {
-    return { error: "Something  wrong! Try Later" };
-  }
+  // let images = null;
+  // const name = uuidv4();
+  // try {
+  //   const buffer = Buffer.from(await image.arrayBuffer());
+  //   const res = await uploadFileToS3(buffer, name + image.name);
+  //   images = res;
+  // } catch (error) {
+  //   return { error: "Something  wrong! Try Later" };
+  // }
 
   try {
-    const db = await connectToDB();
     const isSeller = await db.collection("sellers").findOne({
       email: email,
     });
@@ -130,12 +129,12 @@ export const createSeller = async (fromData) => {
         const unverified = await db.collection("unverifiedsellers").findOne({
           email: email,
         });
-
+        console.log(unverified);
         if (!unverified) {
           await db.collection("unverifiedsellers").insertOne({
             userName,
             shopName,
-            images,
+            // images,
             email,
             address,
             category,
@@ -146,15 +145,15 @@ export const createSeller = async (fromData) => {
             otp: parseInt(otp, 10),
           });
         } else {
-          // console.log(unverified.images.objectkey);
-          // const res = await deleteFiles(unverified.images.objectkey);
-          // console.log(res);
+          console.log(unverified.images.objectkey);
+          const res = await deleteFiles(unverified.images.objectkey);
+          console.log(res);
           const filter = { _id: new ObjectId(unverified._id) };
           const update = {
             $set: {
               userName,
               shopName,
-              images,
+              // images:,
               email,
               address,
               category,
@@ -186,7 +185,130 @@ export const createSeller = async (fromData) => {
   }
 };
 
-export async function activationSeller(email, otp) {
+export const CreateSeller = async (identity) => {
+  const phoneNumberRegex = /^(019|013|014|018|015|016|017)\d{8}$/;
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  try {
+    const db = await connectToDB();
+
+    if (/[a-zA-Z@]/.test(identity)) {
+      const email = identity;
+      if (!emailRegex.test(email)) {
+        return {
+          error: "Invalid email address",
+        };
+      }
+      const seller = await db.collection("sellers").findOne({
+        email: email,
+      });
+      if (seller) {
+        return {
+          error: "user already exists",
+        };
+      }
+      const otp = generateOTP();
+      const res = await sendMail({
+        email: email,
+        subject: "Activate your shop",
+        html: `
+        <html lang="en">
+
+      <head></head>
+      <div id="__react-email-preview" style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0">Begin your Rajdhola venture - start selling with us today!.<div> ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿</div>
+      </div>
+
+      <body style="background-color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen-Sans,Ubuntu,Cantarell,&quot;Helvetica Neue&quot;,sans-serif">
+        <table align="center" role="presentation" cellSpacing="0" cellPadding="0" border="0" width="100%" style="max-width:37.5em;margin:0 auto;padding:20px 0 48px">
+          <tr style="width:100%">
+            <td><img alt="rajdhola.com" src="https://rajdhola.s3.ap-south-1.amazonaws.com/rajdhola.jpg" width="140" height="40" style="display:block;outline:none;border:none;text-decoration:none;margin:0 auto" />
+              <p style="font-size:16px;line-height:26px;margin:16px 0">Hi ${email},</p>
+              <p style="font-size:16px;line-height:26px;margin:16px 0">Welcome to Rajdhola, transform your sales journey! Discover leads, close deals, and become a vendor powerhouse. Click below to activate your account now..</p>
+              <table style="text-align:center" align="center" border="0" cellPadding="0" cellSpacing="0" role="presentation" width="100%">
+                <tbody>
+                  <tr>
+               <td style="font-weight: bold; font-size: 22px;">${otp}</td>
+
+                  </tr>
+                </tbody>
+              </table>
+              <p style="font-size:16px;line-height:26px;margin:16px 0">Best,<br />The Rajdhola team</p>
+              <hr style="width:100%;border:none;border-top:1px solid #eaeaea;border-color:#cccccc;margin:20px 0" />
+              <p style="font-size:12px;line-height:24px;margin:16px 0;color:#8898aa">@rajdhola </p>
+            </td>
+          </tr>
+        </table>
+      </body>
+
+    </html>
+      `,
+      });
+      if (res.success == true) {
+        const unverified = await db.collection("unverifiedsellers").findOne({
+          email: email,
+        });
+
+        if (!unverified) {
+          await db.collection("unverifiedsellers").insertOne({
+            email: email,
+            otp: parseInt(otp, 10),
+          });
+        } else {
+          const filter = { _id: new ObjectId(unverified._id) };
+          const update = { $set: { otp: parseInt(otp, 10) } };
+
+          await db.collection("unverifiedsellers").updateOne(filter, update);
+        }
+        return {
+          success: true,
+          email: true,
+          message: "6 digits otp sent successfully",
+        };
+      }
+    } else if (/^\d+$/.test(identity)) {
+      const number = identity;
+      if (!phoneNumberRegex.test(number) || number.length !== 11) {
+        return {
+          error: "Invalid phone number",
+        };
+      }
+      const seller = await db.collection("sellers").findOne({
+        phoneNumber: parseInt(number, 10),
+      });
+      if (seller) {
+        return {
+          error: "user already exists",
+        };
+      }
+      const ontimeOtp = generateOTP();
+      const res = await sentOtp(number, ontimeOtp);
+
+      if (res.success == 1) {
+        const unverified = await db.collection("unverifiedsellers").findOne({
+          phoneNumber: parseInt(number, 10),
+        });
+
+        if (!unverified) {
+          await db.collection("unverifiedsellers").insertOne({
+            phoneNumber: parseInt(number, 10),
+            otp: parseInt(ontimeOtp, 10),
+          });
+        } else {
+          const filter = { _id: new ObjectId(unverified._id) };
+          const update = { $set: { otp: parseInt(ontimeOtp, 10) } };
+
+          await db.collection("unverifiedsellers").updateOne(filter, update);
+        }
+        return {
+          success: true,
+          number: true,
+          message: "6 digits otp sent successfully",
+        };
+      }
+    }
+  } catch (error) {}
+};
+
+export async function activationSeller(identity, otp) {
   try {
     const db = await connectToDB();
     if (!otp) {
@@ -194,42 +316,166 @@ export async function activationSeller(email, otp) {
         error: "otp field required",
       };
     }
-    const Seller = await db.collection("unverifiedsellers").findOne({
-      email: email,
-    });
-
     const enteredOTP = parseInt(otp, 10);
-
-    if (enteredOTP !== Seller.otp) {
-      return { error: "Invalid OTP. Retry or get a new one." };
-    } else {
-      await db.collection("sellers").insertOne({
-        userName: Seller.userName,
-        shopName: Seller.shopName,
-        images: Seller.images,
-        email: Seller.email,
-        address: Seller.address,
-        category: Seller.category,
-        password: Seller.password,
-        cPassword: Seller.cpassword,
-        phoneNumber: Seller.phoneNumber,
-        zipCode: parseInt(Seller.zipCode, 10),
-        status: "pending",
-        v: parseInt(0, 10),
-        available_Banalace: parseInt(0, 10),
-        withdrawRequest: [],
-        createdAt: new Date(),
+    if (/[a-zA-Z@]/.test(identity)) {
+      const email = identity;
+      const Seller = await db.collection("unverifiedsellers").findOne({
+        email: email,
       });
-      await db
-        .collection("unverifiedsellers")
-        .deleteOne({ _id: new ObjectId(Seller._id) });
 
-      return {
-        success: true,
-        message: " Your Shop created successfully !",
-      };
+      if (enteredOTP !== Seller.otp) {
+        return { error: "Invalid OTP. Retry or get a new one." };
+      } else {
+        const filter = { _id: new ObjectId(Seller._id) };
+        const update = {
+          $set: {
+            verify: true,
+            v: parseInt(0, 10),
+            updated: new Date(),
+          },
+        };
+
+        await db.collection("unverifiedsellers").updateOne(filter, update);
+        return {
+          success: true,
+          message: "Shop verified successfully !",
+          statusCode: 201,
+        };
+      }
+    } else {
+      const Seller = await db.collection("unverifiedsellers").findOne({
+        phoneNumber: parseInt(identity, 10),
+      });
+
+      if (enteredOTP !== Seller.otp) {
+        return { error: "Invalid OTP. Retry or get a new one." };
+      } else {
+        const filter = { _id: new ObjectId(Seller._id) };
+        const update = {
+          $set: {
+            verify: true,
+            v: parseInt(0, 10),
+            updated: new Date(),
+          },
+        };
+
+        await db.collection("unverifiedsellers").updateOne(filter, update);
+        return {
+          success: true,
+          message: " Shop verified successfully !",
+          statusCode: 201,
+        };
+      }
     }
   } catch (error) {
+    return {
+      success: false,
+      error: "Too late  timed out !",
+      statusCode: 500,
+    };
+  }
+}
+
+export async function sellerCreateWithInfo(
+  identity,
+  cate,
+  password,
+  cpassword
+) {
+  console.log(identity, cpassword, cate, password);
+  try {
+    if (!password || !cpassword || !cate) {
+      return { error: "please fill all  fields" };
+    }
+    if (password !== cpassword) {
+      return {
+        error: "Passwords do not match",
+      };
+    }
+
+    if (password.length < 5) {
+      return {
+        error: "Password must be at least 5 characters long",
+      };
+    }
+
+    const strongPasswordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{5,}$/;
+    if (!strongPasswordRegex.test(password)) {
+      return {
+        error:
+          "Password must be strong (at least one uppercase letter, one lowercase letter, and one digit)",
+      };
+    }
+    const Password = await bcrypt.hash(password, 10);
+    const cPassword = await bcrypt.hash(cpassword, 10);
+    const db = await connectToDB();
+    if (/[a-zA-Z@]/.test(identity)) {
+      const email = identity;
+      const Seller = await db.collection("unverifiedsellers").findOne({
+        email: email,
+        verify: true,
+      });
+      if (Seller) {
+        await db.collection("sellers").insertOne({
+          email: Seller.email,
+          category: cate,
+          status: "pending",
+          password: Password,
+          cPassword,
+          v: parseInt(0, 10),
+          available_Banalace: parseInt(0, 10),
+          withdrawRequest: [],
+          createdAt: new Date(),
+        });
+        await db
+          .collection("unverifiedsellers")
+          .deleteOne({ _id: new ObjectId(Seller._id) });
+
+        return {
+          success: true,
+          message: " Shop created successfully !",
+          statusCode: 201,
+        };
+      } else {
+        return {
+          error: "user not found",
+        };
+      }
+    } else {
+      const Seller = await db.collection("unverifiedsellers").findOne({
+        phoneNumber: parseInt(identity, 10),
+        verify: true,
+      });
+
+      if (Seller) {
+        await db.collection("sellers").insertOne({
+          phoneNumber: Seller.phoneNumber,
+          category: cate,
+          status: "pending",
+          password: Password,
+          cPassword,
+          v: parseInt(0, 10),
+          available_Banalace: parseInt(0, 10),
+          withdrawRequest: [],
+          createdAt: new Date(),
+        });
+        await db
+          .collection("unverifiedsellers")
+          .deleteOne({ _id: new ObjectId(Seller._id) });
+
+        return {
+          success: true,
+          message: " Shop created successfully !",
+          statusCode: 201,
+        };
+      } else {
+        return {
+          error: "user not found",
+        };
+      }
+    }
+  } catch (error) {
+    console.log(error.message);
     return {
       success: false,
       error: "Too late  timed out !",

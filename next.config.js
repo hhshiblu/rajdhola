@@ -13,6 +13,12 @@ module.exports = {
         port: "",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "newrajdhola.s3.amazonaws.com",
+        port: "",
+        pathname: "**",
+      },
     ],
   },
 };
