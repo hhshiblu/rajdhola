@@ -15,12 +15,12 @@ const ShopCreate = ({ searchParams }) => {
       ) : (
         <>
           {" "}
-          <div className="flex flex-wrap items-center py-12 bg-[#35A29F] ">
+          <div className="flex flex-wrap items-center py-12 bg-[#05ada3] ">
             <div className="md:w-[45%] w-[100%] mx-auto 600px:mr-auto pb-7 pl-2 ">
               <h1 className="lg:text-[36px] md:text-[28px] text-[25px] text-[#000000] font-[700] ">
                 Become a Rajdhola seller
               </h1>
-              <p className="text-[16px] md:text-[17px] lg:text-[21px] font-Roboto pl-2">
+              <p className="text-[16px] md:text-[17px] lg:text-[21px] font-Roboto pl-2 text-black">
                 {" "}
                 Start your selling journey on Rajdhola and become part of our
                 seller community
@@ -31,8 +31,8 @@ const ShopCreate = ({ searchParams }) => {
                 </h2>
               </div>
             </div>
-            <div className=" w-full md:w-[45%] mx-auto">
-              <div className="flex justify-center items-center ">
+            <div className=" w-full md:w-[45%] mx-auto px-1">
+              <div className="flex justify-center items-center  ">
                 <div className="bg-white   p-8 rounded-lg hover:shadow-xl ">
                   <h1 className="md:text-2xl text-[22px] font-[600] text-center font-Roboto ">
                     Create an Account

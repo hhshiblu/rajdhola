@@ -607,7 +607,7 @@ export const getUserByPhoneNumber = async (number) => {
 
         return {
           success: true,
-          message: "Users found successfully",
+          message: "Send Otp successfully",
         };
       }
     }

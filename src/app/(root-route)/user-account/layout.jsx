@@ -57,11 +57,13 @@ async function layout({ children }) {
                 </ul>
               </li>
 
-              <li className="">
-                <h2 className="text-[#195851] font-semibold">
-                  Sell on Rajdhola
-                </h2>
-              </li>
+              <Link
+                href="/create-seller"
+                className="text-[#195851] font-semibold"
+              >
+                Sell on Rajdhola
+              </Link>
+
               <LogOut />
             </ul>
           </div>

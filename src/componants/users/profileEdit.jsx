@@ -18,7 +18,7 @@ function ProfileEdit() {
           ...
         </h2>
         <div
-          className=" overflow-hidden  absolute top-5 right-0  shadow-lg rounded-md h-[14vh] w-[160px] flex flex-col px-4   duration-200 z-10"
+          className=" overflow-hidden  absolute top-7 right-0  shadow-lg rounded-md h-[14vh] w-[160px] flex flex-col px-4   duration-200 z-10"
           style={{ height: profile ? "14vh" : "0px" }}
         >
           <div className="flex gap-2 pt-4 items-center">

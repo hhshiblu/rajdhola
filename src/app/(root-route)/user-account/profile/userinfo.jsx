@@ -1,7 +1,6 @@
 import React from "react";
 
 function Userinfo({ user }) {
-  console.log(user);
   return (
     <div>
       <div className="flex flex-wrap justify-around items center">
