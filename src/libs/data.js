@@ -11,7 +11,7 @@ export const navItems = [
   },
   {
     title: "About",
-    url: "/about",
+    url: "#",
   },
 ];
 export const topCategory = [
@@ -215,7 +215,7 @@ export const footerProductLinks = [
 export const footercompanyLinks = [
   {
     name: "About us",
-    link: "/about",
+    link: "#",
   },
   {
     name: "FAQ",

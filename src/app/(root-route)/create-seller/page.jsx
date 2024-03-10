@@ -2,7 +2,6 @@
 import Image from "next/image";
 import SellerHeader from "@/componants/layout/sellerHeader";
 import Footer from "@/componants/layout/footer";
-import Link from "next/link";
 import SellerForm from "@/components/seller/sellerForm";
 import Sellerverify from "@/components/seller/sellerverify";
 const ShopCreate = ({ searchParams }) => {
@@ -16,10 +15,9 @@ const ShopCreate = ({ searchParams }) => {
       ) : (
         <>
           {" "}
-          <div className="flex flex-wrap items-center pt-8">
+          <div className="flex flex-wrap items-center py-12 bg-[#35A29F] ">
             <div className="md:w-[45%] w-[100%] mx-auto 600px:mr-auto pb-7 pl-2 ">
-              <h1 className="lg:text-[36px] md:text-[28px] text-[25px] text-[#195851] font-[700] ">
-                {" "}
+              <h1 className="lg:text-[36px] md:text-[28px] text-[25px] text-[#000000] font-[700] ">
                 Become a Rajdhola seller
               </h1>
               <p className="text-[16px] md:text-[17px] lg:text-[21px] font-Roboto pl-2">
@@ -28,22 +26,20 @@ const ShopCreate = ({ searchParams }) => {
                 seller community
               </p>
               <div className="flex pl-8 pt-8">
-                <Link href="/create-seller/account">
-                  <h2 className="bg-[#195851] rounded-2xl py-[7px] px-5 text-white font-[500] cursor-pointer">
-                    Start Selling
-                  </h2>
-                </Link>
+                <h2 className="bg-[#195851] rounded-2xl py-[7px] px-5 text-white font-[500] cursor-pointer">
+                  Start Selling
+                </h2>
               </div>
             </div>
             <div className=" w-full md:w-[45%] mx-auto">
               <div className="flex justify-center items-center ">
                 <div className="bg-white   p-8 rounded-lg hover:shadow-xl ">
-                  <h1 className="md:text-2xl text-[22px] font-[500] text-center ">
+                  <h1 className="md:text-2xl text-[22px] font-[600] text-center font-Roboto ">
                     Create an Account
                   </h1>
-                  <p className="text-[13px] md:text-[16px] text-gray-500">
-                    Greetings! Your product has a vast audience on Daraz eagerly
-                    anticipating their purchase.
+                  <p className="text-[15px] md:text-[17px] text-gray-700 font-Roboto font-[500]">
+                    Greetings! Your product has a vast audience on Rajdhola
+                    eagerly anticipating their purchase.
                   </p>
                   <SellerForm />
                 </div>

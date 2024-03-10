@@ -62,12 +62,12 @@ function Footer() {
           {footercompanyLinks.map((link) => {
             return (
               <li key={link.name} className="pl-1  ">
-                <Link
+                <a
                   href={link.link}
                   className="text-gray-400 hover:text-teal-400 duration-300 text-sm cursor-pointer leading-6 text-[14px]"
                 >
                   {link.name}
-                </Link>
+                </a>
               </li>
             );
           })}
@@ -80,13 +80,12 @@ function Footer() {
               <li
                 key={cate.name}
                 className="pl-1  text-[12px] cursor-pointer hover:text-red-400"
-                onClick={() =>
-                  router.push(
-                    "/products" + "?" + createQueryString("_c", cate.name)
-                  )
-                }
               >
-                {cate.name}
+                <a
+                  href={"/products" + "?" + createQueryString("_c", cate.name)}
+                >
+                  {cate.name}
+                </a>
               </li>
             );
           })}
@@ -108,7 +107,7 @@ function Footer() {
           })} */}
           <div className="flex gap-1">
             <MdOutgoingMail />
-            <li className="text-[12px]">support.rajdhola.com</li>
+            <li className="text-[12px]">support@rajdhola.com</li>
           </div>
         </ul>
       </div>

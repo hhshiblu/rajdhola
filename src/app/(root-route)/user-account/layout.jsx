@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import LogOut from "@/components/logout.jsx/page";
+import ProfileEdit from "@/componants/users/profileEdit";
 async function layout({ children }) {
   const user = await getUser();
   return (
@@ -43,9 +44,13 @@ async function layout({ children }) {
               <li className=" pb-4 ">
                 <h2 className="text-[#195851] font-semibold">My Orders</h2>
                 <ul className="text-[14px] pl-3 py-1 text-gray-800 ">
-                  <li className=" hover:text-[#1A9CB7]">
-                    <p>All orders</p>
-                  </li>
+                  <Link
+                    href="/user-account/all-orders"
+                    className="hover:text-[#1A9CB7]"
+                  >
+                    All orders
+                  </Link>
+
                   <li className=" hover:text-[#1A9CB7]">
                     <p>Return orders</p>
                   </li>
@@ -63,47 +68,56 @@ async function layout({ children }) {
           <div className=" w-[100%]">{children}</div>
         </div>
       </div>
-      <div className="p-8 md:hidden block">
-        <div className="flex justify-between">
+      <div className=" md:hidden block">
+        <div className="flex justify-between p-8">
           <div>
-            <Image
-              src=""
-              alt=""
-              width={500}
-              height={500}
-              className="w-[80px] h-[80px] rounded-full"
-            />
-            <h2 className="text-[13px]"> {user.name}</h2>
-            <h2 className="text-[13px]"> {user.phoneNumber}</h2>
+            {user?.image?.url ? (
+              <Image
+                src={user.image?.url}
+                alt=""
+                width={500}
+                height={500}
+                className="w-[80px] h-[80px] rounded-full"
+              />
+            ) : (
+              <Image
+                src="/avatar_icon.jpg"
+                alt=""
+                width={500}
+                height={500}
+                className="w-[110px] h-[110px] rounded-full"
+              />
+            )}
+
+            <h2 className="text-[15px] pt-3">name : {user.name}</h2>
+            <h2 className="text-[15px]">number : 0{user?.phoneNumber}</h2>
+            <h2 className="text-[15px]">email : {user?.email}</h2>
           </div>
-          <div>
-            {" "}
-            <h2 className="cursor-pointer font-bold text-2xl">...</h2>
-          </div>
+          <ProfileEdit />
         </div>
-        <div className="border-b-[2px] py-1"></div>
-        <div className="py-4 flex  overflow-x-auto gap-3">
+        <hr />
+        <div className="py-4 flex scroll_x_hiiden overflow-x-auto gap-3 px-3">
           <Link
             href="/user-account/address-book"
-            className="border px-[2px] py-[1px] rounded-md  shadow-md"
+            className="border-blue-900  px-1 py-[2px] bg-white rounded-md  shadow-md"
           >
             Address book
           </Link>
           <Link
             href="/user-account/all-orders"
-            className="border px-[2px] py-[1px] rounded-md  shadow-md"
+            className="border-blue-900  px-1 py-[2px] bg-white rounded-md  shadow-md cursor-pointer"
           >
             All orders
           </Link>
           <Link
             href="#"
-            className="border px-[2px] py-[1px] rounded-md shadow-md"
+            className="border-blue-900  px-1 py-[2px] bg-white rounded-md  shadow-md"
           >
             {" "}
             Return Orders
           </Link>
         </div>
-        <div className="py-4">{children}</div>
+        <div className="py-4 bg-white px-[6px]">{children}</div>
       </div>
       <Footer />
     </div>

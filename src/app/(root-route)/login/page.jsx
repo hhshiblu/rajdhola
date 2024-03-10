@@ -2,7 +2,7 @@
 import React, { useRef, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import "@/componants/animate.css";
-import Link from "next/link.js";
+import Link from "next/link";
 import { signIn } from "next-auth/react";
 import SubmitButton from "@/componants/route/button/submitButton";
 import Image from "next/image";
@@ -226,6 +226,9 @@ function Page({ searchParams }) {
                 </div>
               </div>
 
+              <div className="text-[14px] text-[#00453e] font[500] text-right   ">
+                <Link href="/login/forgot-password"> Forgotten password? </Link>
+              </div>
               <div>
                 <SubmitButton name="Login" type="loading..." />
               </div>

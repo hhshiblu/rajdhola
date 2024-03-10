@@ -3,6 +3,8 @@ import React from "react";
 
 async function Page() {
   const user = await getUser();
+  const Address = user.addresses[0];
+
   return (
     <div className="w-[100%]">
       <h2 className="text-[#195851] font-semibold pb-3">My Details</h2>
@@ -14,7 +16,7 @@ async function Page() {
               Profile details
             </h2>
             <hr />
-            <div className=" text-[13px] text-gray-500 ">
+            <div className=" text-[13px] text-gray-600 ">
               <p className="py-1">{user?.name}</p>
               <p>{user.phoneNumber}</p>
               <p className="py-1">{user?.email}</p>
@@ -24,11 +26,19 @@ async function Page() {
           <div className="flex flex-col w-[100%] lg:w-[40%] bg-white hover:shadow-lg p-4 px-3 md:px-8 rounded-lg">
             <h2 className="text-semibold text-gray-800 py-2"> My address</h2>
             <hr />
-            <div className=" text-[13px] text-gray-500 ">
-              <p className="pb-2 pt-1">Default shipping address </p>
-              <p className="text-gray-900 text-[14px]"></p>
-              <p className="pt-1">15, kalibari road</p>
-              <p className="py-[1px]">Netrakona , Mymenshing</p>
+
+            <div className=" text-[14px] text-gray-500 ">
+              <p className="pb-2 pt-1 text-black">
+                {Address.addressType} shipping address{" "}
+              </p>
+              <p className="text-gray-700 text-[14px]">{Address.name}</p>
+              <p className="text-gray-600 text-[14px]">{Address.number}</p>
+              <p className="pt-1">
+                {Address.area} - {Address.upazila}
+              </p>
+              <p className="py-[1px]">
+                {Address.district} , {Address.division}
+              </p>
             </div>
           </div>
         </div>

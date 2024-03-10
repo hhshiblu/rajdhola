@@ -22,170 +22,12 @@ const createActivationToken = (sellerId) => {
   });
 };
 
-export const createSeller = async (fromData) => {
-  const shopName = fromData.get("name");
-  const userName = fromData.get("userName");
-  const email = fromData.get("email");
-  const address = JSON.parse(fromData.get("address"));
-  const phoneNumber = fromData.get("phoneNumber");
-  const category = fromData.get("category");
-  const zipCode = fromData.get("zipCode");
-  const password = fromData.get("password");
-  const cpassword = fromData.get("cpassword");
-  const image = fromData.get("file");
-  const phoneNumberRegex = /^(019|013|014|018|015|016|017)\d{8}$/;
-  if (!phoneNumberRegex.test(phoneNumber) || phoneNumber.length !== 11) {
-    return {
-      error: "Invalid phone number",
-    };
-  }
-  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-  if (!emailRegex.test(email)) {
-    return {
-      error: "Invalid email address",
-    };
-  }
-
-  if (
-    !userName ||
-    !shopName ||
-    !email ||
-    !phoneNumber ||
-    !address ||
-    !zipCode ||
-    !password ||
-    !cpassword ||
-    !image ||
-    !category
-  ) {
-    return { error: "please fill all  fields" };
-  }
-  if (password !== cpassword) {
-    return {
-      error: "passwords do not match",
-    };
-  }
-  // let images = null;
-  // const name = uuidv4();
-  // try {
-  //   const buffer = Buffer.from(await image.arrayBuffer());
-  //   const res = await uploadFileToS3(buffer, name + image.name);
-  //   images = res;
-  // } catch (error) {
-  //   return { error: "Something  wrong! Try Later" };
-  // }
-
-  try {
-    const isSeller = await db.collection("sellers").findOne({
-      email: email,
-    });
-
-    if (isSeller) {
-      return {
-        error: "user already exists",
-      };
-    }
-
-    const Password = await bcrypt.hash(password, 10);
-    const cPassword = await bcrypt.hash(cpassword, 10);
-    const otp = generateOTP();
-    try {
-      const res = await sendMail({
-        email: email,
-        subject: "Activate your shop",
-        html: `
-        <html lang="en">
-
-      <head></head>
-      <div id="__react-email-preview" style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0">Begin your Rajdhola venture - start selling with us today!.<div> ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿</div>
-      </div>
-
-      <body style="background-color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen-Sans,Ubuntu,Cantarell,&quot;Helvetica Neue&quot;,sans-serif">
-        <table align="center" role="presentation" cellSpacing="0" cellPadding="0" border="0" width="100%" style="max-width:37.5em;margin:0 auto;padding:20px 0 48px">
-          <tr style="width:100%">
-            <td><img alt="rajdhola.com" src="https://rajdhola.s3.ap-south-1.amazonaws.com/rajdhola.jpg" width="140" height="40" style="display:block;outline:none;border:none;text-decoration:none;margin:0 auto" />
-              <p style="font-size:16px;line-height:26px;margin:16px 0">Hi ${shopName},</p>
-              <p style="font-size:16px;line-height:26px;margin:16px 0">Welcome to Rajdhola, transform your sales journey! Discover leads, close deals, and become a vendor powerhouse. Click below to activate your account now..</p>
-              <table style="text-align:center" align="center" border="0" cellPadding="0" cellSpacing="0" role="presentation" width="100%">
-                <tbody>
-                  <tr>
-               <td style="font-weight: bold; font-size: 22px;">${otp}</td>
-
-                  </tr>
-                </tbody>
-              </table>
-              <p style="font-size:16px;line-height:26px;margin:16px 0">Best,<br />The Rajdhola team</p>
-              <hr style="width:100%;border:none;border-top:1px solid #eaeaea;border-color:#cccccc;margin:20px 0" />
-              <p style="font-size:12px;line-height:24px;margin:16px 0;color:#8898aa">@rajdhola </p>
-            </td>
-          </tr>
-        </table>
-      </body>
-
-    </html>
-      `,
-      });
-      if (res.success == true) {
-        const unverified = await db.collection("unverifiedsellers").findOne({
-          email: email,
-        });
-        console.log(unverified);
-        if (!unverified) {
-          await db.collection("unverifiedsellers").insertOne({
-            userName,
-            shopName,
-            // images,
-            email,
-            address,
-            category,
-            password: Password,
-            cpassword: cPassword,
-            phoneNumber: parseInt(phoneNumber, 10),
-            zipCode: parseInt(zipCode, 10),
-            otp: parseInt(otp, 10),
-          });
-        } else {
-          console.log(unverified.images.objectkey);
-          const res = await deleteFiles(unverified.images.objectkey);
-          console.log(res);
-          const filter = { _id: new ObjectId(unverified._id) };
-          const update = {
-            $set: {
-              userName,
-              shopName,
-              // images:,
-              email,
-              address,
-              category,
-              password: Password,
-              cpassword: cPassword,
-              phoneNumber: parseInt(phoneNumber, 10),
-              zipCode: parseInt(zipCode, 10),
-              otp: parseInt(otp, 10),
-            },
-          };
-
-          await db.collection("unverifiedsellers").updateOne(filter, update);
-        }
-        return {
-          success: true,
-          message: `please cheak your email : ${email} to activate your account`,
-        };
-      } else {
-        return {
-          success: false,
-          message: `Something  error occurred`,
-        };
-      }
-    } catch (error) {
-      return { error: error.message, status: 500 };
-    }
-  } catch (error) {
-    return { error: error.message };
-  }
-};
-
 export const CreateSeller = async (identity) => {
+  if (!identity) {
+    return {
+      error: "You must private email or number",
+    };
+  }
   const phoneNumberRegex = /^(019|013|014|018|015|016|017)\d{8}$/;
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
   try {
@@ -382,7 +224,6 @@ export async function sellerCreateWithInfo(
   password,
   cpassword
 ) {
-  console.log(identity, cpassword, cate, password);
   try {
     if (!password || !cpassword || !cate) {
       return { error: "please fill all  fields" };
@@ -475,7 +316,6 @@ export async function sellerCreateWithInfo(
       }
     }
   } catch (error) {
-    console.log(error.message);
     return {
       success: false,
       error: "Too late  timed out !",
@@ -647,9 +487,7 @@ export const addAddress = async (fromData) => {
     const phoneNumberRegex = /^(019|013|014|018|015|016|017)\d{8}$/;
     if (
       !phoneNumberRegex.test(address.number) ||
-      !phoneNumberRegex.test(address.altNumber) ||
-      address.number.length !== 11 ||
-      address.altNumber.length !== 11
+      address.number.length !== 11
     ) {
       return {
         error: "Invalid phone number",
@@ -723,9 +561,116 @@ export const deleteAddress = async (addressType) => {
   }
 };
 
-export const autodelete = async () => {
-  const db = await connectToDB();
-  const unverifieduser = await db.collection("unverifiedusers").findOne({
-    phoneNumber: parseInt(phoneNumber, 10),
-  });
+export const getUserByPhoneNumber = async (number) => {
+  try {
+    const phoneNumberRegex = /^(019|013|014|018|015|016|017)\d{8}$/;
+    if (!phoneNumberRegex.test(number) || number.length !== 11) {
+      return {
+        error: "Invalid phone number",
+      };
+    }
+    const db = await connectToDB();
+    const user = await db.collection("users").findOne({
+      phoneNumber: parseInt(number, 10),
+    });
+
+    if (!user) {
+      return {
+        error: "Users not found",
+      };
+    } else {
+      const otp = generateOTP();
+      const res = await sentOtp(number, otp);
+
+      if (res.success === 1) {
+        // Update the user document with the generated OTP and a timestamp
+        const otpExpirationTime = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes in milliseconds
+        await db.collection("users").updateOne(
+          { _id: user._id },
+          {
+            $set: {
+              otp: otp,
+              otpExpiration: otpExpirationTime,
+            },
+          }
+        );
+
+        // Set a timeout to delete the OTP after 5 minutes
+        setTimeout(async () => {
+          await db
+            .collection("users")
+            .updateOne(
+              { _id: user._id },
+              { $unset: { otp: "", otpExpiration: "" } }
+            );
+        }, 5 * 60 * 1000);
+
+        return {
+          success: true,
+          message: "Users found successfully",
+        };
+      }
+    }
+  } catch (error) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
+export const verifyOtpForForgot = async (otp, number) => {
+  try {
+    if (!otp) {
+      return {
+        error: "otp  field is required",
+      };
+    }
+    const db = await connectToDB();
+    const user = await db.collection("users").findOne({
+      phoneNumber: parseInt(number, 10),
+    });
+    if (otp == user.otp) {
+      return {
+        success: true,
+        message: "Otp Verification successful",
+      };
+    } else {
+      return { error: "Invalid OTP. Retry or get a new one." };
+    }
+  } catch (error) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
+export const ChangePassword = async (password, number) => {
+  try {
+    if (!password) {
+      return {
+        error: "Password field is required",
+      };
+    }
+    const hashPassword = await bcrypt.hash(password, 10);
+    const db = await connectToDB();
+    const user = await db.collection("users").findOne({
+      phoneNumber: parseInt(number, 10),
+    });
+    const res = await db
+      .collection("users")
+      .updateOne({ _id: user._id }, { $set: { password: hashPassword } });
+    if (res.acknowledged == true) {
+      await db
+        .collection("users")
+        .updateOne({ _id: user._id }, { $unset: { otp: "" } });
+      return {
+        success: true,
+        message: "Password change successfully",
+      };
+    }
+  } catch (error) {
+    return {
+      error: error.message,
+    };
+  }
 };

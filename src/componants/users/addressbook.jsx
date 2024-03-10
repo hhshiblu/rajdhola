@@ -118,9 +118,13 @@ function AddressBook({ user, searchParams }) {
           ))}
         </div>
       ) : (
-        <div className="justify-center w-[98%] md:w-[95%] lg:w-[65%] bg-white py-8 shadow-2xl rounded-lg hover:shadow-inner px-8 mx-auto overflow-hidden ">
+        <div className="justify-center w-full md:w-[100%] lg:w-[80%] bg-white py-8 shadow-2xl rounded-lg hover:shadow-inner px-8 mx-auto overflow-hidden ">
           <div className="text-center pb-2 border-b-2">Add address</div>
-          <AddAddress searchParams={searchParams} />
+          <AddAddress
+            searchParams={searchParams}
+            setOpen={setOpen}
+            open={open}
+          />
         </div>
       )}
     </>

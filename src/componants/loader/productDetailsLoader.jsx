@@ -1,8 +1,8 @@
 function ProductDetailLoader() {
   return (
-    <div className=" w-full h-[90vh] pt-8  gap-5 p-2 mx-auto bg-white shadow-lg select-none  rounded-md  ">
+    <div className=" w-full h-[90vh] pt-8  gap-5  mx-auto bg-white shadow-lg select-none  rounded-md  ">
       {/* <div className="w-full bg-gray-300 animate-pulse h-20 rounded-2xl"></div> */}
-      <div className="w-11/12  flex flex-col pt-4  gap-5 p-2 mx-auto   md:flex-row  ">
+      <div className="w-full md:w-11/12 flex flex-col pt-4  gap-5 p-2 mx-auto   md:flex-row  ">
         <div className="flex flex-col md:gap-4 gap-4">
           <div className="bg-gray-300   h-[40vh] sm:h-[40vh] md:h-[45vh] md:w-full sm:w-full rounded-xl animate-pulse"></div>
           <div className=" flex flex-row gap-5">

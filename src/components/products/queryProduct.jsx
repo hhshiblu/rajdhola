@@ -16,7 +16,7 @@ async function QueryProduct({ searchParams }) {
           ))}
         </div>
       ) : (
-        <h1 className=" absolute left-[50%] top-[50%] text-[19px] font-Roboto fornt-[400]">
+        <h1 className=" w-full flex justify-center items-center h-[50vh] text-[19px] font-Roboto fornt-[400]">
           No product Yeat
         </h1>
       )}
