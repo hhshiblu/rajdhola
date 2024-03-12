@@ -141,7 +141,7 @@ function CategoryFilter() {
         </div>
       </div>
       <div className="600px:w-11/12 w-[98%]  md:hidden mx-auto ">
-        <div className="flex gap-2 home_cate_slide overflow-x-auto h-[260px] bg-black">
+        <div className="flex gap-2 home_cate_slide overflow-x-auto h-[260px] ">
           <div
             className=" h-[220px] min-w-[240px] hover:shadow-md z-10 cursor-pointer"
             onClick={() => {

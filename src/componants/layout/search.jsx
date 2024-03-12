@@ -87,11 +87,7 @@ const Search = ({ user, categories }) => {
 
   return (
     <>
-      <div
-        className={`${
-          isSticky ? "w-full sticky z-[999999999999999999999]" : ""
-        }`}
-      >
+      <div className={`${isSticky ? "w-full sticky z-[9999]" : ""}`}>
         <div className="  h-[60px]  min-w-fit bg-[#00453e]   md:grid grid-cols-4">
           <div className="hidden md:block text-white pl-20 my-auto h-[30px] cursor-pointer">
             <Link href="/">
@@ -184,7 +180,7 @@ const Search = ({ user, categories }) => {
       {/* --------------------------------------------------------------------- */}
       {/* show category animation i will try allah borosha */}
 
-      {/* <div
+      <div
         ref={ref}
         className={
           maincate
@@ -202,7 +198,7 @@ const Search = ({ user, categories }) => {
           size={30}
           onClick={ToggleMenu}
         />
-      </div> */}
+      </div>
       <div
         className=" fixed top-0 left-0 w-[240px] 600px:w-[300px] bg-white shadow-lg h-[100%] z-[29999]  transition-transform duration-500 ease-in-out"
         style={{
