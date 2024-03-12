@@ -87,7 +87,7 @@ const Search = ({ user, categories }) => {
 
   return (
     <>
-      <div className={`${isSticky ? "w-full sticky z-[9999]" : ""}`}>
+      {/* <div className={`${isSticky ? "w-full sticky z-[9999]" : ""}`}>
         <div className="  h-[60px]  min-w-fit bg-[#00453e]   md:grid grid-cols-4">
           <div className="hidden md:block text-white pl-20 my-auto h-[30px] cursor-pointer">
             <Link href="/">
@@ -175,7 +175,7 @@ const Search = ({ user, categories }) => {
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* --------------------------------------------------------------------- */}
       {/* show category animation i will try allah borosha */}
