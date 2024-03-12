@@ -87,7 +87,7 @@ const Search = ({ user, categories }) => {
 
   return (
     <>
-      <div className={` search  shadow-md font-300 sticky  `}>
+      {/* <div className={` search  shadow-md font-300 sticky  `}>
         <div className={`navbar ${isSticky ? "sticky" : ""}`}>
           <div className="  h-[60px] min- min-w-fit bg-[#00453e]   md:grid grid-cols-4">
             <div className="hidden md:block text-white pl-20 my-auto h-[30px] cursor-pointer">
@@ -177,12 +177,12 @@ const Search = ({ user, categories }) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* --------------------------------------------------------------------- */}
       {/* show category animation i will try allah borosha */}
 
-      <div
+      {/* <div
         ref={ref}
         className={
           maincate
@@ -200,98 +200,99 @@ const Search = ({ user, categories }) => {
           size={30}
           onClick={ToggleMenu}
         />
-        <div
-          className="fixed top-0 left-0 w-[240px] 600px:w-[300px] bg-white shadow-lg h-screen z-[29999]  transition-transform duration-500 ease-in-out"
-          style={{
-            transform: maincate ? "translateX(0px)" : "translateX(-100%)",
-          }}
-        >
-          <div className="relative overflow-hidden">
-            <>
-              <div className=" text-left border-b-2 bg-[#00453e] border-b-[#003c36]  py-2 pl-8 flex items-center">
-                <h1 className="font-semibold pr-2 text-[15px] text-white">
-                  Hello ,{" "}
-                </h1>
-                {user ? (
-                  <div className="flex ">
-                    <h1 className=" font-semibold text-lg text-white pt-[2px]">
-                      {user.name}
-                    </h1>
-                  </div>
-                ) : (
-                  <h1 className="text-semibold text-sm pl-2 text-white">
-                    Sign in
+      </div> */}
+      <div
+        className=" fixed top-0 left-0 w-[240px] 600px:w-[300px] bg-white shadow-lg h-[100%] z-[29999]  transition-transform duration-500 ease-in-out"
+        style={{
+          transform: maincate ? "translateX(0px)" : "translateX(-100%)",
+        }}
+      >
+        <div className="relative overflow-hidden">
+          <>
+            <div className=" text-left border-b-2 bg-[#00453e] border-b-[#003c36]  py-2 pl-8 flex items-center">
+              <h1 className="font-semibold pr-2 text-[15px] text-white">
+                Hello ,{" "}
+              </h1>
+              {user ? (
+                <div className="flex ">
+                  <h1 className=" font-semibold text-lg text-white pt-[2px]">
+                    {user.name}
                   </h1>
-                )}
-              </div>{" "}
-              <div className="bg-[#195851] text-white text-sm  m-auto text-center py-[1px]">
-                <h2>Best wishes for you</h2>
-              </div>
-              <div className="pt-1">
-                {categories?.map((i, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className={`${styles.normalFlex}  justify-between px-4 hover:bg-[#EAEDED] mx-2 text-[15px]  rounded-md cursor-pointer  leading-[26px]  `}
-                      onClick={(e) => handleMenuItemClick(e, i)}
-                    >
-                      <h3 className=" cursor-pointer select-none p-[7px]  font-[510]    text-gray-600">
-                        {i.name}
-                      </h3>
-                      <h2>
-                        <IoIosArrowForward className="text-gray-500" />
-                      </h2>
-                    </div>
-                  );
-                })}
-              </div>
-            </>
-            <div
-              className=" bg-white w-[300px]  h-full overflow-hidden  absolute top-10 left-0  transition-transform duration-500 ease-in-out transform "
-              style={{
-                transform: submenu ? "translateX(0px)" : "translateX(100%)",
-              }}
-            >
-              <div
-                className="text-left border-b-2 border-black py-2 pl-6 flex z-[399999999]  text-[18px] font-medium "
-                onClick={ToggleMenu2}
-              >
-                <BsArrowLeftShort size={30} className="cursor-pointer" />
-                <h1 className="pl-4 cursor-pointer "> Main Categories</h1>
-              </div>
-              <div className="pt-3 pb-1">
-                <h1 className="text-left pl-8 font-medium text-[17px] text-gray-900 mx-2 ">
-                  {SubMenuDetails.name}
+                </div>
+              ) : (
+                <h1 className="text-semibold text-sm pl-2 text-white">
+                  Sign in
                 </h1>
-              </div>
+              )}
+            </div>{" "}
+            <div className="bg-[#195851] text-white text-sm  m-auto text-center py-[1px]">
+              <h2>Best wishes for you</h2>
+            </div>
+            <div className="pt-1">
+              {categories?.map((i, index) => {
+                return (
+                  <div
+                    key={index}
+                    className={`${styles.normalFlex}  justify-between px-4 hover:bg-[#EAEDED] mx-2 text-[15px]  rounded-md cursor-pointer  leading-[26px]  `}
+                    onClick={(e) => handleMenuItemClick(e, i)}
+                  >
+                    <h3 className=" cursor-pointer select-none p-[7px]  font-[510]    text-gray-600">
+                      {i.name}
+                    </h3>
+                    <h2>
+                      <IoIosArrowForward className="text-gray-500" />
+                    </h2>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+          <div
+            className=" bg-white w-[300px]  h-full overflow-hidden  absolute top-10 left-0  transition-transform duration-500 ease-in-out transform "
+            style={{
+              transform: submenu ? "translateX(0px)" : "translateX(100%)",
+            }}
+          >
+            <div
+              className="text-left border-b-2 border-black py-2 pl-6 flex z-[399999999]  text-[18px] font-medium "
+              onClick={ToggleMenu2}
+            >
+              <BsArrowLeftShort size={30} className="cursor-pointer" />
+              <h1 className="pl-4 cursor-pointer "> Main Categories</h1>
+            </div>
+            <div className="pt-3 pb-1">
+              <h1 className="text-left pl-8 font-medium text-[17px] text-gray-900 mx-2 ">
+                {SubMenuDetails.name}
+              </h1>
+            </div>
 
-              <hr />
-              <hr />
+            <hr />
+            <hr />
 
-              <div className="pt-1">
-                {SubMenuDetails?.children?.map((item, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="hover:bg-gray-300 mx-2 text-gray-700 hover:text-gray-950  rounded-md leading-[24px] py-[6px]  "
-                      onClick={() => {
-                        router.push(
-                          `/products?_c=${SubMenuDetails.name}&_subc=${item.name}`
-                        );
-                        setMaincate(false);
-                      }}
-                    >
-                      <h2 className="text-left pl-7 cursor-pointer text-[16px] ">
-                        {item.name}
-                      </h2>
-                    </div>
-                  );
-                })}
-              </div>
+            <div className="pt-1">
+              {SubMenuDetails?.children?.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="hover:bg-gray-300 mx-2 text-gray-700 hover:text-gray-950  rounded-md leading-[24px] py-[6px]  "
+                    onClick={() => {
+                      router.push(
+                        `/products?_c=${SubMenuDetails.name}&_subc=${item.name}`
+                      );
+                      setMaincate(false);
+                    }}
+                  >
+                    <h2 className="text-left pl-7 cursor-pointer text-[16px] ">
+                      {item.name}
+                    </h2>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
       </div>
+      {/* </div> */}
 
       {!path.includes("/product/") && (
         <div className="fixed bottom-0 left-0 w-full md:hidden bg-[#00453e] h-[50px] mx-auto z-50 flex justify-around items-center">

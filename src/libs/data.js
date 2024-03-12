@@ -19,10 +19,10 @@ export const topCategory = [
     name: "Men's Fashion",
   },
   {
-    name: "Women's Fashions",
+    name: "Women's Fashion",
   },
   {
-    name: "Boy's Fashions",
+    name: "Boy's Fashion",
   },
   {
     name: "Kids & Toys",

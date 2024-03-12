@@ -152,7 +152,7 @@ function Page({ searchParams }) {
                     className="appearance-none block w-full px-3 py-[8px] border border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-[#00453e] focus:border-[#00453e] sm:text-sm"
                   />
                   <h2
-                    className="absolute top-[17px] font-[600] right-7 text-[#00453e]"
+                    className="absolute top-[17px] font-[600] right-7 text-[#00453e] cursor-pointer"
                     onClick={() => setVisible(!visible)}
                   >
                     {visible ? "show" : "hide"}

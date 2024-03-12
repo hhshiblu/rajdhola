@@ -16,12 +16,6 @@ function generateOTP() {
   return otp;
 }
 
-const createActivationToken = (sellerId) => {
-  return jwt.sign(sellerId, process.env.ACTIVATED_KEY, {
-    expiresIn: "4m",
-  });
-};
-
 export const CreateSeller = async (identity) => {
   if (!identity) {
     return {
@@ -596,14 +590,16 @@ export const getUserByPhoneNumber = async (number) => {
         );
 
         // Set a timeout to delete the OTP after 5 minutes
-        setTimeout(async () => {
-          await db
-            .collection("users")
-            .updateOne(
-              { _id: user._id },
-              { $unset: { otp: "", otpExpiration: "" } }
-            );
-        }, 5 * 60 * 1000);
+        if (user.otp) {
+          setTimeout(async () => {
+            await db
+              .collection("users")
+              .updateOne(
+                { _id: user._id },
+                { $unset: { otp: "", otpExpiration: "" } }
+              );
+          }, 5 * 60 * 1000);
+        }
 
         return {
           success: true,

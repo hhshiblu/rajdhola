@@ -29,12 +29,12 @@ function Footer() {
   );
   return (
     <div className="bg-[#195851]  text-white pb-16 md:pb-0">
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:px-8 px-4 pt-8 pb-6 md sm:text-center  items-center mx-auto">
-        <ul className="px-5 text-center sm:text-start flex sm:block  flex-col items-center mx-auto">
+      <div className="flex flex-col 450px:flex-row 450px:gap-1 gap-8 items-center flex-wrap justify-between py-8">
+        <ul className=" text-center sm:text-start flex   flex-col items-center justify-start  w-[100%] 450px:w-[45%] ">
           <Image
             src="/rajdhola_title_logo_white.svg"
             alt="rajdhola logo"
-            className="w-[110px] h-[40px]  pb-4 md:pb-0"
+            className="w-[90px] h-[40px]  pb-4 md:pb-0"
             width={100}
             height={100}
           />
@@ -57,7 +57,7 @@ function Footer() {
           </div>
         </ul>
 
-        <ul className="justify-center sm:text-start  pl-8  md:pl-0 mx-auto">
+        <ul className="text-center flex items-center flex-col sm:text-start   md:pl-0  w-[100%] 450px:w-[45%]">
           <h1 className="md-1 font-semibold text-[15px] "> Company </h1>
           {footercompanyLinks.map((link) => {
             return (
@@ -73,7 +73,7 @@ function Footer() {
           })}
         </ul>
 
-        <ul className="justify-center sm:text-start  pl-8  md:pl-0 mx-auto">
+        <ul className=" flex items-center flex-col  450px:pt-8  md:pl-0 mx-auto w-[100%] 450px:w-[45%]">
           <h1 className="md-1 font-semibold text-[15px] "> Top Category </h1>
           {topCategory.map((cate) => {
             return (
@@ -91,7 +91,7 @@ function Footer() {
           })}
         </ul>
 
-        <ul className="text-center sm:text-start  pl-8  md:pl-0 mx-auto">
+        <ul className="flex flex-col items-center sm:text-start  pb-4  md:pl-0 mx-auto w-[100%] 450px:w-[45%]">
           <h1 className="md-1 font-semibold text-[15px] "> Support </h1>
           {/* {footercompanyLinks.map((link) => {
             return (
