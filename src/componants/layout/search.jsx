@@ -87,97 +87,99 @@ const Search = ({ user, categories }) => {
 
   return (
     <>
-      {/* <div className={` search  shadow-md font-300 sticky  `}>
-        <div className={`navbar ${isSticky ? "sticky" : ""}`}>
-          <div className="  h-[60px] min- min-w-fit bg-[#00453e]   md:grid grid-cols-4">
-            <div className="hidden md:block text-white pl-20 my-auto h-[30px] cursor-pointer">
-              <Link href="/">
-                <Image
-                  src="/rajdhola_title_logo_white.svg"
-                  alt=""
-                  className="h-full"
-                  width={100}
-                  height={100}
-                />
-              </Link>
-            </div>
-            <div className=" md:col-span-2 !m-auto w-[90%] py-[10px] relative">
-              <form action={handelSubmit}>
-                <input
-                  type="text"
-                  placeholder="search any item.."
-                  value={searchValue}
-                  onChange={(e) => setSearchValue(e.target.value)}
-                  className="h-[40px] w-full px-2 border-[2px] border-[#06229b] rounded-md f focus:border-spacing-1.5 "
-                />
+      <div
+        className={`${
+          isSticky ? "w-full sticky z-[999999999999999999999]" : ""
+        }`}
+      >
+        <div className="  h-[60px]  min-w-fit bg-[#00453e]   md:grid grid-cols-4">
+          <div className="hidden md:block text-white pl-20 my-auto h-[30px] cursor-pointer">
+            <Link href="/">
+              <Image
+                src="/rajdhola_title_logo_white.svg"
+                alt=""
+                className="h-full"
+                width={100}
+                height={100}
+              />
+            </Link>
+          </div>
+          <div className=" md:col-span-2 !m-auto w-[90%] py-[10px] relative">
+            <form action={handelSubmit}>
+              <input
+                type="text"
+                placeholder="search any item.."
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                className="h-[40px] w-full px-2 border-[2px] border-[#06229b] rounded-md f focus:border-spacing-1.5 "
+              />
 
-                <button
-                  type="submit"
-                  // onClick={handelSubmit}
-                  className="text-white bg-[#050320] absolute right-0 h-[40px] w-[100px] rounded-r-md font-[600]   "
-                >
-                  Search
-                </button>
-              </form>
-            </div>
-            <div className="hidden ml-auto pr-10   md:flex md:justify-center  items-center">
-              <div className="flex items-center ">
-                <div className="relative cursor-pointer pr-4">
-                  <div className="text-white my-auto h-full">
-                    <Link href={`${user && user ? "/user-account" : "/login"}`}>
-                      {user ? (
-                        <div className="flex  items-center gap-1">
-                          <CgProfile size={22} />
-                          <h1 className=" font-semibold text-[17px]  ">
-                            {user.name.split(" ")[0]}
-                          </h1>
-                        </div>
-                      ) : (
-                        <div className="flex gap-1 item-center">
-                          <p className="text-xs">Hello , </p>
-                          <h1 className="font-semibold text-sm ">Sign in</h1>
-                        </div>
-                      )}
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
-              <div className={`flex item-center `}>
-                <div className="relative cursor-pointer pr-[15px] text-white">
-                  <Link href="/cart-products">
-                    <FiShoppingCart size={30} className="text-white" />
-                    <h1 className="absolute right-[2px] top-[-5px] rounded-full bg-[#eb2828] w-5 h-5 top right p-0 m-0 text-white font-semibold text-[14px] loading-tight text-center">
-                      {cart.length}
-                    </h1>
+              <button
+                type="submit"
+                // onClick={handelSubmit}
+                className="text-white bg-[#050320] absolute right-0 h-[40px] w-[100px] rounded-r-md font-[600]   "
+              >
+                Search
+              </button>
+            </form>
+          </div>
+          <div className="hidden ml-auto pr-10   md:flex md:justify-center  items-center">
+            <div className="flex items-center ">
+              <div className="relative cursor-pointer pr-4">
+                <div className="text-white my-auto h-full">
+                  <Link href={`${user && user ? "/user-account" : "/login"}`}>
+                    {user ? (
+                      <div className="flex  items-center gap-1">
+                        <CgProfile size={22} />
+                        <h1 className=" font-semibold text-[17px]  ">
+                          {user.name.split(" ")[0]}
+                        </h1>
+                      </div>
+                    ) : (
+                      <div className="flex gap-1 item-center">
+                        <p className="text-xs">Hello , </p>
+                        <h1 className="font-semibold text-sm ">Sign in</h1>
+                      </div>
+                    )}
                   </Link>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="hidden  bg-[#195851] h-[39px] md:flex items-center ">
-            <div
-              className="pl-10 my-auto  relative  text-white text-sm md:text-base duration-300 cursor-pointer catagoris"
-              onClick={() => setMaincate(true)}
-            >
-              <BiMenuAltLeft size={25} className="absolute left-2" />
-              <h3 className="  font-[600]"> All Catagogies </h3>
-            </div>
-            <div className={`hidden  md:block  my-auto ml-12`}>
-              <Navbar />
-            </div>
-            <div className="my-auto">
-              <Link
-                href={`/create-seller`}
-                className="mr-8  text-[#ffffff] font-semibold hover:border-[1px] px-[8px] pt-[9px] pb-[9px]  rounded-md "
-              >
-                {" "}
-                Become Seller
-              </Link>
+
+            <div className={`flex item-center `}>
+              <div className="relative cursor-pointer pr-[15px] text-white">
+                <Link href="/cart-products">
+                  <FiShoppingCart size={30} className="text-white" />
+                  <h1 className="absolute right-[2px] top-[-5px] rounded-full bg-[#eb2828] w-5 h-5 top right p-0 m-0 text-white font-semibold text-[14px] loading-tight text-center">
+                    {cart.length}
+                  </h1>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-      </div> */}
+        <div className="hidden  bg-[#195851] h-[39px] md:flex items-center ">
+          <div
+            className="pl-10 my-auto  relative  text-white text-sm md:text-base duration-300 cursor-pointer catagoris"
+            onClick={() => setMaincate(true)}
+          >
+            <BiMenuAltLeft size={25} className="absolute left-2" />
+            <h3 className="  font-[600]"> All Catagogies </h3>
+          </div>
+          <div className={`hidden  md:block  my-auto ml-12`}>
+            <Navbar />
+          </div>
+          <div className="my-auto">
+            <Link
+              href={`/create-seller`}
+              className="mr-8  text-[#ffffff] font-semibold hover:border-[1px] px-[8px] pt-[9px] pb-[9px]  rounded-md "
+            >
+              {" "}
+              Become Seller
+            </Link>
+          </div>
+        </div>
+      </div>
 
       {/* --------------------------------------------------------------------- */}
       {/* show category animation i will try allah borosha */}
