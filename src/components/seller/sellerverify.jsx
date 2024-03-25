@@ -127,7 +127,7 @@ function Sellerverify({ searchParams }) {
           </div>
         </div>
       ) : success ? (
-        <div className="bg-white    shadow-lg sm:rounded-lg  rounded-lg sm:mx-auto mx-auto p-8">
+        <div className="bg-white w-[98%]  md:w-[740px]   shadow-lg sm:rounded-lg  rounded-lg sm:mx-auto mx-auto p-8">
           <h1 className="md:text-xl font-[500] text-center text-[18px] pb-2">
             create Account
           </h1>
@@ -147,11 +147,11 @@ function Sellerverify({ searchParams }) {
                   placeholder="Enter category name"
                   value={user.category}
                   onChange={handelChange}
-                  className="appearance-none block w-full px-3 py-[6px] border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="appearance-none block w-full px-3 py-[8px] border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
             </div>
-            <div className="flex flex-wrap gap-3 ">
+            <div className="flex flex-wrap gap-3 py-2">
               <div className="w-[100%]  md:w-[48%] mx-auto ">
                 <label
                   htmlFor="password"
@@ -168,7 +168,7 @@ function Sellerverify({ searchParams }) {
                     value={user.password}
                     onChange={handelChange}
                     placeholder="Enter Password"
-                    className="appearance-none block w-full px-3 py-[6px] border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    className="appearance-none block w-full px-3 py-[8px] border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   />
                 </div>
               </div>
@@ -188,13 +188,13 @@ function Sellerverify({ searchParams }) {
                     value={user.cpassword}
                     onChange={handelChange}
                     placeholder="Enter confirm password"
-                    className="appearance-none block w-full px-3 py-[6px] border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    className="appearance-none block w-full px-3 py-[8px] border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   />
                 </div>
               </div>
             </div>
 
-            <div className="flex gap-2 pt-1">
+            <div className="flex gap-2">
               <input
                 type="checkbox"
                 checked={visible}
@@ -203,7 +203,7 @@ function Sellerverify({ searchParams }) {
               />
               <p className="text-[13px]">show password</p>
             </div>
-            <div className="flex item-center gap-2">
+            <div className="flex item-center gap-2 py-2">
               <VerifyBubmitButton name="Continue" type="loading..." />
             </div>
           </form>

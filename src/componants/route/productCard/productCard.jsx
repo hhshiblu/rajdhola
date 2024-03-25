@@ -23,12 +23,12 @@ function ProductCard({ data, i, ref }) {
       className="bg-white hover:shadow-lg rounded-md "
       ref={ref}
     >
-      <div className="w-full h-auto  p-[1px] 600px:p-3 overflow-hidden relative rounded-md  cursor-pointer ">
+      <div className="w-full h-auto  pt-[1px] 600px:pt-1 overflow-hidden relative rounded-md  cursor-pointer ">
         <Link href={`/product/${data._id}`}>
           <Image
             src={data.images[0].url}
             alt={data.name}
-            className="h-[180px]  sm:h-[190px]   w-auto object-cover pb-[6px]  m-auto rounded-md hover:rounded-none   mx-auto  transform hover:scale-105  transition duration-500 "
+            className="h-[180px]  sm:h-[193px]   w-auto object-cover pb-[6px]  m-auto rounded-md hover:rounded-none   mx-auto  transform hover:scale-105  transition duration-500 "
             height={500}
             width={500}
           />

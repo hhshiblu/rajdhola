@@ -32,7 +32,7 @@ header ul li a:hover {
   position: fixed;
   animation: slide-down 0.8s ease-in-out;
 }
-/* 
+
 @keyframes slide-down {
   from {
     transform: translateY(-100%);
@@ -40,7 +40,7 @@ header ul li a:hover {
   to {
     transform: translateY(0);
   }
-} */
+}
 
 .forHover:hover h3{
 color: #000;

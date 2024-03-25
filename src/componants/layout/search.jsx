@@ -30,7 +30,13 @@ const Search = ({ user, categories }) => {
   const [isSticky, setIsSticky] = useState(false);
   const [maincate, setMaincate] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-
+  useEffect(() => {
+    if (maincate == true) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [maincate]);
   const withoutSideDiv = (e) => {
     if (e.target.contains(ref.current)) {
       setMaincate(false);
@@ -67,6 +73,7 @@ const Search = ({ user, categories }) => {
 
   const handleScroll = () => {
     if (window.scrollY > 200) {
+      document.body;
       setIsSticky(true);
     } else {
       setIsSticky(false);
@@ -83,6 +90,9 @@ const Search = ({ user, categories }) => {
   const handelSubmit = () => {
     router.push("/products" + "?" + createQueryString("_name", searchValue));
     setSearchValue("");
+  };
+  const OpenCategory = () => {
+    setMaincate(true);
   };
 
   return (
@@ -157,7 +167,7 @@ const Search = ({ user, categories }) => {
         <div className="hidden  bg-[#195851] h-[39px] md:flex items-center ">
           <div
             className="pl-10 my-auto  relative  text-white text-sm md:text-base duration-300 cursor-pointer catagoris"
-            onClick={() => setMaincate(true)}
+            onClick={OpenCategory}
           >
             <BiMenuAltLeft size={25} className="absolute left-2" />
             <h3 className="  font-[600]"> All Catagogies </h3>
@@ -275,7 +285,9 @@ const Search = ({ user, categories }) => {
                     className="hover:bg-gray-300 mx-2 text-gray-700 hover:text-gray-950  rounded-md leading-[24px] py-[6px]  "
                     onClick={() => {
                       router.push(
-                        `/products?_c=${SubMenuDetails.name}&_subc=${item.name}`
+                        `/products?_c=${encodeURIComponent(
+                          SubMenuDetails.name
+                        )}&_subc=${item.name}`
                       );
                       setMaincate(false);
                     }}
@@ -290,7 +302,6 @@ const Search = ({ user, categories }) => {
           </div>
         </div>
       </div>
-      {/* </div> */}
 
       {!path.includes("/product/") && (
         <div className="fixed bottom-0 left-0 w-full md:hidden bg-[#00453e] h-[50px] mx-auto z-50 flex justify-around items-center">
@@ -353,7 +364,6 @@ const Search = ({ user, categories }) => {
             </Link>
           </button>
         </div>
-        // </div>
       )}
     </>
   );

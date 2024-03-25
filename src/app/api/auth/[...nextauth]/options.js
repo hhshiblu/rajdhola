@@ -73,7 +73,7 @@ export const authOptions = {
         const { phoneNumber, password } = credentials;
 
         if (!phoneNumber || !password) {
-          return null;
+          throw new Error(" Please Enter all Fields !");
         }
         const db = await connectToDB();
         const user = await db.collection("users").findOne({
@@ -81,11 +81,11 @@ export const authOptions = {
         });
 
         if (!user) {
-          return null;
+          throw new Error("Unauthorized login attempt !");
         }
         const ispasswordOk = await compare(password, user.password);
         if (!ispasswordOk) {
-          return null;
+          throw new Error("Invalied identity or password");
         }
 
         return user;

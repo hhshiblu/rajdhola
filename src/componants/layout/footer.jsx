@@ -81,9 +81,7 @@ function Footer() {
                 key={cate.name}
                 className="pl-1  text-[12px] cursor-pointer hover:text-red-400"
               >
-                <a
-                  href={"/products" + "?" + createQueryString("_c", cate.name)}
-                >
+                <a href={`/products?_c=${encodeURIComponent(cate.name)}`}>
                   {cate.name}
                 </a>
               </li>

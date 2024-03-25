@@ -5,9 +5,12 @@ import "@/componants/animate.css";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import SubmitButton from "@/componants/route/button/submitButton";
+import { toast } from "sonner";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-function Page({ searchParams }) {
+function Page() {
+  const router = useRouter();
   const number = useRef();
   const passwords = useRef();
 
@@ -16,13 +19,37 @@ function Page({ searchParams }) {
     try {
       const phoneNumber = number.current.value;
       const password = passwords.current.value;
-      await signIn("credentials", {
+      const res = await signIn("credentials", {
         phoneNumber,
         password,
         callbackUrl: "/",
+        redirect: false,
       });
+
+      if (res.ok == false) {
+        toast.error(res.error, {
+          duration: 3000,
+          cancel: {
+            label: "cancel",
+          },
+        });
+      }
+      if (res.ok == true) {
+        router.push(res.url);
+        toast.success("user login successfully", {
+          duration: 3000,
+          cancel: {
+            label: "cancel",
+          },
+        });
+      }
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message, {
+        duration: 3000,
+        cancel: {
+          label: "cancel",
+        },
+      });
     }
   };
 

@@ -7,9 +7,6 @@ import { Suspense } from "react";
 
 async function Page({ params }) {
   const product = await getproduct(params.id);
-  const fileNameToDelete = "rajdhola.jpg";
-  const res = await deleteFiles(fileNameToDelete);
-  console.log(res);
   return (
     <div>
       <ProductDetails data={product} />

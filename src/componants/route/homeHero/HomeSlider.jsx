@@ -40,17 +40,7 @@ const YourSliderComponent = ({ banars }) => {
 
   return (
     <>
-      <div className="  overflow-hidden hidden md:flex group 600px:mb-[-16%]  xl:mb-[-19%] mb-[-65px] relative">
-        {/* {banars.map((imageUrl, index) => (
-          <div
-            key={index}
-            className="image-item min-w-[100%] "
-            ref={(el) => (imgItemRef.current[index] = el)}
-            style={{ transform: `translateX(${startSlider}%)` }}
-          >
-            <img src={"/slide3.png"} alt="" className=" home_image  " />
-          </div>
-        ))} */}
+      <div className=" h-[90vh]  overflow-hidden hidden md:flex group 600px:mb-[-16%]  xl:mb-[-19%] mb-[-65px] relative">
         {banars
           .filter((item) => item.type === "big")
           .map((banar, index) => (
@@ -86,7 +76,7 @@ const YourSliderComponent = ({ banars }) => {
               ref={(el) => (imgItemRef.current[index] = el)}
               style={{ transform: `translateX(${startSlider}%)` }}
             >
-              <img src={banar?.image.url} alt="" className=" home_image  " />
+              <img src={banar?.image.url} alt="" className="home_image  " />
             </div>
           ))}
       </div>
