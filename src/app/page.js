@@ -15,7 +15,7 @@ import CategoryFilter from "@/componants/route/categoryFilter/categoryFilter";
 export const dynamic = "force-dynamic";
 export const metadata = {
   title: "rajdhola.com",
-  description: "rajdhola is a big company as a e-commerce",
+  description: "",
   keywords: ["Rajdhola", "rajdhola", "rajdhala"],
   metadataBase: new URL("https://rajdhola.com"),
 
@@ -26,7 +26,7 @@ export const metadata = {
     },
   },
   openGraph: {
-    images: "/rajdhola_title_logo.svg",
+    images: "/rajdhola_title_logo.png",
   },
   icons: {
     icon: ["/favicon_crome.png"],
