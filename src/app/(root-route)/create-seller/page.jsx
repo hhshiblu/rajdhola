@@ -4,6 +4,7 @@ import SellerHeader from "@/componants/layout/sellerHeader";
 import Footer from "@/componants/layout/footer";
 import SellerForm from "@/components/seller/sellerForm";
 import Sellerverify from "@/components/seller/sellerverify";
+import RajdholaComission from "@/componants/route/faqtype/rajdholaComission";
 const ShopCreate = ({ searchParams }) => {
   return (
     <>
@@ -240,6 +241,9 @@ const ShopCreate = ({ searchParams }) => {
               </div>
             </div>
           </div>
+          <>
+            <RajdholaComission />
+          </>
         </>
       )}
 

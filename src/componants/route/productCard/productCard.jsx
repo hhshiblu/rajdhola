@@ -41,7 +41,7 @@ function ProductCard({ data, i, ref }) {
               : data?.name}
           </h5>
         </Link>
-        <div className="px-[4px] 600px:px-0 flex">
+        <div className="px-[4px]  flex">
           <h5 className={`${styles.productDiscountPrice}`}>
             {data.presentPrice}
             <span className=" font-semibold"> ৳</span>
